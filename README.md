@@ -30,21 +30,21 @@ ___
 Como primer vistazo formal a las historias de usuario el equipo decidio omitir *definition of ready and definition of done*.
 Esto debido a no se pedia especificamente en la letra de la segunda entrega. 
 
-![Historia 1](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia1.png?raw=true)
+![Historia 1](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia1.png?raw=true)
 
-![Historia 2](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia2.png?raw=true)
+![Historia 2](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia2.png?raw=true)
 
-![Historia 3](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia3.png?raw=true)
+![Historia 3](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia3.png?raw=true)
 
-![Historia 4](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia4.png?raw=true)
+![Historia 4](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia4.png?raw=true)
 
-![Historia 5](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia5.png?raw=true)
+![Historia 5](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia5.png?raw=true)
 
-![Historia 6](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia6.png?raw=true)
+![Historia 6](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia6.png?raw=true)
 
-![Historia 7](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia7.png?raw=true)
+![Historia 7](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia7.png?raw=true)
 
-![Historia 8](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/user_story/historia8.png?raw=true)
+![Historia 8](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia8.png?raw=true)
 
 ___
 ## 👤 Integrantes del Equipo 👤
