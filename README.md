@@ -29,22 +29,18 @@ ___
 ## 🎭 Historias de usuario 🎭
 Como primer vistazo formal a las historias de usuario el equipo decidio omitir *definition of ready and definition of done*.
 Esto debido a no se pedia especificamente en la letra de la segunda entrega. 
-
-![Historia 1](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia1.png?raw=true)
-
-![Historia 2](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia2.png?raw=true)
-
-![Historia 3](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia3.png?raw=true)
-
-![Historia 4](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia4.png?raw=true)
-
-![Historia 5](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia5.png?raw=true)
-
-![Historia 6](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia6.png?raw=true)
-
-![Historia 7](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia7.png?raw=true)
-
-![Historia 8](https://github.com/MatiXV23/FinalProyect_WebDev/blob/56b75d48ee82adcd7539ffcf33dbfdba56632a6f/assets/img/user_story/historia8.png?raw=true)
+| Titulo   | Descripción   |  Prioridad  |  Estimado  |
+|--------------|--------------|--------------|--------------|
+| **Registro de usuario** | **Como** nuevo usuario **quiero** poder registrarme **para** poder acceder a las funciones de la pagina | **Alta** | 5/10 |
+| **Login de usuario** | **Como** usuario registrado **quiero** poder logearme en mi cuenta **para** poder acceder a las funcionalidades de la pagina | **Alta** | 5/10 |
+| **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 |
+| **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 |
+| **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 |
+| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Meida** | 3/10 |
+| **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 |
+| **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 |
+| **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 |
+| **Crear categorias nuevas** | **Como** administrador **quiero** poder crear nuevas categorias de articulos **para** abarcar todo lo que los usuarios quieran publicar | **Alta** | 5/10 |
 
 ___
 ## 👤 Integrantes del Equipo 👤
