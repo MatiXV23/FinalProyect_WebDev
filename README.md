@@ -29,18 +29,18 @@ ___
 ## 🎭 Historias de usuario 🎭
 Como primer vistazo formal a las historias de usuario el equipo decidio omitir *definition of ready and definition of done*.
 Esto debido a no se pedia especificamente en la letra de la segunda entrega. 
-| Titulo   | Descripción   |  Prioridad  |  Estimado  |
-|--------------|--------------|--------------|--------------|
-| **Registro de usuario** | **Como** nuevo usuario **quiero** poder registrarme **para** poder acceder a las funciones de la pagina | **Alta** | 5/10 |
-| **Login de usuario** | **Como** usuario registrado **quiero** poder logearme en mi cuenta **para** poder acceder a las funcionalidades de la pagina | **Alta** | 5/10 |
-| **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 |
-| **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 |
-| **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 |
-| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Media** | 3/10 |
-| **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 |
-| **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 |
-| **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 |
-| **Crear categorias nuevas** | **Como** administrador **quiero** poder crear nuevas categorias de articulos **para** abarcar todo lo que los usuarios quieran publicar | **Alta** | 5/10 |
+| Titulo   | Descripción   |  Prioridad  |  Estimado  | MPU |
+|--------------|--------------|--------------|--------------|--------------|
+| **Registro de usuario** | **Como** nuevo usuario **quiero** poder registrarme **para** poder acceder a las funciones de la pagina | **Alta** | 5/10 |  |
+| **Login de usuario** | **Como** usuario registrado **quiero** poder logearme en mi cuenta **para** poder acceder a las funcionalidades de la pagina | **Alta** | 5/10 |  |
+| **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 |  |
+| **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 |  |
+| **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 |  |
+| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Media** | 3/10 |  |
+| **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 |  |
+| **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 |  |
+| **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 |  |
+| **Crear categorias nuevas** | **Como** administrador **quiero** poder crear nuevas categorias de articulos **para** abarcar todo lo que los usuarios quieran publicar | **Alta** | 5/10 |  |
 
 ___
 ## 👤 Integrantes del Equipo 👤
