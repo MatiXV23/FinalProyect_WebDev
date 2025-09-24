@@ -36,7 +36,7 @@ Esto debido a no se pedia especificamente en la letra de la segunda entrega.
 | **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 |
 | **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 |
 | **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 |
-| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Meida** | 3/10 |
+| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Media** | 3/10 |
 | **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 |
 | **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 |
 | **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 |
