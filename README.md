@@ -31,16 +31,26 @@ Como primer vistazo formal a las historias de usuario el equipo decidio omitir *
 Esto debido a no se pedia especificamente en la letra de la segunda entrega. 
 | Titulo   | Descripción   |  Prioridad  |  Estimado  | MPU |
 |--------------|--------------|--------------|--------------|--------------|
-| **Registro de usuario** | **Como** nuevo usuario **quiero** poder registrarme **para** poder acceder a las funciones de la pagina | **Alta** | 5/10 |  |
-| **Login de usuario** | **Como** usuario registrado **quiero** poder logearme en mi cuenta **para** poder acceder a las funcionalidades de la pagina | **Alta** | 5/10 |  |
-| **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 |  |
-| **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 |  |
-| **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 |  |
-| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Media** | 3/10 |  |
-| **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 |  |
-| **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 |  |
-| **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 |  |
-| **Crear categorias nuevas** | **Como** administrador **quiero** poder crear nuevas categorias de articulos **para** abarcar todo lo que los usuarios quieran publicar | **Alta** | 5/10 |  |
+| **Registro de usuario** | **Como** nuevo usuario **quiero** poder registrarme **para** poder acceder a las funciones de la pagina | **Alta** | 5/10 | Si |
+| **Login de usuario** | **Como** usuario registrado **quiero** poder logearme en mi cuenta **para** poder acceder a las funcionalidades de la pagina | **Alta** | 5/10 | Si |
+| **Ver articulos** | **Como** usuario logeado **quiero** poder ver los articulos de la pagina **para** poder explorar la pagina y conocer todos los articulos publicados | **Alta** | 3/10 | Si |
+| **Listar articulos por categoria** | **Como** usuario **quiero** poder listar los articulos de la pagina según su categoria **para** poder filtrar y explorar la pagina según mi necesidad | **Alta** | 3/10 | Si |
+| **Publicar un articulo** | **Como** usuario logeado **quiero** poder publicar un articulo **para** poder vender el articulo y generar un beneficio | **Alta** | 5/10 | Si |
+| **Buscar un articulo** | **Como** usuario logeado **quiero** poder buscar articulos especificos **para** poder encontrar un articulo según mi necesidad | **Media** | 3/10 | Si |
+| **Chat con el vendedor** | **Como** usuario logeado **quiero** poder chatear con el vendedor **para** poder conocer mas información sobre el articulo publicado | **Alta** | 6/10 | No |
+| **Ver detalle del articulo** | **Como** usuario logeado **quiero** poder ver los detalles del articulo **para** poder definir si comprarlo o no | **Alta** | 4/10 | No |
+| **Comprar articulo** | **Como** usuario logeado **quiero** poder comprar un articulo publicado **para** poder obtener dicho articulo | **Alta** | 5/10 | Si |
+| **Crear categorias nuevas** | **Como** administrador **quiero** poder crear nuevas categorias de articulos **para** abarcar todo lo que los usuarios quieran publicar | **Alta** | 5/10 | No |
+| **Editar una categoría** | **Como** administrador **quiero** poder editar el nombre de una categoría **para** modificarla según la necesidad | **Baja** | 4/10 | No |
+| **Borrar un articulo publicado** | **Como** administrador **quiero** poder borrar un articulo publicado **para** evitar articulos ilicitos | **Media** | 4/10 | Si |
+| **Barrera de edad** | **Como** administrador **quiero** poder colocar una barrera de edad a ciertos artículos **para** evitar que los menores vean articulos ilicitos | **Baja** | 5/10 | No |
+| **Eliminar un usuario** | **Como** administrador **quiero** poder eliminar el perfil de un usuario **para** sancionar al usuario por hacer algo no permitido | **Media** | 5/10 | No |
+| **Editar mi articulo publicado** | **Como** usuario logeado **quiero** poder editar mi articulo publicado **para** cambiar los datos y adaptarlos | **Media** | 4/10 | Si |
+| **Borrar un articulo publicado** | **Como** usuario logeado **quiero** poder borrar mi articulo publicado **para** que los otros usuarios ya no lo puedan ver | **Alta** | 5/10 | Si |
+| **Eliminar mi cuenta** | **Como** usuario logeado **quiero** poder eliminar mi propia cuenta **para** dejar de acceder a la pagina | **Alta** | 6/10 | No |
+| **Calificar vendedores** | **Como** usuario logeado **quiero** poder calificar a los usuarios con estrellas (1 a 5) a los usuarios que le compre un aritulo **para** que otros usuarios sepan si es confiable | **Media** | 6/10 | No |
+| **Ver estrellas de vendedor** | **Como** usuario logeado **quiero** poder ver cuantas estrellas tiene otro usuario **para** saber si confiar o no en el mismo | **Media** | 5/10 | No |
+| **Dejar reseña a articulo** | **Como** usuario logeado **quiero** poder dejar una reseña sobre un articulo que ya compre **para** que otros usuarios sepan si comprarlo o no | **Media** | 5/10 | No |
 
 ___
 ## 👤 Integrantes del Equipo 👤
