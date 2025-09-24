@@ -1,23 +1,34 @@
 import Fastify from 'fastify'
-import rootRoute from './src/routes/root.ts'
-import swagger from './src/plugins/swagger.ts'
+import autoLoad from '@fastify/autoload'
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 
-const fastify = Fastify({
-  logger: true
-})
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = join(dirname(__filename), 'src')
+
+const fastify = Fastify({ logger: true }).withTypeProvider<TypeBoxTypeProvider>();
+
 
 const PORT = Number(process.env.PORT) || 3000
 
-await fastify.register(swagger)
-await fastify.register(rootRoute)
+await fastify.register(autoLoad, {
+  dir: join(__dirname, 'plugins')
+})
+await fastify.register(autoLoad, {
+  dir: join(__dirname, 'decorators')
+})
 
+fastify.register(autoLoad, {
+  dir: join(__dirname, 'routes'),
+  routeParams: true
+})
 
-  try {
+try {
     await fastify.listen({ port: PORT })
-    console.log(`Swagger UI disponible en http://localhost:${PORT}/docs`)
-  } catch (err) {
+} catch (err) {
     fastify.log.error(err)
     process.exit(1)
-  }
+}
 
 export default fastify
