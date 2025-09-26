@@ -51,7 +51,28 @@ Esto debido a no se pedia especificamente en la letra de la segunda entrega.
 | **Calificar vendedores** | **Como** usuario logeado **quiero** poder calificar a los usuarios con estrellas (1 a 5) a los usuarios que le compre un aritulo **para** que otros usuarios sepan si es confiable | **Media** | 6/10 | No |
 | **Ver estrellas de vendedor** | **Como** usuario logeado **quiero** poder ver cuantas estrellas tiene otro usuario **para** saber si confiar o no en el mismo | **Media** | 5/10 | No |
 | **Dejar reseña a articulo** | **Como** usuario logeado **quiero** poder dejar una reseña sobre un articulo que ya compre **para** que otros usuarios sepan si comprarlo o no | **Media** | 5/10 | No |
+___
+## 📦 Tercera entrega 📦 
 
+|  En esta entrega del proyecto el equipo a cargo debera:  |
+|----------------|
+|  Crear todas las tablas de la base de datos  |
+|  Crear un modelo gráfico de los datos  |
+|  Crear datos de prueba  |
+
+#### Para llevar a cabo esta tarea el equipo creo un archivo *init.sql* en la carpeta correspondiente.
+
+#### Utilizamos el comando **DROP TABLE IF EXISTS tabla CASCADE**:
+- Sirve para borrar la tabla y las dependencias de la misma antes de crearla
+- *Esto evita que tengamos tablas repetidas al ejecutar el script.*
+- *Dicho comando borra las tablas si existen, si no existen es ignorado y continua con la creación normal.*  
+
+#### Luego de la creación de todas las tablas:
+- Se realizo el insert de los datos básicos de prueba en las tablas que **consideramos más importantes.**
+- Finalmente tras generar la base de datos, el equipo asocio *dbeaver con postgres* para poder *obtener el modelo grafico con notación cardinal.*
+
+## Modelo grafico: 
+![modelo](https://raw.githubusercontent.com/MatiXV23/FinalProyect_WebDev/bedcded6d1aed088c3e255ff8909b1c6509d3b14/assets/img/MER_Dbeaver.png)
 ___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
