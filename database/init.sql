@@ -89,3 +89,64 @@ CREATE TABLE IF NOT EXISTS articulos_carritos (
     id_articulo INTEGER NOT NULL REFERENCES articulos(id_articulo) ON DELETE CASCADE,
     cantidad INTEGER CHECK (cantidad >= 1 AND cantidad <= 64)
 );
+
+-- ACA VAN LOS INSERT MANITOS, OJO AL GOL 
+
+TRUNCATE TABLE articulos_carritos, carritos, articulos, categorias, credenciales, usuarios, ciudades RESTART IDENTITY CASCADE;
+
+INSERT INTO ciudades (nombre) VALUES
+('Salto'),
+('Paysandú'),
+('Bella Unión'),
+('Artigas'),
+('Rivera'),
+('Tacuarembó'),
+('Young'),
+('Guichón'),
+('Baltasar Brum'),
+('Constitución'),
+('Daymán'),
+('Termas del Arapey'),
+('San Antonio'),
+('Colonia Lavalleja'),
+('Tranqueras'),
+('Vichadero'),
+('Paso de los Toros'),
+('Mercedes'),
+('Fray Bentos');
+
+insert into usuarios (is_admin, email, nombres, apellidos, id_ciudad, direccion, foto_url, nro_documento, reputacion) 
+values 
+(true, 'agu@gmail.com', 'Agustin', 'Cigaran', 3, 'calle 1', 'https://external-preview.redd.it/T1CjKMNYd4oViR3U1SHq7FRwM710QEnTyrboQRxuU0U.jpg?auto=webp&s=ae2c366ede78c8d798b0b78cb25cb9c5e951e088', '54812997', 3),
+(false, 'brah@icloud.com', 'Brahian', 'Nuñez', 1, 'calle ABC', 'https://static.vecteezy.com/system/resources/previews/055/566/023/non_2x/cartoon-teacher-with-pointer-and-chalkboard-white-background-free-vector.jpg', '12345678', 5),
+(false, 'mati@yahoo.net', 'Matias', 'Perez', 1, 'calle 56', 'https://www.vhv.rs/dpng/d/145-1454771_terrorist-csgo-png-transparent-png.png', '01001101', 1);
+
+insert into credenciales (id_usuario, password_hash)
+values
+(1, 'cazaCurioso'),
+(2, 'contraseñaSuperSecreta1'),
+(3, 'contraseñaSuperSecreta2');
+
+insert into categorias (nombre)
+values 
+('Computación'),
+('Comestibles'),
+('Plantas');
+
+insert into articulos (id_categoria, id_vendedor, usado, con_envio, nombre, precio, moneda, descripcion, foto_url, cantidad)
+values
+(2, 1, true, false, 'Embutido de mortadela', '60', 'USD', 'Un embutido de mortadela, casi nuevo, comí un poco pero me llené', 'https://upload.wikimedia.org/wikipedia/commons/b/be/Mortadella.jpg', 1),
+(1, 2, false, true, 'AirPods PRO', '3850', 'UYU', 'Auriculares nuevos en caja, importados de Miami', 'https://www.apple.com/newsroom/images/product/airpods/standard/Apple-AirPods-Pro-2nd-gen-hero-220907_big.jpg.large.jpg', 64),
+(3, 3, true, false, 'Paraiso canadiense', '650', 'UYU', 'Me regalaron este paraiso canadiense, pero en realidad vivo en un apartamento. Esta prácticamente nuevo', 'https://http2.mlstatic.com/D_NQ_NP_683954-MLU75782155351_042024-O.webp', 1);
+
+insert into carritos (id_usuario)
+values 
+(1),
+(2),
+(3);
+
+insert into articulos_carritos (id_carrito, id_articulo, cantidad)
+values
+(1, 3, 1),
+(2, 1, 1),
+(3, 2, 15);
