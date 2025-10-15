@@ -72,7 +72,7 @@ ___
 - Finalmente tras generar la base de datos, el equipo asocio *dbeaver con postgres* para poder *obtener el modelo grafico con notación cardinal.*
 
 ## Modelo grafico: 
-![modelo](https://raw.githubusercontent.com/MatiXV23/FinalProyect_WebDev/bedcded6d1aed088c3e255ff8909b1c6509d3b14/assets/img/MER_Dbeaver.png)
+![modelo](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/DbeaverDiagram2.png?raw=true)
 ___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
