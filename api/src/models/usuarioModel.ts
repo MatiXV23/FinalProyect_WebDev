@@ -8,4 +8,4 @@ export const usuarioModel = Type.Object({
     direccion: Type.String(),
 })
 
-export type usuarioModel = Static<typeof usuarioModel>
+export type UsuarioModel = Static<typeof usuarioModel>
