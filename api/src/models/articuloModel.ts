@@ -1,4 +1,4 @@
-import {Type} from "@fastify/type-provider-typebox";
+import {Static, Type} from "@fastify/type-provider-typebox";
 import { categoriaModel } from "./categoriaModel";
 
 export const articuloModel = Type.Object({
@@ -10,3 +10,5 @@ export const articuloModel = Type.Object({
 }, {
     title: "Esquema para articulo"
 })
+
+export type ArticuloModel = Static<typeof articuloModel>
