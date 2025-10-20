@@ -1,7 +1,7 @@
 import {Static, Type} from "@fastify/type-provider-typebox";
 
 export const categoriaModel = Type.Object({
-    id: Type.Integer(),
+    id_categoria: Type.Integer(),
     nombre: Type.String(),
 }, {
     title: "Esquema para categoria"
