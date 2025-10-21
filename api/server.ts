@@ -15,9 +15,9 @@ const PORT = Number(process.env.PORT) || 3000
 await fastify.register(autoLoad, {
   dir: join(__dirname, 'plugins')
 })
-await fastify.register(autoLoad, {
-  dir: join(__dirname, 'decorators')
-})
+// await fastify.register(autoLoad, {
+//   dir: join(__dirname, 'decorators')
+// })
 
 fastify.register(autoLoad, {
   dir: join(__dirname, 'routes'),
