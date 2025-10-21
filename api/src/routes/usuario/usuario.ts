@@ -1,5 +1,5 @@
 import {type FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox"
-import { usuarioModel } from "../../models/usuarioModel"
+import { usuarioModel } from "../../models/usuarioModel.ts"
 import { Type } from "@fastify/type-provider-typebox"
 import { PC_NotImplemented } from "../../errors/errors.ts"
 
@@ -25,6 +25,9 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             tags: ["Usuario"],
             description: "Ruta para crear usuarios",
             body: Type.Omit(usuarioModel,["id_usuario"]),
+            response: {
+                201: usuarioModel,
+            }
         }
     },async (req, rep)=>{
         return new PC_NotImplemented()

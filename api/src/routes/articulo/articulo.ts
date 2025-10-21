@@ -1,6 +1,6 @@
-import { FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox"
+import {type  FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox"
 import {articuloModel} from "../../models/articuloModel.ts"
-import { PC_NotImplemented } from "../../errors/errors"
+import { PC_NotImplemented } from "../../errors/errors.ts"
 
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -23,6 +23,9 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             tags: [""],
             description: "",
             body: Type.Omit(articuloModel, ["id_articulo"]),
+            response: {
+                201: articuloModel,
+            }
         }
     }, async (req, rep)=>{
         return new PC_NotImplemented()

@@ -1,6 +1,6 @@
-import { FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox"
-import {articuloModel} from "../../../models/articuloModel"
-import { PC_NotImplemented } from "../../../errors/errors"
+import {type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox"
+import {articuloModel} from "../../../models/articuloModel.ts"
+import { PC_NotImplemented } from "../../../errors/errors.ts"
 
 
 //necesito autorizacion, solo el admin puede moficar el artículo
@@ -10,10 +10,10 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             summary:"Modificar articulo",
             tags: ["Articulo"],
             description: "Ruta para modificar articulo",
-            body: Type.Partial(articuloModel),
+            body: articuloModel,
             params: Type.Pick(articuloModel,["id_articulo"]),
             response: {
-                201: articuloModel,
+                204: Type.Null()
             }
         }
     }, async (req, rep)=>{
@@ -27,7 +27,7 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             description:"Ruta para eliminar articulo",
             params: Type.Pick(articuloModel, ["id_articulo"]),
             response: {
-                201: Type.Null()
+                204: Type.Null()
             }
         }
     }, async (req, rep)=>{

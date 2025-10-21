@@ -9,10 +9,10 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             summary: "Modificar usuario",
             tags:["Usuario"],
             description: "Ruta para modificar un usuario",
-            body: Type.Partial({usuarioModel}),
+            body: usuarioModel,
             params: Type.Pick(usuarioModel, ["id_usuario"]),
             response: {
-                201: usuarioModel
+                204: Type.Null()
             }
         }
     },async (req,rep)=>{
@@ -26,7 +26,7 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
             description:"Ruta para eliminar un usuario",
             params: Type.Pick(usuarioModel, ["id_usuario"]),
             response: {
-                201: Type.Null()
+                204: Type.Null()
             }
         }
     }, async (req, rep)=>{
