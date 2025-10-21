@@ -34,3 +34,5 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         return new PC_NotImplemented()
     })
 }
+
+export default articuloByIdRoutes

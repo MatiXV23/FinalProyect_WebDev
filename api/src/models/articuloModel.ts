@@ -1,5 +1,5 @@
-import {Static, Type} from "@fastify/type-provider-typebox";
-import { categoriaModel } from "./categoriaModel";
+import {type Static, Type} from "@fastify/type-provider-typebox";
+import { categoriaModel } from "./categoriaModel.ts";
 
 export const articuloModel = Type.Object({
     id_articulo: Type.Integer(),

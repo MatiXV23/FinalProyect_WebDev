@@ -33,3 +33,5 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         return new PC_NotImplemented()
     })
 }
+
+export default usersRoutes

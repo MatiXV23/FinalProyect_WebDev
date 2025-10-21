@@ -19,9 +19,9 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
 
     fastify.post("/", {
         schema:{
-            summary:"",
-            tags: [""],
-            description: "",
+            summary:"Crear articulo",
+            tags: ["Articulo"],
+            description: "Ruta para crear articulo",
             body: Type.Omit(articuloModel, ["id_articulo"]),
             response: {
                 201: articuloModel,
@@ -31,3 +31,5 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         return new PC_NotImplemented()
     })
 }
+
+export default articuloRoutes

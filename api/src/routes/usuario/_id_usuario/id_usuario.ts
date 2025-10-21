@@ -1,9 +1,10 @@
-import { FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox"
+import { type FastifyPluginAsync } from "fastify";
+import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../errors/errors.ts"
 import { usuarioModel } from "../../../models/usuarioModel.ts"
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
-const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
     fastify.put("/",{
         schema:{
             summary: "Modificar usuario",
@@ -33,3 +34,5 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         return new PC_NotImplemented()
     })
 }
+
+export default usersByIdRoutes

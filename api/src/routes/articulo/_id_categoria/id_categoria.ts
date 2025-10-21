@@ -1,9 +1,10 @@
-import { FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { articuloModel } from "../../../models/articuloModel";
-import { PC_NotImplemented } from "../../../errors/errors";
+import { type FastifyPluginAsync } from "fastify";
+import { Type } from "@fastify/type-provider-typebox";
+import { articuloModel } from "../../../models/articuloModel.ts";
+import { PC_NotImplemented } from "../../../errors/errors.ts";
 
 
-const articuloByCategoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+const articuloByCategoriaRoutes: FastifyPluginAsync = async (fastify) => {
         fastify.get("/",{
         schema:{
             summary:"Obtener articulo",
@@ -18,3 +19,5 @@ const articuloByCategoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => 
         return new PC_NotImplemented()
     });
 }
+
+export default articuloByCategoriaRoutes
