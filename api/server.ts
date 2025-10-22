@@ -3,6 +3,7 @@ import autoLoad from "@fastify/autoload";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { PC_Error, PC_InternalServerError } from "./src/errors/errors.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(dirname(__filename), "src");
@@ -24,6 +25,19 @@ fastify.register(autoLoad, {
   dir: join(__dirname, "routes"),
   routeParams: true,
 });
+
+
+fastify.setErrorHandler((err: PC_Error, request, reply) => {
+    if (!(err instanceof PC_Error)) err = new PC_InternalServerError()
+    fastify.log.error(err);
+
+    reply.status(err.statusCode).send({
+        statusCode: err.statusCode,
+        error: err.error,
+        message: err.message
+    });
+});
+
 
 try {
   await fastify.listen({ port: PORT });
