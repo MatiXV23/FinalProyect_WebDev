@@ -11,4 +11,4 @@ export const articuloModel = Type.Object({
     title: "Esquema para articulo"
 })
 
-export type ArticuloModel = Static<typeof articuloModel>
+export type Articulo = Static<typeof articuloModel>

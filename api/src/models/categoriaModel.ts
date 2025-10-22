@@ -7,4 +7,4 @@ export const categoriaModel = Type.Object({
     title: "Esquema para categoria"
 })
 
-export type categoriaModel = Static<typeof categoriaModel>
+export type Categoria = Static<typeof categoriaModel>
