@@ -8,7 +8,7 @@ import { PC_NotImplemented } from "../../../errors/errors.ts";
 //necesito autorizacion, solo el admin puede moficar el artículo
 const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.put(
-    "/",
+    "",
     {
       schema: {
         summary: "Modificar articulo",
@@ -22,15 +22,16 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: fastify.isAdminOrOwner,
+      onRequest: [fastify.authenticate, fastify.isAdmin]
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return 
     }
   );
 
   fastify.delete(
-    "/",
+    "",
     {
       schema: {
         summary: "Eliminar articulo",
@@ -43,10 +44,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: fastify.isAdminOrOwner,
+      onRequest: [fastify.authenticate, fastify.isAdmin]
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return
     }
   );
 };

@@ -9,4 +9,4 @@ export const usuarioModel = Type.Object({
   administrador: Type.Boolean(),
 });
 
-export type UsuarioModel = Static<typeof usuarioModel>;
+export type Usuario = Static<typeof usuarioModel>;

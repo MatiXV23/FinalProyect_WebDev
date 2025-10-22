@@ -3,6 +3,7 @@ import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 import { credencialesModel } from "../../models/credencialesModel.ts";
 import type { SignOptions } from "@fastify/jwt";
+import { usuarioModel } from "../../models/usuarioModel.ts";
 
 const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
   fastify.post(
@@ -29,6 +30,24 @@ const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
       //   return { token: fastify.jwt.sign(cuenta, signOptions) };
     }
   );
+
+  fastify.get(
+    "",
+    {
+      schema: {
+        summary: "Get User",
+        description: "Devuelve el usuario logeado",
+        tags: ["Auth"],
+        response: {
+          200: usuarioModel,
+        },
+        
+      },
+    },
+    async (request, reply) => {
+      return new PC_NotImplemented();
+    }
+  )
 };
 
 export default loginRoute;

@@ -6,7 +6,7 @@ import { usuarioModel } from "../../../models/usuarioModel.ts";
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
 const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.put(
-    "/",
+    "",
     {
       schema: {
         summary: "Modificar usuario",
@@ -20,7 +20,7 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: fastify.isAdminOrOwner,
+      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
@@ -28,7 +28,7 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
   );
 
   fastify.delete(
-    "/",
+    "",
     {
       schema: {
         summary: "Eliminar usuario",
@@ -41,7 +41,7 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: fastify.isAdminOrOwner,
+      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
     },
     async (req, rep) => {
       return new PC_NotImplemented();

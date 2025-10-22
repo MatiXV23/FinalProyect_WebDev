@@ -5,7 +5,7 @@ import { PC_NotImplemented } from "../../errors/errors.ts";
 
 const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
-    "/",
+    "",
     {
       schema: {
         summary: "Obtener los usuarios",
@@ -18,12 +18,13 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return
     }
   );
 
   fastify.post(
-    "/",
+    "",
     {
       schema: {
         summary: "Crear usuario",
@@ -33,10 +34,13 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         response: {
           201: usuarioModel,
         },
+        security: [{ bearerAuth: [] }],
       },
+      onRequest: [fastify.authenticate, fastify.isAdmin]
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return
     }
   );
 };

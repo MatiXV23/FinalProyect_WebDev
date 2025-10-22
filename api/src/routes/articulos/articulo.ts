@@ -7,24 +7,25 @@ import { PC_NotImplemented } from "../../errors/errors.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
-    "/",
+    "",
     {
       schema: {
-        summary: "Obtener articulo",
+        summary: "Obtener articulos",
         tags: ["Articulo"],
-        description: "Ruta para obtener articulo. No hay requerimientos de uso",
+        description: "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
           200: Type.Array(articuloModel),
         },
       },
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return
     }
   );
 
   fastify.post(
-    "/",
+    "",
     {
       schema: {
         summary: "Crear articulo",
@@ -34,10 +35,13 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         response: {
           201: articuloModel,
         },
+        security: [{ bearerAuth: [] }],
       },
+      onRequest: [fastify.authenticate, fastify.isAdmin]
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
+      return 
     }
   );
 };
