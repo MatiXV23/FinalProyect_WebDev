@@ -3,7 +3,7 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../errors/errors.ts";
-import { categoriaModel } from "../../../models/categoriaModel.ts";
+import { categoriaModel } from "../../../models/market/categoriaModel.ts";
 
 const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
 
@@ -11,7 +11,7 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     "",
     {
       schema: {
-        summary: "Crear categoria",
+        summary: "Eliminar categoria",
         tags: ["Categoria"],
         description: "Ruta para eliminar una categoria",
         response: {

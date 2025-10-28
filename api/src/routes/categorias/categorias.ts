@@ -3,7 +3,7 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
-import { categoriaModel } from "../../models/categoriaModel.ts";
+import { categoriaModel } from "../../models/market/categoriaModel.ts";
 
 const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

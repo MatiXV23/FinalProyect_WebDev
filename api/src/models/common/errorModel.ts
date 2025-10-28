@@ -1,4 +1,4 @@
-import { Type } from "@fastify/type-provider-typebox";
+import {Type} from "@fastify/type-provider-typebox";
 
 export const ErrorSchema = Type.Object({
     statusCode: Type.Integer(),

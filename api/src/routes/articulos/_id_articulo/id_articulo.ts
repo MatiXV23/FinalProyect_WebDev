@@ -2,7 +2,7 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { articuloModel } from "../../../models/articuloModel.ts";
+import { articuloModel } from "../../../models/market/articuloModel.ts";
 import { PC_NotImplemented } from "../../../errors/errors.ts";
 
 //necesito autorizacion, solo el admin puede moficar el artículo

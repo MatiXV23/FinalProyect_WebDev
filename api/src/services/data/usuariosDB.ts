@@ -1,6 +1,6 @@
-import { BasePgRepository } from "../../models/baseRepository.ts";
-import type { Usuario } from "../../models/usuarioModel.ts";
-import type { Credenciales } from "../../models/credencialesModel.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import type { Usuario } from "../../models/market/usuarioModel.ts";
+import type { Credenciales } from "../../models/market/credencialesModel.ts";
 import { PC_NotFound, PC_BadRequest, PC_InternalServerError } from "../../errors/errors.ts";
 import type { Pool } from "pg";
 

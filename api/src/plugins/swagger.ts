@@ -10,20 +10,20 @@ import fp from 'fastify-plugin'
 //       tags?: string[];
 //   }
 // }
-
+const PORT = Number(process.env.PORT) || 3000;
 //En vez de exportar la función la encapsulamos con fastify plugin.
 export default fp<FastifySwaggerOptions>(async (fastify) => {
   await fastify.register(swagger,{
     openapi: {
       openapi: '3.0.0',
       info: {
-        title: 'Test swagger',
-        description: 'Testing the Fastify swagger API',
+        title: 'CNP Market',
+        description: 'Documentacion de la api de CNP Market',
         version: '0.1.0'
       },
       servers: [
         {
-          url: 'http://localhost:3000',
+          url: `http://localhost:${PORT}`,
           description: 'Development server'
         }
       ],
