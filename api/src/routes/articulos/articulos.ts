@@ -2,7 +2,8 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { articuloModel } from "../../models/articuloModel.ts";
+import { articuloModel } from "../../models/market/articuloModel.ts";
+import { categoriaModel } from "../../models/market/categoriaModel.ts";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -12,6 +13,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener articulos",
         tags: ["Articulo"],
+        querystring: Type.Pick(categoriaModel, ["id_categoria"]),
         description: "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
           200: Type.Array(articuloModel),

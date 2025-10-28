@@ -1,9 +1,9 @@
 import { type FastifyPluginAsync } from "fastify";
 import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
-import { credencialesModel } from "../../models/credencialesModel.ts";
+import { credencialesModel } from "../../models/market/credencialesModel.ts";
 import type { SignOptions } from "@fastify/jwt";
-import { usuarioModel } from "../../models/usuarioModel.ts";
+import { usuarioModel } from "../../models/market/usuarioModel.ts";
 
 const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
   fastify.post(

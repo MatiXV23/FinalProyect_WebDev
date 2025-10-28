@@ -1,7 +1,7 @@
-import { BasePgRepository } from "../../models/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.ts";
 import { PC_NotFound, PC_BadRequest, PC_InternalServerError, PC_NotImplemented } from "../../errors/errors.ts";
 import type { Pool } from "pg";
-import type { Categoria } from "../../models/categoriaModel.ts";
+import type { Categoria } from "../../models/market/categoriaModel.ts";
 
 
 // TODO: REALIZAR ESTO ! ! !

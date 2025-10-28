@@ -1,5 +1,5 @@
 import { type FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
-import { usuarioModel } from "../../models/usuarioModel.ts";
+import { usuarioModel } from "../../models/market/usuarioModel.ts";
 import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 
