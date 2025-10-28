@@ -10,10 +10,10 @@ const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
     "",
     {
       schema: {
-        summary: "Obtener las ventas que realizo un usuario",
+        summary: "Obtener las compras que realizo un usuario",
         tags: ["Usuario"],
         description:
-          "Ruta para obtener las ventas de un usuario. Se requiere ser el usuario dueño o ser un administrador",
+          "Ruta para obtener las compras de un usuario. Se requiere ser el usuario dueño o ser un administrador",
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           200: Type.Array(compraModel),
