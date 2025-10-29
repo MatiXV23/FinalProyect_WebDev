@@ -19,7 +19,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return
+      return;
     }
   );
 
@@ -34,13 +34,11 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         response: {
           201: usuarioModel,
         },
-        security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return
+      return;
     }
   );
 };

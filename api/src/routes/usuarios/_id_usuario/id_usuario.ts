@@ -20,7 +20,8 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
+      preHandler: [fastify.isAdminOrOwner],
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
@@ -41,7 +42,8 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
+      preHandler: [fastify.isAdminOrOwner],
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();

@@ -5,7 +5,6 @@ import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../../../models/market/chatModel.ts";
 import { mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
 
-
 const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get(
     "",
@@ -14,14 +13,18 @@ const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
         summary: "Obtener mensajes de un chat",
         tags: ["Usuario", "Chats"],
         description:
-          "Ruta para obtener un chat de un usuario.",
-        params: Type.Intersect([Type.Pick(usuarioModel, ["id_usuario"]), Type.Pick(chatModel,  ["id_chat"])]),
+          "Ruta para obtener un chat de un usuario. Se requiere ser el usuario dueño ",
+        params: Type.Intersect([
+          Type.Pick(usuarioModel, ["id_usuario"]),
+          Type.Pick(chatModel, ["id_chat"]),
+        ]),
         response: {
           200: Type.Array(mensajeModel),
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isOwner],
+      preHandler: [fastify.isOwner],
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
@@ -35,15 +38,19 @@ const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
         summary: "Enviar mensaje",
         tags: ["Usuario", "Chats"],
         description:
-          "Ruta para enviar un mensaje a un usuario.",
+          "Ruta para enviar un mensaje a un usuario. Se requiere ser el usuario dueño ",
         body: Type.Omit(mensajeModel, ["fecha_mensaje"]),
-        params: Type.Intersect([Type.Pick(usuarioModel, ["id_usuario"]), Type.Pick(chatModel,  ["id_chat"])]),
+        params: Type.Intersect([
+          Type.Pick(usuarioModel, ["id_usuario"]),
+          Type.Pick(chatModel, ["id_chat"]),
+        ]),
         response: {
           204: Type.Null(),
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isOwner],
+      preHandler: [fastify.isOwner],
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
@@ -52,7 +59,3 @@ const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
 };
 
 export default mensajesRoutes;
-
-
-
-
