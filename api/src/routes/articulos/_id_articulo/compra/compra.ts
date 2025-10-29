@@ -3,6 +3,7 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { articuloModel } from "../../../../models/market/articuloModel.ts";
+import { compraModel } from "../../../../models/market/compraModel.ts";
 import { PC_NotImplemented } from "../../../../errors/errors.ts";
 
 //necesito autorizacion, cualquiera menos el owner
@@ -15,7 +16,7 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         tags: ["Articulo", "Comprar"],
         description:
           "Ruta para modificar articulo. No hay requerimientos de uso, pero debo estar loggeado",
-        body: articuloModel,
+        body: compraModel,
         params: Type.Pick(articuloModel, ["id_articulo"]),
         response: {
           204: Type.Null(),
@@ -23,7 +24,7 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         security: [{ bearerAuth: [] }],
       },
       onRequest: [fastify.authenticate],
-      preHandler: [fastify.isNotOwner]
+      preHandler: [fastify.isNotOwner],
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
