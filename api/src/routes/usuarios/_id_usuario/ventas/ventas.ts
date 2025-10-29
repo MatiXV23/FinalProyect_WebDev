@@ -4,7 +4,6 @@ import { PC_NotImplemented } from "../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
 import { compraModel } from "../../../../models/market/compraModel.ts";
 
-
 const ventasUserRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get(
     "",
@@ -20,7 +19,8 @@ const ventasUserRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
+      preHandler: [fastify.isAdminOrOwner],
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();

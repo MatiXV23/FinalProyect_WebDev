@@ -14,7 +14,7 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         summary: "Comprar articulo",
         tags: ["Articulo", "Comprar"],
         description:
-          "Ruta para modificar articulo. Se requiere ser el usuario dueño o ser un administrador",
+          "Ruta para modificar articulo. No hay requerimientos de uso, pero debo estar loggeado",
         body: articuloModel,
         params: Type.Pick(articuloModel, ["id_articulo"]),
         response: {
@@ -22,11 +22,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate]
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return 
+      return;
     }
   );
 };

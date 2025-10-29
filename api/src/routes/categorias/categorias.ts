@@ -12,7 +12,8 @@ const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener categorias",
         tags: ["Categoria"],
-        description: "Ruta para obtener categorias.",
+        description:
+          "Ruta para obtener categorias. No hay requerimientos de uso",
         response: {
           200: Type.Array(categoriaModel),
         },
@@ -20,7 +21,7 @@ const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return
+      return;
     }
   );
 
@@ -30,21 +31,21 @@ const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Crear categoria",
         tags: ["Categoria"],
-        description: "Ruta para crear categoria",
+        description:
+          "Ruta para crear categoria. Se requiere ser un administrador",
         body: Type.Omit(categoriaModel, ["id_categoria"]),
         response: {
           201: categoriaModel,
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return 
+      return;
     }
   );
-
 };
 
 export default categoriasRoutes;

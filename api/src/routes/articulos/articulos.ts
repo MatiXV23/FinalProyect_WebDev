@@ -14,7 +14,8 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         summary: "Obtener articulos",
         tags: ["Articulo"],
         querystring: Type.Pick(categoriaModel, ["id_categoria"]),
-        description: "Ruta para obtener articulos. No hay requerimientos de uso",
+        description:
+          "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
           200: Type.Array(articuloModel),
         },
@@ -22,7 +23,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return
+      return;
     }
   );
 
@@ -32,18 +33,19 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Crear articulo",
         tags: ["Articulo"],
-        description: "Ruta para crear articulo. No hay requerimientos de uso",
+        description:
+          "Ruta para crear articulo. No hay requerimientos de uso, pero debo estar loggeado",
         body: Type.Omit(articuloModel, ["id_articulo"]),
         response: {
           201: articuloModel,
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
-      return 
+      return;
     }
   );
 };
