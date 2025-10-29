@@ -17,7 +17,6 @@ const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
         response: {
           200: Type.Array(reseniaModel),
         },
-        security: [{ bearerAuth: [] }],
       },
     },
     async (req, rep) => {

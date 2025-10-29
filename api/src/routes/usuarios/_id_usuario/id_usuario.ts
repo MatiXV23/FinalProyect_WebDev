@@ -5,6 +5,25 @@ import { usuarioModel } from "../../../models/market/usuarioModel.ts";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
 const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.get(
+    "",
+    {
+      schema: {
+        summary: "Obtener usuario",
+        tags: ["Usuario"],
+        description:
+          "Ruta para obtener un usuario.",
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        response: {
+          200: usuarioModel,
+        },
+      },
+    },
+    async (req, rep) => {
+      return new PC_NotImplemented();
+    }
+  );
+
   fastify.put(
     "",
     {
