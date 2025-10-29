@@ -12,15 +12,13 @@ const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
         summary: "Obtener las resenias que le realizaron a un usuario",
         tags: ["Usuario"],
         description:
-          "Ruta para obtener las resenias de un usuario. Se requiere ser el usuario dueño o ser un administrador",
+          "Ruta para obtener las resenias de un usuario.",
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           200: Type.Array(reseniaModel),
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isAdminOrOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();

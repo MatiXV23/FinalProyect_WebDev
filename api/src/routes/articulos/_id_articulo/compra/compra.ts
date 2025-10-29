@@ -23,6 +23,7 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         security: [{ bearerAuth: [] }],
       },
       onRequest: [fastify.authenticate],
+      preHandler: [fastify.isNotOwner]
     },
     async (req, rep) => {
       throw new PC_NotImplemented();
