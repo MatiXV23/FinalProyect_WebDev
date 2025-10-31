@@ -51,4 +51,82 @@ export const routes: Routes = [
         .MensajesListarPage,
     title: 'Listar chats',
   },
+
+  {
+    path: 'articulo/buscar',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/articulo-buscar/articulo-buscar.page'))
+        .ArticuloBuscarPage,
+    title: 'Buscar Articulo',
+  },
+
+  {
+    path: 'articulo/comprar',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
+        .ArticuloComprarPage,
+    title: 'Comprar Articulo',
+  },
+
+  {
+    path: 'articulo/crear',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
+        .ArticuloCrearPage,
+    title: 'Crear Articulo',
+  },
+
+  {
+    path: 'articulo/detalle',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
+        .ArticuloDetallePage,
+    title: 'Detallar Articulo',
+  },
+
+  {
+    path: 'articulo/listar',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/articulo-listar/articulo-listar.page'))
+        .ArticuloListarPage,
+    title: 'Listar Articulo',
+  },
+
+  {
+    path: 'articulo/usuario/editar',
+    loadComponent: async () =>
+      (
+        await import(
+          './routes/articulos/pages/articulos-usuario-editar/articulos-usuario-editar.page'
+        )
+      ).ArticulosUsuarioEditarPage,
+    title: 'Usuario edita articulos publicados',
+  },
+
+  {
+    path: 'articulo/usuario/listar',
+    loadComponent: async () =>
+      (
+        await import(
+          './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
+        )
+      ).ArticulosUsuarioListarPage,
+    title: 'Usuario lista articulos publicados',
+  },
+
+  {
+    path: 'articulo/review',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/compras-review/compras-review.page'))
+        .ComprasReviewPage,
+    title: 'Review Articulo',
+  },
+
+  {
+    path: 'compras/usuario/listar',
+    loadComponent: async () =>
+      (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
+        .ComprasUsuarioListarPage,
+    title: 'Listar compras usuario',
+  },
 ];
