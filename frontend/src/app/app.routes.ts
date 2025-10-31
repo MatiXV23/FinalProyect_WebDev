@@ -2,10 +2,11 @@ import { Routes } from '@angular/router';
 import { HomePage } from './routes/home/home.page';
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ArticuloListarPage } from './routes/articulos/pages/articulo-listar/articulo-listar.page';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomePage, title: 'Home' },
+  { path: 'home', component: ArticuloListarPage, title: 'Home' },
   {
     path: 'usuarios',
     loadComponent: async () =>
@@ -14,14 +15,14 @@ export const routes: Routes = [
   },
 
   {
-    path: 'usuarios/edit',
+    path: ':id_usuario/edit',
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
     title: 'Editar usuarios',
   },
 
   {
-    path: 'usuarios/login',
+    path: 'login',
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-login/usuarios-login.page'))
         .UsuariosLoginPage,
@@ -29,7 +30,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'usuarios/register',
+    path: 'registro',
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-register/usuarios-register.page'))
         .UsuariosRegisterPage,
@@ -37,7 +38,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'chats/enviar',
+    path: ':id:usuario/chats/enviar',
     loadComponent: async () =>
       (await import('./routes/chats/pages/mensajes-enviar/mensajes-enviar.page'))
         .MensajesEnviarPage,
@@ -45,7 +46,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'chats/listar',
+    path: ':id_usuario/chats',
     loadComponent: async () =>
       (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
         .MensajesListarPage,
@@ -53,7 +54,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/buscar',
+    path: 'buscar',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-buscar/articulo-buscar.page'))
         .ArticuloBuscarPage,
@@ -61,7 +62,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/comprar',
+    path: ':id_articulo/comprar',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
         .ArticuloComprarPage,
@@ -77,7 +78,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/detalle',
+    path: ':id_articulo/detalle',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
         .ArticuloDetallePage,
@@ -85,15 +86,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/listar',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/articulo-listar/articulo-listar.page'))
-        .ArticuloListarPage,
-    title: 'Listar Articulo',
-  },
-
-  {
-    path: 'articulo/usuario/editar',
+    path: ':id_articulo/editar',
     loadComponent: async () =>
       (
         await import(
@@ -104,7 +97,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/usuario/listar',
+    path: ':id_usuario/articulos',
     loadComponent: async () =>
       (
         await import(
@@ -115,7 +108,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/review',
+    path: ':id_articulo/review',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/compras-review/compras-review.page'))
         .ComprasReviewPage,
@@ -123,10 +116,16 @@ export const routes: Routes = [
   },
 
   {
-    path: 'compras/usuario/listar',
+    path: ':id_usuario/compras',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
         .ComprasUsuarioListarPage,
     title: 'Listar compras usuario',
+  },
+
+  {
+    path: '**',
+    loadComponent: () => import('./routes/not-found/not-found.page').then((m) => m.NotFoundPage),
+    title: 'No encontrado',
   },
 ];
