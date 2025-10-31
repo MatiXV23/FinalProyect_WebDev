@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MensajesEnviarPage } from './mensajes-enviar.page';
+import { UsuarioDetallePage } from './usuario-detalle.page';
 
-describe('MensajesEnviarPage', () => {
-  let component: MensajesEnviarPage;
-  let fixture: ComponentFixture<MensajesEnviarPage>;
+describe('UsuarioDetallePage', () => {
+  let component: UsuarioDetallePage;
+  let fixture: ComponentFixture<UsuarioDetallePage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MensajesEnviarPage]
+      imports: [UsuarioDetallePage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MensajesEnviarPage);
+    fixture = TestBed.createComponent(UsuarioDetallePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

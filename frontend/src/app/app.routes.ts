@@ -15,10 +15,24 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_usuario/edit',
+    path: 'usuarios/:id_usuario/edit',
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
     title: 'Editar usuarios',
+  },
+
+  {
+    path: 'cuenta',
+    loadComponent: async () =>
+      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
+        .UsuarioDetallePage,
+  },
+
+  {
+    path: 'cuenta/edit',
+    loadComponent: async () =>
+      (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
+    title: 'Editar cuenta',
   },
 
   {
@@ -38,15 +52,15 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id:usuario/chats/enviar',
+    path: 'chats/:id_chat',
     loadComponent: async () =>
-      (await import('./routes/chats/pages/mensajes-enviar/mensajes-enviar.page'))
-        .MensajesEnviarPage,
+      (await import('./routes/chats/pages/mensajes-detalle/mensajes-detalle.page'))
+        .MensajesDetallePage,
     title: 'Enviar chat',
   },
 
   {
-    path: ':id_usuario/chats',
+    path: 'chats',
     loadComponent: async () =>
       (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
         .MensajesListarPage,
@@ -54,15 +68,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'buscar',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/articulo-buscar/articulo-buscar.page'))
-        .ArticuloBuscarPage,
-    title: 'Buscar Articulo',
-  },
-
-  {
-    path: ':id_articulo/comprar',
+    path: 'articulos/:id_articulo/comprar',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
         .ArticuloComprarPage,
@@ -70,7 +76,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'articulo/crear',
+    path: 'articulos/crear',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
         .ArticuloCrearPage,
@@ -78,7 +84,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_articulo/detalle',
+    path: 'articulos/:id_articulo',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
         .ArticuloDetallePage,
@@ -86,7 +92,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_articulo/editar',
+    path: 'articulos/:id_articulo/editar',
     loadComponent: async () =>
       (
         await import(
@@ -97,7 +103,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_usuario/articulos',
+    path: 'usuarios/:id_usuario/articulos',
     loadComponent: async () =>
       (
         await import(
@@ -108,7 +114,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_articulo/review',
+    path: 'cuenta/compras/:id_articulo/review',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/compras-review/compras-review.page'))
         .ComprasReviewPage,
@@ -116,7 +122,7 @@ export const routes: Routes = [
   },
 
   {
-    path: ':id_usuario/compras',
+    path: 'cuenta/compras',
     loadComponent: async () =>
       (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
         .ComprasUsuarioListarPage,
