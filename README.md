@@ -74,6 +74,20 @@ ___
 ## Modelo grafico: 
 ![modelo](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/DbeaverDiagram2.png?raw=true)
 ___
+## 📦 Sexta entrega 📦 
+
+En esta entrega se pidio la creación inicial del Frontend.
+A partir de un modelo visual (wireframe) sobre la navegación de la pagina.
+
+## Wireframe
+![navegacion](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/wireframeNavegacionFrontend.jpg?raw=true)
+
+### En dicha entrega el equipo creo:
+- Proyecto de angular para frontend.
+- Esquema visual de navegación.
+- Estructura de carpetas.
+- Rutas registradas
+___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
 ___
