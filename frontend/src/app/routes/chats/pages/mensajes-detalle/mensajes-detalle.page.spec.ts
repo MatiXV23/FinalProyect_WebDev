@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArticuloBuscarPage } from './articulo-buscar.page';
+import { MensajesDetallePage } from './mensajes-detalle.page';
 
-describe('ArticuloBuscarPage', () => {
-  let component: ArticuloBuscarPage;
-  let fixture: ComponentFixture<ArticuloBuscarPage>;
+describe('MensajesDetallePage', () => {
+  let component: MensajesDetallePage;
+  let fixture: ComponentFixture<MensajesDetallePage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArticuloBuscarPage]
+      imports: [MensajesDetallePage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ArticuloBuscarPage);
+    fixture = TestBed.createComponent(MensajesDetallePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

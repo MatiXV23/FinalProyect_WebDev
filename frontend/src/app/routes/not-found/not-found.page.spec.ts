@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MensajesEnviarPage } from './mensajes-enviar.page';
+import { NotFoundPage } from './not-found.page';
 
-describe('MensajesEnviarPage', () => {
-  let component: MensajesEnviarPage;
-  let fixture: ComponentFixture<MensajesEnviarPage>;
+describe('NotFoundPage', () => {
+  let component: NotFoundPage;
+  let fixture: ComponentFixture<NotFoundPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MensajesEnviarPage]
+      imports: [NotFoundPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MensajesEnviarPage);
+    fixture = TestBed.createComponent(NotFoundPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
