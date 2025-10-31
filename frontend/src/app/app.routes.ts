@@ -35,4 +35,20 @@ export const routes: Routes = [
         .UsuariosRegisterPage,
     title: 'Regsitrar usuario',
   },
+
+  {
+    path: 'chats/enviar',
+    loadComponent: async () =>
+      (await import('./routes/chats/pages/mensajes-enviar/mensajes-enviar.page'))
+        .MensajesEnviarPage,
+    title: 'Enviar chat',
+  },
+
+  {
+    path: 'chats/listar',
+    loadComponent: async () =>
+      (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
+        .MensajesListarPage,
+    title: 'Listar chats',
+  },
 ];
