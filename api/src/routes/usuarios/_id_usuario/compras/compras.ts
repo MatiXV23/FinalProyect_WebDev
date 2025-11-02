@@ -5,6 +5,7 @@ import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
 import { compraModel } from "../../../../models/market/compraModel.ts";
 
 const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.addHook("onRequest", fastify.authenticate)
   fastify.get(
     "",
     {
@@ -20,10 +21,32 @@ const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
         security: [{ bearerAuth: [] }],
       },
       preHandler: [fastify.isAdminOrOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
+    }
+  );
+
+  fastify.post(
+    "",
+    {
+      schema: {
+        summary: "Comprar articulo",
+        tags: ["Articulo", "Comprar"],
+        description:
+          "Ruta para modificar articulo. No hay requerimientos de uso, pero debo estar loggeado",
+        body: Type.Omit(compraModel, ["id_compra"]),
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      preHandler: [fastify.isNotOwner]
+    },
+    async (req, rep) => {
+      throw new PC_NotImplemented();
+      return;
     }
   );
 };
