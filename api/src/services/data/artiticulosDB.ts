@@ -138,11 +138,11 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
 
   async delete(id: number): Promise<void> {
     const query = `DELETE FROM articulos
-                        WHERE a.id_articulo = $1;`;
+                        WHERE id_articulo = $1;`;
     const res = await this.pool.query<Articulo>(query, [id]);
 
     if (res.rowCount === 0)
-      throw new PC_NotFound(`Usuario de id ${id}, no existe. Ignorando`);
+      throw new PC_NotFound(`Articulo de id ${id}, no existe. Ignorando`);
     console.log(res);
   }
 }
