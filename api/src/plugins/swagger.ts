@@ -10,7 +10,7 @@ import fp from 'fastify-plugin'
 //       tags?: string[];
 //   }
 // }
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.API_PORT) || 3000;
 //En vez de exportar la función la encapsulamos con fastify plugin.
 export default fp<FastifySwaggerOptions>(async (fastify) => {
   await fastify.register(swagger,{

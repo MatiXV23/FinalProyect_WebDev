@@ -1,11 +1,11 @@
 import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 import { credencialesModel } from "../../models/market/credencialesModel.ts";
 import type { SignOptions } from "@fastify/jwt";
-import { usuarioModel } from "../../models/market/usuarioModel.ts";
+import { type JWTUsuario, usuarioModel } from "../../models/market/usuarioModel.ts";
 
-const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
+const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
   fastify.post(
     "",
     {
@@ -15,19 +15,27 @@ const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
         tags: ["Auth"],
         body: credencialesModel,
         response: {
-          200: { token: Type.String() },
+          200: Type.Object({ token: Type.String() }),
         },
       },
     },
     async (request, reply) => {
-      return new PC_NotImplemented();
-      // const cuenta = //metodo para ver si coinciden las credenciales
+      const user = await fastify.UsuariosDB.getUserByCredentials(request.body)
 
-      //   const signOptions: SignOptions = {
-      //     expiresIn: "8h",
-      //     notBefore: 0,
-      //   };
-      //   return { token: fastify.jwt.sign(cuenta, signOptions) };
+      const userPayload: JWTUsuario = {
+        email: user.email,
+        id_usuario: user.id_usuario,
+        id_departamento: user.id_departamento,
+        is_admin: user.is_admin,
+        nombres: user.nombres
+      }
+
+      const signOptions: SignOptions = {
+        expiresIn: "8h",
+        notBefore: 0,
+      };
+      const token = fastify.jwt.sign(userPayload, signOptions)
+      return { token:  token };
     }
   );
 
@@ -41,11 +49,12 @@ const loginRoute: FastifyPluginAsync = async (fastify, opts) => {
         response: {
           200: usuarioModel,
         },
-        
+        security: [{ bearerAuth: [] }],
       },
+      onRequest: [fastify.authenticate],
     },
     async (request, reply) => {
-      return new PC_NotImplemented();
+      return await fastify.UsuariosDB.getById(request.user.id_usuario)
     }
   )
 };
