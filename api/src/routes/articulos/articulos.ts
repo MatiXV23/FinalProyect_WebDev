@@ -22,8 +22,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      return fastify.ArticulosDB.getAll();
     }
   );
 
@@ -44,8 +43,8 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      fastify.ArticulosDB.create(req.body);
+      rep.code(201).send();
     }
   );
 };

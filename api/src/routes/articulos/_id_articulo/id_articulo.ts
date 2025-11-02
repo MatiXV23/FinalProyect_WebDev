@@ -22,11 +22,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return 
+      fastify.ArticulosDB.update(req.params.id_articulo, req.body);
+      rep.code(204).send();
     }
   );
 
@@ -44,11 +44,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return
+      fastify.ArticulosDB.delete(req.params.id_articulo);
+      rep.code(204).send();
     }
   );
 };
