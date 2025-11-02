@@ -85,29 +85,60 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
   }
 
   async update(id: number, data: Partial<Articulo>): Promise<Articulo> {
-    let query = `UPDATE articulos
-                        SET
-                    `;
-    let vars: any[] = [id];
+    const {
+      id_vendedor,
+      id_categoria,
+      usado,
+      con_envio,
+      nombre,
+      precio,
+      moneda,
+      descripcion,
+      foto_url,
+    } = data;
 
-    query += `  WHERE a.id_articulo = $1;`;
+    let query = `UPDATE articulos
+                SET
+                  id_categoria = COALESCE($2, id_categoria),
+                  id_vendedor = COALESCE($3, id_vendedor),
+                  usado = COALESCE($4, usado),
+                  con_envio = COALESCE($5, con_envio),
+                  nombre = COALESCE($6, nombre),
+                  precio = COALESCE($7, precio),
+                  moneda = COALESCE($8, moneda),
+                  descripcion = COALESCE($9, descripcion),
+                  foto_url = COALESCE($10, foto_url)
+                WHERE id_articulo = $1
+                RETURNING *;
+                    `;
 
     try {
-      const res = await this.pool.query(query, vars);
+      const res = await this.pool.query(query, [
+        id,
+        id_categoria,
+        id_vendedor,
+        usado,
+        con_envio,
+        nombre,
+        precio,
+        moneda,
+        descripcion,
+        foto_url,
+      ]);
 
       if (res.rowCount === 0) {
         throw new PC_NotFound(`Articulo con id (${id}) no encontrado`);
       }
 
-      return await this.getById(id);
+      return res.rows[0];
     } catch (err: any) {
       throw new PC_InternalServerError("Error al modificar articulo");
     }
   }
 
   async delete(id: number): Promise<void> {
-    const query = `DELETE FROM usuarios
-                        WHERE id_usuario = $1;`;
+    const query = `DELETE FROM articulos
+                        WHERE a.id_articulo = $1;`;
     const res = await this.pool.query<Articulo>(query, [id]);
 
     if (res.rowCount === 0)
