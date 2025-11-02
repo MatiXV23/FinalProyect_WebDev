@@ -13,7 +13,9 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener articulos",
         tags: ["Articulo"],
-        querystring: Type.Pick(categoriaModel, ["id_categoria"]),
+        querystring: Type.Object({
+          id_categoria: Type.Optional(Type.Integer()),
+        }),
         description:
           "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
@@ -22,7 +24,11 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return fastify.ArticulosDB.getAll();
+      if (req.query.id_categoria)
+        return await fastify.ArticulosDB.getAllByCategory(
+          req.query.id_categoria
+        );
+      return await fastify.ArticulosDB.getAll();
     }
   );
 

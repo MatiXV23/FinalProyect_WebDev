@@ -5,7 +5,7 @@ export const articuloModel = Type.Object(
   {
     id_articulo: Type.Integer(),
     id_vendedor: Type.Integer(),
-    id_categorias: Type.Integer(),
+    id_categoria: Type.Integer(),
     usado: Type.Boolean(),
     con_envio: Type.Boolean(),
     nombre: Type.String({ maxLength: 28 }),
