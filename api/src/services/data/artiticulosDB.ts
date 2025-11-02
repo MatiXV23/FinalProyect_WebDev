@@ -26,6 +26,7 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
     const users = await this.pool.query<Articulo>(this.getQuery());
     return users.rows;
   }
+
   async getAllByCategory(id_categoria: number): Promise<Articulo[]> {
     const users = await this.pool.query<Articulo>(
       this.getQuery("WHERE a.id_categoria = $1;"),
@@ -45,7 +46,7 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
     return res.rows[0];
   }
 
-  async create(data: Articulo): Promise<Articulo> {
+  async create(data: Partial<Articulo>): Promise<Articulo> {
     const {
       id_vendedor,
       id_categoria,
@@ -55,26 +56,20 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
       precio,
       moneda,
       descripcion,
-      foto_url = "https://img.freepik.com/vector-premium/icono-perfil-avatar_188544-4755.jpg?w=1060",
+      foto_url,
     } = data;
 
-    let query = /*sql*/ `
-                    WITH nuevo_usuario AS (
-                        insert into usuarios (is_admin, email, nombres, apellidos, id_departamento, direccion, nro_documento, foto_url)
-                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    let query = `
+                    WITH nuevo_articulo AS (
+                        insert into articulos (id_categoria, id_vendedor, usado, con_envio, nombre, precio, moneda, descripcion, foto_url)
+                            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                             RETURNING *
-                        ),
-                        cred AS (
-                            INSERT INTO credenciales (id_usuario, password_hash)
-                            SELECT id_usuario, crypt($9, gen_salt('bf'))
-                            FROM nuevo_usuario
-                            RETURNING id_usuario
                         )
-                    SELECT * from nuevo_usuario;`;
+                    SELECT * from nuevo_articulo;`;
     try {
       const res = await this.pool.query(query, [
-        id_vendedor,
         id_categoria,
+        id_vendedor,
         usado,
         con_envio,
         nombre,
@@ -85,87 +80,28 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
       ]);
       return res.rows[0];
     } catch (err: any) {
-      if (err.code !== "23505") throw new PC_InternalServerError();
-
-      switch (err.constraint) {
-        case "usuarios_nro_documento_key":
-          throw new PC_BadRequest("Ese numero de documento ya esta en uso");
-
-        case "usuarios_email_key":
-          throw new PC_BadRequest("Ese email ya esta en uso");
-
-        default:
-          throw new PC_BadRequest("Alguna key esta duplicada");
-      }
+      throw new PC_InternalServerError("Error en la creacion de un articulo!");
     }
   }
 
   async update(id: number, data: Partial<Articulo>): Promise<Articulo> {
-    let query = `UPDATE usuarios
+    let query = `UPDATE articulos
                         SET
                     `;
-    let cont = 2;
     let vars: any[] = [id];
 
-    let carrito_modified = false;
-    for (const key in data) {
-      const k = key as keyof Articulo;
-
-      // if (data[k] === undefined || k === "id_usuario" || k === "reputacion")
-      //   continue;
-
-      // if (k === "articulos_carrito") {
-      //   carrito_modified = true;
-      //   continue;
-      // }
-
-      query += `${k} = $${cont},`;
-      vars.push(data[k]);
-      cont++;
-    }
-    query = query.slice(0, -1);
-
-    query += `  WHERE id_usuario = $1;`;
+    query += `  WHERE a.id_articulo = $1;`;
 
     try {
       const res = await this.pool.query(query, vars);
 
       if (res.rowCount === 0) {
-        throw new PC_NotFound(`Usuario con id (${id}) no encontrado`);
-      }
-
-      if (carrito_modified) {
-        // Elimina los articulos que no esten en el array
-        await this.pool.query(/*sql*/ `
-                DELETE FROM articulos_carritos
-                WHERE id_usuario = $1
-                AND id_articulo NOT IN (SELECT UNNEST($2::int[]));
-                `);
-        // [id, data.articulos_carrito]
-
-        // Inserta los articulos que faltan
-        await this.pool.query(/*sql*/ `
-                INSERT INTO articulos_carritos (id_usuario, id_articulo)
-                SELECT $1, UNNEST($2::int[])
-                ON CONFLICT DO NOTHING;
-                `);
-        // [id, data.articulos_carrito]
+        throw new PC_NotFound(`Articulo con id (${id}) no encontrado`);
       }
 
       return await this.getById(id);
     } catch (err: any) {
-      if (err.code !== "23505") throw new PC_InternalServerError();
-
-      switch (err.constraint) {
-        case "usuarios_nro_documento_key":
-          throw new PC_BadRequest("Ese numero de documento ya esta en uso");
-
-        case "usuarios_email_key":
-          throw new PC_BadRequest("Ese email ya esta en uso");
-
-        default:
-          throw new PC_BadRequest("Alguna key esta duplicada");
-      }
+      throw new PC_InternalServerError("Error al modificar articulo");
     }
   }
 

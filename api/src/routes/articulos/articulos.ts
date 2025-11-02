@@ -3,8 +3,6 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { articuloModel } from "../../models/market/articuloModel.ts";
-import { categoriaModel } from "../../models/market/categoriaModel.ts";
-import { PC_NotImplemented } from "../../errors/errors.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -49,7 +47,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      fastify.ArticulosDB.create(req.body);
+      await fastify.ArticulosDB.create(req.body);
       rep.code(201).send();
     }
   );
