@@ -1,10 +1,10 @@
 import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import {type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../errors/errors.ts";
 import { usuarioModel } from "../../../models/market/usuarioModel.ts";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
-const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
+const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
   fastify.get(
     "",
     {
@@ -20,7 +20,7 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      return fastify.UsuariosDB.getById(req.params.id_usuario);
     }
   );
 
@@ -43,7 +43,32 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
       onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      await fastify.UsuariosDB.update(req.params.id_usuario ,req.body)
+      rep.code(204).send()
+    }
+  );
+
+  fastify.patch(
+    "",
+    {
+      schema: {
+        summary: "Modificar usuario",
+        tags: ["Usuario"],
+        description:
+          "Ruta para modificar un usuario. Se requiere ser el usuario dueño o ser un administrador",
+        body: Type.Partial(usuarioModel),
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      preHandler: [fastify.isAdminOrOwner],
+      onRequest: [fastify.authenticate],
+    },
+    async (req, rep) => {
+      await fastify.UsuariosDB.update(req.params.id_usuario, req.body)
+      rep.code(204).send()
     }
   );
 
@@ -61,11 +86,11 @@ const usersByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isAdminOrOwner],
       onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      fastify.UsuariosDB.delete(req.params.id_usuario);
     }
   );
 };

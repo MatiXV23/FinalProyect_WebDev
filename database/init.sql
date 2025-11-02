@@ -108,9 +108,9 @@ values
 
 insert into credenciales (id_usuario, password_hash)
 values
-(1, 'cazaCurioso'),
-(2, 'contraseñaSuperSecreta1'),
-(3, 'contraseñaSuperSecreta2');
+(1, crypt('pass', gen_salt('bf'))),
+(2, crypt('pass', gen_salt('bf'))),
+(3, crypt('pass', gen_salt('bf')));
 
 insert into categorias (nombre)
 values 

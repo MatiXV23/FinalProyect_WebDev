@@ -1,5 +1,5 @@
 import { type FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
-import { usuarioModel } from "../../models/market/usuarioModel.ts";
+import { usuarioModel, usuarioPostModel } from "../../models/market/usuarioModel.ts";
 import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 
@@ -18,8 +18,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      return fastify.UsuariosDB.getAll()
     }
   );
 
@@ -30,15 +29,14 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         summary: "Crear usuario",
         tags: ["Usuario"],
         description: "Ruta para crear usuarios. No hay requerimientos de uso",
-        body: Type.Omit(usuarioModel, ["id_usuario"]),
+        body: usuarioPostModel,
         response: {
           201: usuarioModel,
         },
       },
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      return await fastify.UsuariosDB.create(req.body);
     }
   );
 };

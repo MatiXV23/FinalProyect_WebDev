@@ -3,7 +3,6 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { articuloModel } from "../../../models/market/articuloModel.ts";
-import { PC_NotImplemented } from "../../../errors/errors.ts";
 
 //necesito autorizacion, solo el admin puede moficar el artículo
 const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -22,11 +21,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return 
+      await fastify.ArticulosDB.update(req.params.id_articulo, req.body);
+      rep.code(204).send();
     }
   );
 
@@ -44,11 +43,11 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin]
+      onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return
+      await fastify.ArticulosDB.delete(req.params.id_articulo);
+      rep.code(204).send();
     }
   );
 };
