@@ -1,0 +1,41 @@
+<header>
+  <div class="header-content">
+    <h1>MarketSpace</h1>
+  </div>
+</header>
+
+<div class="container">
+  <nav>
+    <ul id="menuUL">
+      <li>
+        <a routerLink="login">login</a>
+      </li>
+      <li>
+        <a routerLink="registro">registrarme</a>
+      </li>
+      <li>
+        <a routerLink="cuenta">mi cuenta</a>
+      </li>
+      <li>
+        <a routerLink="chats">mensajes</a>
+      </li>
+      <li>
+        <a routerLink="cuenta/compras">compras</a>
+      </li>
+      <li>
+        <a routerLink="usuarios/1/articulos">articulos publicados</a>
+      </li>
+      <li>
+        <a routerLink="articulos/crear">publicar un articulo</a>
+      </li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <router-outlet />
+  </main>
+</div>
+
+<footer>
+  <p>© 2025 - Cigaran, Nuñez, Perez</p>
+</footer>
