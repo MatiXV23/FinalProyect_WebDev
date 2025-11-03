@@ -39,8 +39,8 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isAdminOrOwner],
       onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario ,req.body)
@@ -63,8 +63,8 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isAdminOrOwner],
       onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario, req.body)

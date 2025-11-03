@@ -10,19 +10,18 @@ export default fastifyPlugin(async function (fastify) {
     }
   }); 
 
-  fastify.decorate("isOwner", (req:any, rep:any) => {
+  fastify.decorate("isOwner", async (req:any, rep:any) => {
     const usuario = req.user;
-    console.log(usuario);
-    if (!(req.params.id_usuario === usuario.id_usuario))
+
+    if (req.params.id_usuario !== usuario.id_usuario)
       throw new PC_NoAuthorized();
-    return;
   });
 
   fastify.decorate("isAdminOrOwner", async (req:any, rep:any) => {
     const usuario = req.user;
     if (
       usuario.administrador === false &&
-      !(req.params.id_usuario === usuario.id_usuario)
+      (req.params.id_usuario !== usuario.id_usuario)
     )
       throw new PC_NoAuthorized();
   });
@@ -37,7 +36,6 @@ export default fastifyPlugin(async function (fastify) {
     console.log(usuario);
     if (req.params.id_usuario === usuario.id_usuario)
       throw new PC_NoAuthorized("No puedes interactuar en esta ruta con ti mismo");
-    return;
   });
 });
 

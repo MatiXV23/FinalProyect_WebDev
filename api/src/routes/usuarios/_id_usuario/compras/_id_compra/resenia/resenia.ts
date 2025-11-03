@@ -18,7 +18,7 @@ const compraUserByIdRoutes: FastifyPluginAsync = async (fastify) => {
           "Ruta para realizar una resenia sobre una compra de un usuario. Se requiere ser el usuario dueño.",
         params: Type.Intersect([Type.Pick(usuarioModel, ["id_usuario"]), Type.Pick(compraModel, ["id_compra"])]),
         response: {
-          204: Type.Null(),
+          201: reseniaModel,
         },
         security: [{ bearerAuth: [] }],
       },
@@ -26,6 +26,7 @@ const compraUserByIdRoutes: FastifyPluginAsync = async (fastify) => {
     },
     async (req, rep) => {
       return new PC_NotImplemented();
+      rep.code(201).send()
     }
   );
 };

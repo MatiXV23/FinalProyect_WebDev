@@ -5,6 +5,9 @@ import { usuarioModel } from "../../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../../models/market/chatModel.ts";
 
 const chatsByIdRoutes: FastifyPluginAsync = async (fastify) => {
+  fastify.addHook("onRequest", fastify.authenticate)
+  fastify.addHook("preHandler", fastify.isOwner)
+
   fastify.get(
     "",
     {
@@ -22,8 +25,6 @@ const chatsByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
       return new PC_NotImplemented();
