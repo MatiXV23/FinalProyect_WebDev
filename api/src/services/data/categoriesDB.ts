@@ -34,7 +34,19 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
   }
 
   async create(data: Partial<Categoria>): Promise<Categoria> {
-    throw new PC_NotImplemented();
+    const { nombre } = data;
+
+    let query = ` WITH nuevo_categoria AS (insert into categorias (nombre) 
+        VALUES ($1)
+        RETURNING*)
+        SELECT * from nuevo_categoria;`;
+
+    try {
+      const resultado = await this.pool.query(query, [nombre]);
+      return resultado.rows[0];
+    } catch (err: any) {
+      throw new PC_InternalServerError("Error en la creacion de una categoria");
+    }
   }
 
   async update(id: number, data: Partial<Categoria>): Promise<Categoria> {
