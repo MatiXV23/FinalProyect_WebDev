@@ -3,8 +3,6 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { articuloModel } from "../../models/market/articuloModel.ts";
-import { categoriaModel } from "../../models/market/categoriaModel.ts";
-import { PC_NotImplemented } from "../../errors/errors.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -13,7 +11,9 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener articulos",
         tags: ["Articulo"],
-        querystring: Type.Pick(categoriaModel, ["id_categoria"]),
+        querystring: Type.Object({
+          id_categoria: Type.Optional(Type.Integer()),
+        }),
         description:
           "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
@@ -22,8 +22,11 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      if (req.query.id_categoria)
+        return await fastify.ArticulosDB.getAllByCategory(
+          req.query.id_categoria
+        );
+      return await fastify.ArticulosDB.getAll();
     }
   );
 
@@ -44,8 +47,8 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      await fastify.ArticulosDB.create(req.body);
+      rep.code(201).send();
     }
   );
 };
