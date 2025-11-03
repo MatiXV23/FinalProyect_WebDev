@@ -1,11 +1,13 @@
-import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../../../models/market/chatModel.ts";
 import { mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
 
-const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
+const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+  fastify.addHook("onRequest", fastify.authenticate)
+  fastify.addHook("preHandler", fastify.isOwner)
+
   fastify.get(
     "",
     {
@@ -23,11 +25,9 @@ const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      return await fastify.ChatsDB.getMensajesFromChat(req.params.id_chat)
     }
   );
 
@@ -39,21 +39,19 @@ const mensajesRoutes: FastifyPluginAsync = async (fastify) => {
         tags: ["Usuario", "Chats"],
         description:
           "Ruta para enviar un mensaje a un usuario. Se requiere ser el usuario dueño ",
-        body: Type.Omit(mensajeModel, ["fecha_mensaje"]),
+        body: Type.Omit(mensajeModel, ["fecha_mensaje", "id_chat"]),
         params: Type.Intersect([
           Type.Pick(usuarioModel, ["id_usuario"]),
           Type.Pick(chatModel, ["id_chat"]),
         ]),
         response: {
-          204: Type.Null(),
+          201: mensajeModel,
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(req.params.id_chat, req.body))
     }
   );
 };

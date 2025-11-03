@@ -44,16 +44,19 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
     }
 
     async getAll(): Promise<Usuario[]> {
-        const users = await this.pool.query<Usuario>(this.getQuery())
+        try {
 
-        console.log(users)
-        return users.rows
+            const users = await this.pool.query<Usuario>(this.getQuery())
+            return users.rows
+        } catch (e) {
+            throw new PC_InternalServerError()
+        }
+        
     }
     
     async getById(id:number): Promise<Usuario> {
         const query = this.getQuery(`WHERE u.id_usuario = $1`)
         const vars = [id]
-        console.info(query, 'id: ', id)
         const res = await this.pool.query<Usuario>(query, vars)
         
         if (res.rowCount === 0) throw new PC_NotFound(`Usuario con id (${id}) no encontrado`)
@@ -166,12 +169,16 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
     }
 
     async delete(id: number): Promise<void> {
-        const query =  `DELETE FROM usuarios
-                        WHERE id_usuario = $1;`
-        const res = await this.pool.query<Usuario>(query, [id])
+        try {
+            const query =  `DELETE FROM usuarios
+                            WHERE id_usuario = $1;`
+            const res = await this.pool.query<Usuario>(query, [id])
 
-        if (res.rowCount === 0) throw new PC_NotFound(`Usuario de id ${id}, no existe. Ignorando`)
-        console.log(res)
+            if (res.rowCount === 0) throw new PC_NotFound(`Usuario de id ${id}, no existe. Ignorando`)
+            console.log(res)
+        } catch (e) {
+            throw new PC_InternalServerError()
+        }
     }
     
     async getUserByCredentials(credenciales: Credenciales): Promise<Usuario> {

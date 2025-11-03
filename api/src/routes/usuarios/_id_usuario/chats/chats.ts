@@ -1,10 +1,13 @@
 import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../models/market/chatModel.ts";
 
-const chatsByIdRoutes: FastifyPluginAsync = async (fastify) => {
+const chatsByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+  fastify.addHook("onRequest", fastify.authenticate)
+  fastify.addHook("preHandler", fastify.isOwner)
+
   fastify.get(
     "",
     {
@@ -19,11 +22,29 @@ const chatsByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isOwner],
-      onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      return await fastify.ChatsDB.getAll(req.params.id_usuario)
+    }
+  );
+  fastify.post(
+    "",
+    {
+      schema: {
+        summary: "Crear nuevo chat",
+        tags: ["Usuario", "Chats"],
+        description:
+          "Ruta para crear un chat. Se requiere ser el usuario dueño.",
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        body: Type.Omit(chatModel, ["id_chat"]),
+        response: {
+          201: chatModel,
+        },
+        security: [{ bearerAuth: [] }],
+      },
+    },
+    async (req, rep) => {
+      rep.code(201).send(await fastify.ChatsDB.create(req.body))
     }
   );
 };
