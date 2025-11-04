@@ -89,6 +89,12 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
   }
 
   async delete(id: number): Promise<void> {
-    throw new PC_NotImplemented();
+    const query = `DELETE FROM categorias
+                        WHERE id_categoria = $1;`;
+    const resultado = await this.pool.query<Categoria>(query, [id]);
+
+    if (resultado.rowCount === 0)
+      throw new PC_NotFound(`Categoria de id ${id}, no existe. Ignorado`);
+    console.log(resultado);
   }
 }
