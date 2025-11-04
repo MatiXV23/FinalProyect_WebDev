@@ -54,7 +54,25 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
   }
 
   async update(id: number, data: Partial<Departamento>): Promise<Departamento> {
-    throw new PC_NotImplemented();
+    const { nombre } = data;
+    let query = `UPDATE departamentos
+                SET
+                    nombre = COALESCE ($2, nombre)
+                WHERE id_departamento = $1
+                RETURNING *;
+                    `;
+
+    try {
+      const res = await this.pool.query(query, [id, nombre]);
+      if (res.rowCount === 0) {
+        throw new PC_NotFound(`Departamento con id (${id}) no encontrado`);
+      }
+      return res.rows[0];
+    } catch (err: any) {
+      throw new PC_InternalServerError(
+        "Error al modificar un departamento \n" + err
+      );
+    }
   }
 
   async delete(id: number): Promise<void> {
