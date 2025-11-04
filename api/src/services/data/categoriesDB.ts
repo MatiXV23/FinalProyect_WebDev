@@ -24,13 +24,29 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
                 FROM categorias u
                 `;
 
+  private getQuery(whereCondition: string | null = null) {
+    const query = /*sql*/ `
+            SELECT * from categorias a
+            ${whereCondition ?? ""}
+        `;
+
+    return query;
+  }
+
   async getAll(): Promise<Categoria[]> {
     const resultado = await this.pool.query<Categoria>(this.#baseQuery);
     return resultado.rows;
   }
 
   async getById(id: number): Promise<Categoria> {
-    throw new PC_NotImplemented();
+    const query = this.getQuery(`WHERE a.id_categoria = $1`);
+    const vars = [id];
+    console.info(query, "id:", id);
+    const resultado = await this.pool.query<Categoria>(query, vars);
+
+    if (resultado.rowCount === 0)
+      throw new PC_NotFound(`Categoria con id (${id}) no encontrado`);
+    return resultado.rows[0];
   }
 
   async create(data: Partial<Categoria>): Promise<Categoria> {
@@ -50,7 +66,26 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
   }
 
   async update(id: number, data: Partial<Categoria>): Promise<Categoria> {
-    throw new PC_NotImplemented();
+    const { nombre } = data;
+
+    let query = `UPDATE categorias
+                SET 
+                nombre = COALESCE($2, nombre)
+                WHERE id_categoria = $1
+                RETURNING *;         
+                `;
+
+    try {
+      const resultado = await this.pool.query(query, [id, nombre]);
+
+      if (resultado.rowCount === 0) {
+        throw new PC_NotFound(`Categoria con id (${id}) no encontrado`);
+      }
+
+      return resultado.rows[0];
+    } catch (err: any) {
+      throw new PC_InternalServerError("Error al modificar articulo");
+    }
   }
 
   async delete(id: number): Promise<void> {

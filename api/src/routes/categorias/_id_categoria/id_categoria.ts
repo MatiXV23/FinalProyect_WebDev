@@ -18,13 +18,13 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         response: {
           204: Type.Null(),
         },
-        security: [{ bearerAuth: [] }],
+        // security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdmin],
+      // onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      await fastify.CategoriasDB.update(req.params.id_categoria, req.body);
+      rep.code(204).send();
     }
   );
 
