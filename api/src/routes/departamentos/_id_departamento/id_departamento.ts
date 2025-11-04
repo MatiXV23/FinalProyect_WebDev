@@ -38,7 +38,7 @@ const departamentosRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      //   onRequest: [fastify.isAdmin],
+      onRequest: [fastify.isAdmin],
     },
     async (req, rep) => {
       await fastify.DepartamentosDB.update(
@@ -49,27 +49,27 @@ const departamentosRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     }
   );
 
-  //   fastify.delete(
-  //     "",
-  //     {
-  //       schema: {
-  //         summary: "Eliminar departamento",
-  //         tags: ["Departamentos"],
-  //         description:
-  //           "Ruta para eliminar un departamento. Se requiere ser un administrador",
-  //         params: Type.Pick(departamentoModel, ["id_departamento"]),
-  //         response: {
-  //           204: Type.Null(),
-  //         },
-  //         security: [{ bearerAuth: [] }],
-  //       },
-  //       //   onRequest: [fastify.isAdmin],
-  //     },
-  //     async (req, rep) => {
-  //       await fastify.DepartamentosDB.delete(req.params.id_articulo);
-  //       rep.code(204).send();
-  //     }
-  //   );
+  fastify.delete(
+    "",
+    {
+      schema: {
+        summary: "Eliminar departamento",
+        tags: ["Departamentos"],
+        description:
+          "Ruta para eliminar un departamento. Se requiere ser un administrador",
+        params: Type.Pick(departamentoModel, ["id_departamento"]),
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      //   onRequest: [fastify.isAdmin],
+    },
+    async (req, rep) => {
+      await fastify.DepartamentosDB.delete(req.params.id_departamento);
+      rep.code(204).send();
+    }
+  );
 };
 
 export default departamentosRoutes;

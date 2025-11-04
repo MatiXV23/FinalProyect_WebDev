@@ -76,6 +76,12 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
   }
 
   async delete(id: number): Promise<void> {
-    throw new PC_NotImplemented();
+    const query = `DELETE FROM departamentos
+                        WHERE id_departamento = $1;`;
+    const res = await this.pool.query<Departamento>(query, [id]);
+
+    if (res.rowCount === 0) {
+      throw new PC_NotFound(`Departamento con id (${id}) no encontrado`);
+    }
   }
 }
