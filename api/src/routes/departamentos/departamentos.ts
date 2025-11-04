@@ -3,7 +3,6 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { departamentoModel } from "../../models/market/departamentoModel.ts";
-import fastify from "fastify";
 
 const departamentosRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -38,7 +37,7 @@ const departamentosRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      // onRequest: [fastify.authenticate],
+      onRequest: [fastify.authenticate],
     },
     async (req, res) => {
       await fastify.DepartamentosDB.create(req.body);

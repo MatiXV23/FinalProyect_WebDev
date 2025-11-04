@@ -1,6 +1,7 @@
 import { BasePgRepository } from "../../models/common/baseRepository.ts";
 import {
   PC_InternalServerError,
+  PC_NotFound,
   PC_NotImplemented,
 } from "../../errors/errors.ts";
 import type { Pool } from "pg";
@@ -24,7 +25,13 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
   }
 
   async getById(id: number): Promise<Departamento> {
-    throw new PC_NotImplemented();
+    const whereQuery = `${this.#baseQuery} WHERE u.id_departamento = $1`;
+    const vars = [id];
+    const res = await this.pool.query<Departamento>(whereQuery, vars);
+
+    if (res.rowCount === 0)
+      throw new PC_NotFound(`Departamento con id (${id}) no encontrado`);
+    return res.rows[0];
   }
 
   async create(data: Partial<Departamento>): Promise<Departamento> {
@@ -44,6 +51,10 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
         "Error en la creación de un departamento. \n" + err
       );
     }
+  }
+
+  async update(id: number, data: Partial<Departamento>): Promise<Departamento> {
+    throw new PC_NotImplemented();
   }
 
   async delete(id: number): Promise<void> {
