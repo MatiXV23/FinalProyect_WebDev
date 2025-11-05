@@ -20,7 +20,8 @@ const compraUserByIdRoutes: FastifyPluginAsync = async (fastify) => {
         },
         security: [{ bearerAuth: [] }],
       },
-      onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
+      onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner]
     },
     async (req, rep) => {
       return new PC_NotImplemented();

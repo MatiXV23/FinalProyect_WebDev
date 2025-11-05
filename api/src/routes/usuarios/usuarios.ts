@@ -36,7 +36,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return await fastify.UsuariosDB.create(req.body);
+      rep.code(201).send(await fastify.UsuariosDB.create(req.body))
     }
   );
 };
