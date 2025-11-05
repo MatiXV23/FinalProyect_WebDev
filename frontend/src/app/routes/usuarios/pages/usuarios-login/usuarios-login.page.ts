@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonCard, IonInputPasswordToggle, IonCardSubtitle, IonRouterLinkWithHref } from '@ionic/angular/standalone';
 import { IonInput } from '@ionic/angular/standalone';
 import { Credenciales } from '../../../../shared/types/credenciales';
@@ -15,6 +15,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 })
 export class UsuariosLoginPage {
   private authService = inject(AuthService)
+  private router = inject(Router)
 
   credenciales = signal<Credenciales>({
     email: '',
@@ -24,6 +25,12 @@ export class UsuariosLoginPage {
   async handleSessionInit(event: any){
     console.log("credenciales: ",this.credenciales())
 
-    await this.authService.logIn(this.credenciales())
+    try {
+      await this.authService.logIn(this.credenciales())
+      this.router.navigate(['/home'])
+    }
+    catch (e) {
+
+    }
   }
 }
