@@ -20,9 +20,14 @@
             </a>
           </li>
           <div class="flex-8">
-            <li><a routerLink="login"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Log In</ion-button></a></li>
+            
             <li><a routerLink="chats"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Chats</ion-button></a></li>
             <li><a routerLink="articulos/crear"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a></li>
+            @if (isLogged()) {
+              <li><ion-button expand="block" color="darkbg" (click)="handleLogOut($event)">Cerrar Sesion</ion-button></li>
+            } @else {
+              <li><a routerLink="login"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Iniciar Sesion</ion-button></a></li>
+            }
           </div>
 
           @if(this.isMobile()){

@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './routes/home/home.page';
-import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { isLoggedGuard } from './core/guards/is-logged-guard';
 import { ArticuloListarPage } from './routes/articulos/pages/articulo-listar/articulo-listar.page';
 
 export const routes: Routes = [
@@ -10,6 +8,7 @@ export const routes: Routes = [
   
   {
     path: 'usuarios',
+    canActivate: [isLoggedGuard],
     children: [
       {
         path: '',
@@ -41,6 +40,7 @@ export const routes: Routes = [
 
   {
     path: 'cuenta',
+    canActivate: [isLoggedGuard],
     children: [
       {
         path: '',
@@ -60,6 +60,7 @@ export const routes: Routes = [
 
       {
         path: 'compras',
+        canActivate: [isLoggedGuard],
         children: [
           {
             path: '',
@@ -101,6 +102,7 @@ export const routes: Routes = [
 
   {
     path: 'chats',
+    canActivate: [isLoggedGuard],
     children: [
       {
         path: '',
@@ -123,9 +125,9 @@ export const routes: Routes = [
   {
     path: 'articulos',
     children: [
-      
       {
         path: 'crear',
+        canActivate: [isLoggedGuard],
         loadComponent: async () =>
           (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
             .ArticuloCrearPage,
@@ -144,6 +146,7 @@ export const routes: Routes = [
           },
           {
             path: 'comprar',
+            canActivate: [isLoggedGuard],
             loadComponent: async () =>
               (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
                 .ArticuloComprarPage,
@@ -151,6 +154,7 @@ export const routes: Routes = [
           },
           {
             path: ':id_articulo/editar',
+            canActivate: [isLoggedGuard],
             loadComponent: async () =>
               (
                 await import(

@@ -12,4 +12,8 @@ export class MainStore {
     if (!this.token) { this.token = localStorage.getItem("token") ?? '' }
     return this.token
   }
+
+  isLoggedIn(): boolean {
+    return this.getToken() !== ''
+  }
 }

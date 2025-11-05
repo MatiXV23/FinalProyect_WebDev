@@ -1,6 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, signal } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { IonContent, IonTitle, IonHeader, IonToolbar, IonMenu, MenuController, IonIcon, IonSplitPane } from "@ionic/angular/standalone";
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,14 @@ export class App {
   protected readonly title = signal('frontend');
 
   constructor(private menuCtrl: MenuController) {}
-  
+  private router = inject(Router)
+  private authService = inject(AuthService)
+
   labelPlacement = signal<'start' | 'stacked'>('stacked');
   isMobile = signal<boolean>(Boolean(window.innerWidth < 768))
   
+  isLogged = this.authService.isLogged
+
   @HostListener('window:resize')
   onResize() {
     this.isMobile.set(Boolean(window.innerWidth < 768))
@@ -41,5 +46,10 @@ export class App {
     this.menuCtrl.close('menu');
   }
 
+  async handleLogOut(event: any) {
+    this.closeMenu()
+    this.authService.logOut()
+    this.router.navigate(['/login'])
+  }
 
 }
