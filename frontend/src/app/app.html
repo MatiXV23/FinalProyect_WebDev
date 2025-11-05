@@ -13,21 +13,30 @@
     <ion-content color="darkbg"> 
       <nav class="h-full">
         <ul class="w-full h-full flex-col flex">
-          <li class="flex-1 flex justify-center items-center m-5"><a routerLink="cuenta" (click)="closeMenu()">
+          <li class="flex-1 flex justify-center items-center m-5">
+            <a routerLink="cuenta" (click)="closeMenu()">
               <ion-avatar>
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
               </ion-avatar>
             </a>
+            @if (isLogged()) {
+              <div class="text-center ml-4">
+                <h4>Nombre apellido</h4>
+                <a routerLink="cuenta" (click)="closeMenu()" class="text-xs cursor-pointer" color="terciary">Detalles</a>
+              </div>
+            }
+            
           </li>
           <div class="flex-8">
             
-            <li><a routerLink="chats"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Chats</ion-button></a></li>
+            
             <li><a routerLink="articulos/crear"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a></li>
             @if (isLogged()) {
               <li><ion-button expand="block" color="darkbg" (click)="handleLogOut($event)">Cerrar Sesion</ion-button></li>
             } @else {
               <li><a routerLink="login"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Iniciar Sesion</ion-button></a></li>
             }
+          <li><a routerLink="chats"><ion-button expand="block" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/chatbubbles-outline.svg"></ion-icon></ion-button></a></li>
           </div>
 
           @if(this.isMobile()){
@@ -35,6 +44,8 @@
               <ion-button expand="block" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
             </li>
           }
+
+          
         </ul>
       </nav>
     </ion-content>
@@ -44,13 +55,12 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          <div class="flex">
-            <a routerLink="home" class="flex-1 text-center cursor-pointer" color="terciary">CNP Market</a>
-            
+          <div class="flex items-center">
             @if(this.isMobile()){
               <ion-menu-button auto-hide="false" class="flex-0"></ion-menu-button>
             }
-            
+            <a routerLink="home" class="flex-1 text-center cursor-pointer" color="terciary">CNP Market</a>
+          
           </div>
         </ion-title>
       </ion-toolbar>
