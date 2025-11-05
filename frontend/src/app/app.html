@@ -1,41 +1,58 @@
-<header>
-  <div class="header-content">
-    <h1>MarketSpace</h1>
+<ion-split-pane when="md" contentId="main">
+
+  <ion-menu menuId="menu" contentId="main" class="w-xs">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="flex">
+          <div class="flex text-left items-center">
+            <p class="flex-1 ml-6">Opciones</p>
+          </div>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content color="darkbg"> 
+      <nav class="h-full">
+        <ul class="w-full h-full flex-col flex">
+          <li class="flex-1 flex justify-center items-center m-5"><a routerLink="cuenta" (click)="closeMenu()">
+              <ion-avatar>
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+            </a>
+          </li>
+          <div class="flex-8">
+            <li><a routerLink="login"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Log In</ion-button></a></li>
+            <li><a routerLink="chats"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Chats</ion-button></a></li>
+            <li><a routerLink="articulos/crear"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a></li>
+          </div>
+
+          @if(this.isMobile()){
+            <li class="flex-0">
+              <ion-button expand="block" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
+            </li>
+          }
+        </ul>
+      </nav>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <div class="flex">
+            <a routerLink="home" class="flex-1 text-center cursor-pointer" color="terciary">CNP Market</a>
+            
+            @if(this.isMobile()){
+              <ion-menu-button auto-hide="false" class="flex-0"></ion-menu-button>
+            }
+            
+          </div>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding w-full">
+      <router-outlet class="flex justify-center"></router-outlet>
+    </ion-content>
   </div>
-</header>
+</ion-split-pane>
 
-<div class="container">
-  <nav>
-    <ul id="menuUL">
-      <li>
-        <a routerLink="login">login</a>
-      </li>
-      <li>
-        <a routerLink="registro">registrarme</a>
-      </li>
-      <li>
-        <a routerLink="cuenta">mi cuenta</a>
-      </li>
-      <li>
-        <a routerLink="chats">mensajes</a>
-      </li>
-      <li>
-        <a routerLink="cuenta/compras">compras</a>
-      </li>
-      <li>
-        <a routerLink="usuarios/1/articulos">articulos publicados</a>
-      </li>
-      <li>
-        <a routerLink="articulos/crear">publicar un articulo</a>
-      </li>
-    </ul>
-  </nav>
-
-  <main id="main">
-    <router-outlet />
-  </main>
-</div>
-
-<footer>
-  <p>© 2025 - Cigaran, Nuñez, Perez</p>
-</footer>

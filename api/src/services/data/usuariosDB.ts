@@ -187,7 +187,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
         const vars = [credenciales.email, credenciales.password]
         try {
             const res = await this.pool.query<Usuario>(query, vars)
-            console.info("res:" ,res)
+            console.info("res:" ,res, "credenciales:", credenciales)
             if (res.rowCount === 0) throw new PC_NotFound(`Credenciales Incorrectas`)
 
             return res.rows[0]
