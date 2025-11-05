@@ -25,7 +25,8 @@
       },
       "presentation": {
         "panel": "dedicated"
-      }
+      },
+      "problemMatcher": []
     },
     {
       "label": "Run Both",

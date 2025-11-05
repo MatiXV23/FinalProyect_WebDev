@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+
+
+:root {
+	--ion-color-darkbg: #1f1f1f;
+	--ion-color-darkbg-rgb: 31,31,31;
+	--ion-color-darkbg-contrast: #ffffff;
+	--ion-color-darkbg-contrast-rgb: 255,255,255;
+	--ion-color-darkbg-shade: #1b1b1b;
+	--ion-color-darkbg-tint: #353535;
+}
+
+.ion-color-darkbg {
+	--ion-color-base: var(--ion-color-darkbg);
+	--ion-color-base-rgb: var(--ion-color-darkbg-rgb);
+	--ion-color-contrast: var(--ion-color-darkbg-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-darkbg-contrast-rgb);
+	--ion-color-shade: var(--ion-color-darkbg-shade);
+	--ion-color-tint: var(--ion-color-darkbg-tint);
+}

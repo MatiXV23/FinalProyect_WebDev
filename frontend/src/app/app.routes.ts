@@ -7,33 +7,80 @@ import { ArticuloListarPage } from './routes/articulos/pages/articulo-listar/art
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: ArticuloListarPage, title: 'Home' },
+  
   {
     path: 'usuarios',
-    loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuarios/usuarios.page')).UsuariosPage,
-    title: 'Usuarios',
+    children: [
+      {
+        path: '',
+        loadComponent: async () =>
+          (await import('./routes/usuarios/pages/usuarios/usuarios.page')).UsuariosPage,
+        title: 'Usuarios',
+      },
+      {
+        path: ':id_usuario/edit',
+        loadComponent: async () =>
+          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
+        title: 'Editar usuarios',
+      },
+
+      {
+        path: ':id_usuario/articulos',
+        loadComponent: async () =>
+          (
+            await import(
+              './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
+            )
+          ).ArticulosUsuarioListarPage,
+        title: 'Usuario lista articulos publicados',
+      },
+    ]
   },
 
-  {
-    path: 'usuarios/:id_usuario/edit',
-    loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
-    title: 'Editar usuarios',
-  },
+  
 
   {
     path: 'cuenta',
-    loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
-        .UsuarioDetallePage,
+    children: [
+      {
+        path: '',
+        loadComponent: async () =>
+          (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
+            .UsuarioDetallePage,
+        title: 'Editar cuenta',
+      },
+      {
+        path: 'edit',
+        loadComponent: async () =>
+          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
+        title: 'Editar cuenta',
+      },
+
+      
+
+      {
+        path: 'compras',
+        children: [
+          {
+            path: '',
+            loadComponent: async () =>
+              (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
+                .ComprasUsuarioListarPage,
+            title: 'Listar compras usuario',
+          },
+          {
+            path: ':id_articulo/review',
+            loadComponent: async () =>
+              (await import('./routes/articulos/pages/compras-review/compras-review.page'))
+                .ComprasReviewPage,
+            title: 'Review Articulo',
+          },
+        ]
+      },
+    ]
   },
 
-  {
-    path: 'cuenta/edit',
-    loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
-    title: 'Editar cuenta',
-  },
+  
 
   {
     path: 'login',
@@ -51,83 +98,77 @@ export const routes: Routes = [
     title: 'Regsitrar usuario',
   },
 
-  {
-    path: 'chats/:id_chat',
-    loadComponent: async () =>
-      (await import('./routes/chats/pages/mensajes-detalle/mensajes-detalle.page'))
-        .MensajesDetallePage,
-    title: 'Enviar chat',
-  },
 
   {
     path: 'chats',
-    loadComponent: async () =>
-      (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
-        .MensajesListarPage,
-    title: 'Listar chats',
+    children: [
+      {
+        path: '',
+        loadComponent: async () =>
+          (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
+            .MensajesListarPage,
+        title: 'Listar chats',
+      },
+      {
+        path: ':id_chat',
+        loadComponent: async () =>
+          (await import('./routes/chats/pages/mensajes-detalle/mensajes-detalle.page'))
+            .MensajesDetallePage,
+        title: 'Chat con :id_chat',
+      },
+    ]
   },
 
+  
   {
-    path: 'articulos/:id_articulo/comprar',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
-        .ArticuloComprarPage,
-    title: 'Comprar Articulo',
+    path: 'articulos',
+    children: [
+      
+      {
+        path: 'crear',
+        loadComponent: async () =>
+          (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
+            .ArticuloCrearPage,
+        title: 'Crear Articulo',
+      },
+
+      {
+        path: ':id_articulo',
+        children: [
+          {
+            path: '',
+            loadComponent: async () =>
+              (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
+                .ArticuloDetallePage,
+            title: 'Detallar Articulo',
+          },
+          {
+            path: 'comprar',
+            loadComponent: async () =>
+              (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
+                .ArticuloComprarPage,
+            title: 'Comprar Articulo',
+          },
+          {
+            path: ':id_articulo/editar',
+            loadComponent: async () =>
+              (
+                await import(
+                  './routes/articulos/pages/articulos-usuario-editar/articulos-usuario-editar.page'
+                )
+              ).ArticulosUsuarioEditarPage,
+            title: 'Usuario edita articulos publicados',
+          },
+        ]
+      },
+    ]
   },
 
-  {
-    path: 'articulos/crear',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
-        .ArticuloCrearPage,
-    title: 'Crear Articulo',
-  },
+  
 
-  {
-    path: 'articulos/:id_articulo',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
-        .ArticuloDetallePage,
-    title: 'Detallar Articulo',
-  },
+  
 
-  {
-    path: 'articulos/:id_articulo/editar',
-    loadComponent: async () =>
-      (
-        await import(
-          './routes/articulos/pages/articulos-usuario-editar/articulos-usuario-editar.page'
-        )
-      ).ArticulosUsuarioEditarPage,
-    title: 'Usuario edita articulos publicados',
-  },
-
-  {
-    path: 'usuarios/:id_usuario/articulos',
-    loadComponent: async () =>
-      (
-        await import(
-          './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
-        )
-      ).ArticulosUsuarioListarPage,
-    title: 'Usuario lista articulos publicados',
-  },
-
-  {
-    path: 'cuenta/compras/:id_articulo/review',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/compras-review/compras-review.page'))
-        .ComprasReviewPage,
-    title: 'Review Articulo',
-  },
-
-  {
-    path: 'cuenta/compras',
-    loadComponent: async () =>
-      (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
-        .ComprasUsuarioListarPage,
-    title: 'Listar compras usuario',
-  },
+  
 
   {
     path: '**',
