@@ -3,15 +3,9 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import {
-  PC_Error,
-  PC_NotFound,
-  PC_NotImplemented,
-} from "../../errors/errors.ts";
-import {
   type Categoria,
   categoriaModel,
 } from "../../models/market/categoriaModel.ts";
-import { myPool } from "../../services/data/db_service.ts";
 
 const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

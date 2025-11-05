@@ -7,22 +7,12 @@ import {
 } from "../../errors/errors.ts";
 import type { Pool } from "pg";
 import type { Categoria } from "../../models/market/categoriaModel.ts";
-import { myPool } from "./db_service.ts";
 
 // TODO: REALIZAR ESTO ! ! !
 export class CategoriasDB extends BasePgRepository<Categoria> {
-  static rows:
-    | { id_categoria: number; nombre: string }[]
-    | PromiseLike<{ id_categoria: number; nombre: string }[]>;
   constructor(pool: Pool) {
     super(pool);
   }
-
-  #baseQuery = /*sql*/ `
-                SELECT 
-                    u.*
-                FROM categorias u
-                `;
 
   private getQuery(whereCondition: string | null = null) {
     const query = /*sql*/ `
@@ -34,7 +24,7 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
   }
 
   async getAll(): Promise<Categoria[]> {
-    const resultado = await this.pool.query<Categoria>(this.#baseQuery);
+    const resultado = await this.pool.query<Categoria>(this.getQuery());
     return resultado.rows;
   }
 

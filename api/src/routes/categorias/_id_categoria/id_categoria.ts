@@ -2,7 +2,6 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../errors/errors.ts";
 import { categoriaModel } from "../../../models/market/categoriaModel.ts";
 
 const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
