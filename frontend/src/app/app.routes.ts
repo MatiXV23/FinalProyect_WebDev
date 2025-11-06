@@ -156,6 +156,7 @@ export const routes: Routes = [
                 .ArticuloComprarPage,
             title: 'Comprar Articulo',
           },
+          // ##TODO: Crear Guard, isAdminOrOwner, para entrar y crear un boton que verifique lo mismo en el template de articulo
           {
             path: ':id_articulo/editar',
             canActivate: [isLoggedGuard],
