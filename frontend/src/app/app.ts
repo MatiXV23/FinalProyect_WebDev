@@ -1,7 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { IonContent, IonTitle, IonHeader, IonToolbar, IonMenu, MenuController, IonIcon, IonSplitPane } from "@ionic/angular/standalone";
 import { AuthService } from './shared/services/auth.service';
+import { MainStore } from './shared/stores/main.store';
 
 @Component({
   selector: 'app-root',
@@ -10,23 +11,35 @@ import { AuthService } from './shared/services/auth.service';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit{
   protected readonly title = signal('frontend');
 
-  constructor(private menuCtrl: MenuController) {}
   private router = inject(Router)
   private authService = inject(AuthService)
+  private mainStore = inject(MainStore)
 
-  labelPlacement = signal<'start' | 'stacked'>('stacked');
   isMobile = signal<boolean>(Boolean(window.innerWidth < 768))
   
-  isLogged = this.authService.isLogged
+
+  isLogged = this.mainStore.isLogged
+  user = this.mainStore.user
+  
+  avatarImgUrl = computed(()=> this.user() ? this.user()?.foto_url : '/assets/imgs/avatar.png')
+
+  async ngOnInit() {
+    await this.authService.checkLocalStorage()
+  }
+
+
+  constructor(private menuCtrl: MenuController) {}
 
   @HostListener('window:resize')
   onResize() {
-    this.isMobile.set(Boolean(window.innerWidth < 768))
-    this.labelPlacement.set(window.innerWidth > 768 ? 'start' : 'stacked');
-    console.log(window.innerWidth, this.labelPlacement(), this.isMobile())
+    const isMobile = Boolean(window.innerWidth < 768)
+    if (!isMobile) return
+    
+    this.isMobile.set(isMobile)
+    
   }
 
   openMenu() {

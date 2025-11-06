@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { MainStore } from '../stores/main.store';
 import { Credenciales } from '../types/credenciales';
 import { firstValueFrom } from 'rxjs';
+import { Usuario } from '../types/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -12,19 +13,15 @@ export class AuthService {
 
   private mainStore = inject(MainStore)
 
-  private User: any = null
-
-
-  isLogged = signal<boolean>(false)
-
 
   async logIn(credenciales: Credenciales){
     try {
       const {token} = await firstValueFrom(this.httpClient.post<{token: string}>('http://localhost:3000/auth', credenciales))
-      console.log("token: ", token)
-      this.mainStore.token = token
-      this.isLogged.set(true)
+
       localStorage.setItem("token", token)
+
+      this.mainStore.token.set(token)
+      this.mainStore.user.set(await this.getUser())
     }
     catch (e) {
       throw e
@@ -32,15 +29,19 @@ export class AuthService {
   }
 
   async logOut(){
-    this.isLogged.set(false)
-    console.log("log out")
-    this.mainStore.token = undefined;
+    this.mainStore.token.set(undefined);
+    this.mainStore.user.set(undefined);
     localStorage.removeItem("token")
   }
 
-  async getUser(){
-    if (!this.User) { this.User = await firstValueFrom(this.httpClient.get('http://localhost:3000/auth')) }
+  async checkLocalStorage(){ 
+    if (!this.mainStore.token() && localStorage.getItem('token')) {
+      this.mainStore.token.set(localStorage.getItem('token')!)
+      if (!this.mainStore.user()) this.mainStore.user.set(await this.getUser())
+    }
+  }
 
-    return this.User
+  async getUser(): Promise<Usuario>{
+    return await firstValueFrom(this.httpClient.get<Usuario>('http://localhost:3000/auth'))
   }
 }

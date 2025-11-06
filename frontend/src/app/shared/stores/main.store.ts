@@ -1,19 +1,14 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
+import { Usuario } from '../types/usuario';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MainStore {
-  token?: string
-  user?: any
 
+  token = signal<string | undefined>(undefined)
+  user = signal<Usuario | undefined>(undefined)
 
-  getToken(){ 
-    if (!this.token) { this.token = localStorage.getItem("token") ?? '' }
-    return this.token
-  }
+  isLogged = computed(()=> !!this.user())
 
-  isLoggedIn(): boolean {
-    return this.getToken() !== ''
-  }
 }

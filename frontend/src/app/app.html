@@ -1,3 +1,4 @@
+@let user = this.user();
 <ion-split-pane when="md" contentId="main">
 
   <ion-menu menuId="menu" contentId="main" class="w-xs">
@@ -14,34 +15,46 @@
       <nav class="h-full">
         <ul class="w-full h-full flex-col flex">
           <li class="flex-1 flex justify-center items-center m-5">
-            <a routerLink="cuenta" (click)="closeMenu()">
+             <a routerLink="cuenta" (click)="closeMenu()">
               <ion-avatar>
-                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                <img alt="Silhouette of a person's head" class="aspect-square" [src]="avatarImgUrl()" />
               </ion-avatar>
             </a>
-            @if (isLogged()) {
+            @if (user) {
               <div class="text-center ml-4">
-                <h4>Nombre apellido</h4>
+                <h4>{{user.nombres}} {{user.apellidos}}</h4>
                 <a routerLink="cuenta" (click)="closeMenu()" class="text-xs cursor-pointer" color="terciary">Detalles</a>
               </div>
-            }
-            
+            } 
           </li>
           <div class="flex-8">
-            
-            
-            <li><a routerLink="articulos/crear"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a></li>
-            @if (isLogged()) {
-              <li><ion-button expand="block" color="darkbg" (click)="handleLogOut($event)">Cerrar Sesion</ion-button></li>
-            } @else {
-              <li><a routerLink="login"><ion-button expand="block" color="darkbg" (click)="closeMenu()">Iniciar Sesion</ion-button></a></li>
+            @if (user && user.is_admin) {
+              <li> 
+                <a routerLink="usuarios"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Dashboard</ion-button></a>
+              </li>
             }
-          <li><a routerLink="chats"><ion-button expand="block" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/chatbubbles-outline.svg"></ion-icon></ion-button></a></li>
+            <li> 
+              <a routerLink="articulos/crear"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a>
+            </li>
+            @if (user) {
+              <li><ion-button expand="full" color="darkbg" (click)="handleLogOut($event)">Cerrar Sesion</ion-button></li>
+            } @else {
+              <li><a routerLink="login"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Iniciar Sesion</ion-button></a></li>
+            }
+          <li>
+            <div class="grid grid-cols-2 w-full">
+              <a routerLink="chats"><ion-button expand="full" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/chatbubbles-outline.svg"></ion-icon></ion-button>
+              </a>
+              <a routerLink="chats"><ion-button expand="full" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/cart.svg"></ion-icon></ion-button>
+              </a>
+            </div>
+            
+          </li>
           </div>
 
           @if(this.isMobile()){
             <li class="flex-0">
-              <ion-button expand="block" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
+              <ion-button expand="full" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
             </li>
           }
 

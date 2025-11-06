@@ -30,7 +30,7 @@ export class UsuariosLoginPage {
       this.router.navigate(['/home'])
     }
     catch (e) {
-
+      console.log(e)
     }
   }
 }

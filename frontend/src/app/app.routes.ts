@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { isLoggedGuard } from './core/guards/is-logged-guard';
 import { ArticuloListarPage } from './routes/articulos/pages/articulo-listar/articulo-listar.page';
+import { isNotLoggedGuard } from './core/guards/is-not-logged-guard';
+import { isAdminGuard } from './core/guards/is-admin-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -8,7 +10,7 @@ export const routes: Routes = [
   
   {
     path: 'usuarios',
-    canActivate: [isLoggedGuard],
+    canActivateChild: [isLoggedGuard, isAdminGuard],
     children: [
       {
         path: '',
@@ -40,7 +42,7 @@ export const routes: Routes = [
 
   {
     path: 'cuenta',
-    canActivate: [isLoggedGuard],
+    canActivateChild: [isLoggedGuard],
     children: [
       {
         path: '',
@@ -60,7 +62,7 @@ export const routes: Routes = [
 
       {
         path: 'compras',
-        canActivate: [isLoggedGuard],
+        canActivateChild: [isLoggedGuard],
         children: [
           {
             path: '',
@@ -88,6 +90,7 @@ export const routes: Routes = [
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-login/usuarios-login.page'))
         .UsuariosLoginPage,
+    canActivate: [isNotLoggedGuard],
     title: 'Logear usuario',
   },
 
@@ -96,6 +99,7 @@ export const routes: Routes = [
     loadComponent: async () =>
       (await import('./routes/usuarios/pages/usuarios-register/usuarios-register.page'))
         .UsuariosRegisterPage,
+    canActivate: [isNotLoggedGuard],
     title: 'Regsitrar usuario',
   },
 
