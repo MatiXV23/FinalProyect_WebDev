@@ -21,4 +21,14 @@ export class UsuariosService {
       throw new Error(e.error.message);
     }
   }
+  public async getUsuarios() {
+    const users = await firstValueFrom(
+      this.httpClient.get<Usuario[]>('http://localhost:3000/usuarios')
+    );
+    return users;
+  }
+
+  public async eliminarUsuario(id: number) {
+    await firstValueFrom(this.httpClient.delete(`http://localhost:3000/usuarios/${id}`));
+  }
 }
