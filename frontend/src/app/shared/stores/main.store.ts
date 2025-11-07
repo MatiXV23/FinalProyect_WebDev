@@ -12,6 +12,6 @@ export class MainStore {
   isLogged = computed(()=> !!this.user())
   isAdmin = computed(()=> {
     const user = this.user()
-    return !(user && user.is_admin)
+    return !!(user && user.is_admin)
   })
 }
