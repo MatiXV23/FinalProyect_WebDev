@@ -11,10 +11,11 @@ import {
   IonInputPasswordToggle,
   IonCardSubtitle,
 } from '@ionic/angular/standalone';
+import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
 
 @Component({
   selector: 'app-usuarios-register',
-  imports: [IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle],
+  imports: [IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle, UsuariosFormComponent],
   templateUrl: './usuarios-register.page.html',
   styleUrl: './usuarios-register.page.css',
 })

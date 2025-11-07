@@ -12,4 +12,14 @@ export type Usuario = {
   articulos_carrito: number[];
 };
 
-export type UsuarioSinId = Omit<Usuario, 'id_usuario'>;
+export type UsuarioSinId = {
+  email: string;
+  nombres: string;
+  apellidos: string;
+  direccion: string;
+  is_admin: boolean;
+  id_departamento: number;
+  nro_documento: string;
+  foto_url: string;
+  password: string;
+};

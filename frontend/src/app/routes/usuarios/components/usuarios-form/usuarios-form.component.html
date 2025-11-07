@@ -10,6 +10,76 @@
   ></ion-input>
 
   <ion-input
+    name="nombres"
+    class="mt-10"
+    label="Nombres"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+  ></ion-input>
+
+  <ion-input
+    name="apellidos"
+    class="mt-10"
+    label="Apellidos"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+  ></ion-input>
+
+  <ion-input
+    name="direccion"
+    class="mt-10"
+    label="Direccion"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+  ></ion-input>
+
+  <ion-checkbox
+    name="is_admin"
+    class="mt-10"
+    label="Admin"
+    label-placement="fixed"
+    fill="outline"
+    type="checkbox"
+    >Admin</ion-checkbox
+  >
+
+  <ion-select
+    name="id_departamento"
+    class="mt-10"
+    label="Departamento"
+    label-placement="stacked"
+    fill="outline"
+    type="select"
+    >@for (item of departamentos; track $index) {
+    <ion-select-option [value]="item">{{ item }}</ion-select-option>
+    }</ion-select
+  >
+
+  <ion-input
+    name="nro_documento"
+    class="mt-10"
+    label="Documento"
+    label-placement="stacked"
+    fill="outline"
+    type="number"
+  ></ion-input>
+
+  <ion-input
+    name="foto_url"
+    class="mt-10"
+    label="FotoURL"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+  ></ion-input>
+
+  <ion-input
     name="password"
     class="mt-6"
     label="Contraseña"
@@ -20,5 +90,5 @@
     <ion-input-password-toggle slot="end"></ion-input-password-toggle>
   </ion-input>
 
-  <ion-button type="submit" class="self-center mt-6">Iniciar Sesion</ion-button>
+  <ion-button type="submit" class="self-center mt-6">Crear cuenta</ion-button>
 </form>
