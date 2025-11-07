@@ -22,6 +22,5 @@ export type UsuarioConPwd= {
   is_admin: boolean;
   id_departamento: number;
   nro_documento: string;
-  foto_url: string;
   password: string;
 };

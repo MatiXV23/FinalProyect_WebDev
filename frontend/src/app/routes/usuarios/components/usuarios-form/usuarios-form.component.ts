@@ -7,7 +7,7 @@ import {
   IonSelectOption,
   IonCheckbox,
 } from '@ionic/angular/standalone';
-import { UsuarioConPwd } from '../../../../shared/types/usuario';
+import { UsuarioConPwd, Usuario } from '../../../../shared/types/usuario';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { Departamento } from '../../../../shared/types/departamentos';
 import { MainStore } from '../../../../shared/stores/main.store';
@@ -38,7 +38,7 @@ export class UsuariosFormComponent {
   buttonMSG = input<string>('Crear cuenta');
   isAdmin = this.mainStore.isAdmin;
 
-  public user = input<UsuarioConPwd>({
+  public user = input<Usuario>({
     email: '',
     nombres: '',
     apellidos: '',
@@ -46,14 +46,29 @@ export class UsuariosFormComponent {
     is_admin: false,
     id_departamento: 1,
     nro_documento: '',
+    id_usuario: 0,
     foto_url: '',
-    password: '',
+    reputacion: 0,
+    articulos_carrito: [],
   });
+
+  password: string = ''
+
 
   public saved = output<UsuarioConPwd>();
 
   async handleClick(event: any) {
-    console.log('handleClick error: \n');
-    this.saved.emit(this.user());
+    const userExp = {
+      email: this.user().email,
+      nombres: this.user().nombres,
+      apellidos: this.user().apellidos,
+      direccion: this.user().direccion,
+      is_admin: this.user().is_admin,
+      id_departamento: this.user().id_departamento,
+      nro_documento: this.user().nro_documento,
+      password: this.password,
+    }
+
+    this.saved.emit(userExp);
   }
 }

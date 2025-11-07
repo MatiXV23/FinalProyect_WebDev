@@ -2,6 +2,7 @@ import { type FastifyPluginAsync } from "fastify";
 import {type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../errors/errors.ts";
 import { usuarioModel } from "../../../models/market/usuarioModel.ts";
+import { credencialesModel } from "../../../models/market/credencialesModel.ts";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
 const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
@@ -91,6 +92,30 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
     },
     async (req, rep) => {
       fastify.UsuariosDB.delete(req.params.id_usuario);
+    }
+  );
+
+  fastify.put(
+    "/pwd",
+    {
+      schema: {
+        summary: "Modificar password de usuario",
+        tags: ["Usuario"],
+        description:
+          "Ruta para modificar la password un usuario. Se requiere ser el usuario dueño",
+        body: Type.Object({password: Type.String()}),
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      onRequest: [fastify.authenticate],
+      preHandler: [fastify.isOwner],
+    },
+    async (req, rep) => {
+      await fastify.UsuariosDB.updatePass(req.params.id_usuario ,req.body.password)
+      rep.code(204).send()
     }
   );
 };

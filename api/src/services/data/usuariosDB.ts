@@ -38,8 +38,6 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
             GROUP BY
                 u.id_usuario, u.email, u.id_departamento, u.nombres, u.apellidos, u.direccion, u.is_admin, u.nro_documento, u.foto_url;
         `
-        console.trace(query)
-
         return query;
     }
 
@@ -193,8 +191,24 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
             return res.rows[0]
         } catch (err) {
             console.error(err)
-            throw err
+            throw new PC_InternalServerError()
         }
 
+    }
+
+    async updatePass(id: number, password: string) {
+        const query = /*sql*/`UPDATE credenciales
+                    SET password_hash = crypt($2, gen_salt('bf'))
+                    WHERE id_usuario = $1;
+                    `
+        const vars = [id, password]
+
+        try {
+            const res = await this.pool.query(query, vars)
+            console.log(res)
+        }
+        catch (e){
+            throw new PC_InternalServerError()
+        }
     }
 }

@@ -9,6 +9,18 @@ import { firstValueFrom } from 'rxjs';
 export class UsuariosService {
   private httpClient = inject(HttpClient);
 
+  public async getUserById(id_usuario: string): Promise<Usuario> {
+    try {
+      return await firstValueFrom(
+        this.httpClient.get<Usuario>(`http://localhost:3000/usuarios/${id_usuario}`)
+      );
+    } catch (e: any) {
+      console.log('Este es el error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
   public async postUsuario(datos: Partial<Usuario>): Promise<Usuario[]> {
     try {
       console.log('postUsuarios try: \n');
@@ -30,5 +42,29 @@ export class UsuariosService {
 
   public async eliminarUsuario(id: number) {
     await firstValueFrom(this.httpClient.delete(`http://localhost:3000/usuarios/${id}`));
+  }
+
+  public async updateUsuario(datos: Partial<Usuario>): Promise<void> {
+    try {
+      await firstValueFrom(this.httpClient.put(`http://localhost:3000/usuarios/${datos.id_usuario}`, datos))
+      
+    } catch (e: any) {
+      console.log('Este es el error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
+  public async updateUserPwd(id_usuario:number, password: string): Promise<void> {
+    try {
+      console.log(id_usuario, password)
+      console.log('updateuserPwd try: \n');
+      await firstValueFrom(this.httpClient.put(`http://localhost:3000/usuarios/${id_usuario}/pwd`, {password: password}))
+      
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
   }
 }
