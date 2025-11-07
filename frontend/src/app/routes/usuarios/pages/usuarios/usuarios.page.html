@@ -1,1 +1,34 @@
-<p>usuarios works!</p>
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <h2>Listado de Usuarios</h2>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>ID</ion-col>
+    <ion-col>Nombre</ion-col>
+    <ion-col>Email</ion-col>
+    <ion-col>Opciones</ion-col>
+  </ion-row>
+
+  @for (usuario of usuarios(); track usuario.id_usuario) {
+  <ion-row>
+    <ion-col>{{ usuario.id_usuario }}</ion-col>
+    <ion-col>{{ usuario.nombres }} {{ usuario.apellidos }}</ion-col>
+    <ion-col>{{ usuario.email }}</ion-col>
+    <ion-col>
+      <ion-button (click)="handleEdit($event)" fill="outline" color="primary">
+        Modificar
+      </ion-button>
+      <ion-button (click)="handleDelete(usuario.id_usuario)" fill="outline" color="danger">
+        Eliminar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  } @empty {
+  <ion-row>
+    <ion-col size="12">No hay usuarios registrados.</ion-col>
+  </ion-row>
+  }
+</ion-grid>
