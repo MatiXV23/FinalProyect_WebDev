@@ -10,7 +10,7 @@ export class DepartamentosService {
   private httpClient = inject(HttpClient);
   async getDepartamentos(): Promise<Departamento[]> {
     return await firstValueFrom(
-      this.httpClient.get<Departamento[]>('https://localhost:3000/departamentos')
+      this.httpClient.get<Departamento[]>('http://localhost:3000/departamentos')
     );
   }
 }

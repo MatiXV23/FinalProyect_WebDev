@@ -1,14 +1,5 @@
-<form class="flex flex-col">
-  <ion-input
-    name="email"
-    class="mt-10"
-    label="Correo electronico"
-    label-placement="stacked"
-    fill="outline"
-    type="email"
-    placeholder="Enter text"
-  ></ion-input>
 
+<form class="grid grid-cols-1 gap-6 md:grid-cols-2">
   <ion-input
     name="nombres"
     class="mt-10"
@@ -18,10 +9,10 @@
     type="text"
     placeholder="Enter text"
   ></ion-input>
-
+    
   <ion-input
     name="apellidos"
-    class="mt-10"
+    class="md:mt-10"
     label="Apellidos"
     label-placement="stacked"
     fill="outline"
@@ -30,40 +21,39 @@
   ></ion-input>
 
   <ion-input
+    name="email"
+    label="Correo electronico"
+    label-placement="stacked"
+    fill="outline"
+    type="email"
+    placeholder="Enter text"
+  ></ion-input>
+
+  <ion-input
     name="direccion"
-    class="mt-10"
     label="Direccion"
     label-placement="stacked"
     fill="outline"
     type="text"
     placeholder="Enter text"
   ></ion-input>
+  
 
-  <ion-checkbox
-    name="is_admin"
-    class="mt-10"
-    label="Admin"
-    label-placement="fixed"
-    fill="outline"
-    type="checkbox"
-    >Admin</ion-checkbox
-  >
-
+  @if (departamentos.hasValue()) {
   <ion-select
-    name="id_departamento"
-    class="mt-10"
-    label="Departamento"
-    label-placement="stacked"
-    fill="outline"
-    type="select"
-    >@for (item of departamentos; track $index) {
-    <ion-select-option [value]="item">{{ item }}</ion-select-option>
-    }</ion-select
-  >
+  name="id_departamento"
+  label="Departamento"
+  label-placement="stacked"
+  fill="outline"
+  type="select"
+  >@for (item of departamentos.value(); track $index) {
+  <ion-select-option [value]="item.nombre">{{ item.nombre }}</ion-select-option>
+  }</ion-select>
+  }
+  
 
   <ion-input
     name="nro_documento"
-    class="mt-10"
     label="Documento"
     label-placement="stacked"
     fill="outline"
@@ -71,24 +61,27 @@
   ></ion-input>
 
   <ion-input
-    name="foto_url"
-    class="mt-10"
-    label="FotoURL"
-    label-placement="stacked"
-    fill="outline"
-    type="text"
-  ></ion-input>
-
-  <ion-input
     name="password"
-    class="mt-6"
     label="Contraseña"
     label-placement="stacked"
     fill="outline"
     placeholder="Enter text"
-  >
-    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+  ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
   </ion-input>
 
-  <ion-button type="submit" class="self-center mt-6">Crear cuenta</ion-button>
+  <ion-input
+    name="password_repeat"
+    label="Repita la Contraseña"
+    label-placement="stacked"
+    fill="outline"
+    placeholder="Enter text"
+  ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
+  </ion-input>
+
+    @if (isAdmin()) {
+    <ion-checkbox
+    name="is_admin"  labelPlacement="end"
+    >Administrador</ion-checkbox>
+  }
+  <ion-button type="submit" class="self-center mt-6 md:col-span-2">Crear cuenta</ion-button>
 </form>

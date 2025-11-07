@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, inject, input, OnInit, output, resource } from '@angular/core';
 import {
   IonInput,
   IonInputPasswordToggle,
@@ -7,9 +7,10 @@ import {
   IonSelectOption,
   IonCheckbox,
 } from '@ionic/angular/standalone';
-import { UsuarioSinId } from '../../../../shared/types/usuario';
+import { UsuarioConPwd } from '../../../../shared/types/usuario';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { Departamento } from '../../../../shared/types/departamentos';
+import { MainStore } from '../../../../shared/stores/main.store';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -17,25 +18,29 @@ import { Departamento } from '../../../../shared/types/departamentos';
   styleUrls: ['./usuarios-form.component.scss'],
   imports: [IonInput, IonInputPasswordToggle, IonButton, IonSelect, IonSelectOption, IonCheckbox],
 })
-export class UsuariosFormComponent implements OnInit {
+export class UsuariosFormComponent {
+  private mainStore = inject(MainStore)
   private departamentoService = inject(DepartamentosService);
-  public departamentos: Departamento[] = [];
-  public user = input<UsuarioSinId>({
-    email: 'artigas@ucu.edu.uy',
-    nombres: 'Jose Gervacio',
-    apellidos: 'Artigas Artgias',
-    direccion: 'calle abc',
+  public departamentos = resource({
+    loader: () => this.departamentoService.getDepartamentos()
+  })
+
+  isAdmin = this.mainStore.isAdmin
+
+  public user = input<UsuarioConPwd>({
+    email: '',
+    nombres: '',
+    apellidos: '',
+    direccion: '',
     is_admin: false,
     id_departamento: 1,
-    nro_documento: '12345678',
-    foto_url: 'foto.png',
-    password: 'pass',
+    nro_documento: '',
+    foto_url: '',
+    password: '',
   });
-  public saved = output<UsuarioSinId>();
 
-  async ngOnInit() {
-    this.departamentos = await this.departamentoService.getDepartamentos();
-  }
+  public saved = output<UsuarioConPwd>();
+
   async handleClick(event: any) {
     this.saved.emit(this.user());
   }

@@ -12,7 +12,9 @@ export type Usuario = {
   articulos_carrito: number[];
 };
 
-export type UsuarioSinId = {
+export type UsuarioSinId = Omit<Usuario,"id_usuario">     
+
+export type UsuarioConPwd= {
   email: string;
   nombres: string;
   apellidos: string;

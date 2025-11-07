@@ -10,5 +10,8 @@ export class MainStore {
   user = signal<Usuario | undefined>(undefined)
 
   isLogged = computed(()=> !!this.user())
-
+  isAdmin = computed(()=> {
+    const user = this.user()
+    return !(user && user.is_admin)
+  })
 }
