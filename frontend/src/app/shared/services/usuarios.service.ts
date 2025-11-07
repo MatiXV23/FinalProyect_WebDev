@@ -9,13 +9,16 @@ import { firstValueFrom } from 'rxjs';
 export class UsuariosService {
   private httpClient = inject(HttpClient);
 
-  public async postUsuario(datos: Partial<Usuario>) {
+  public async postUsuario(datos: Partial<Usuario>): Promise<Usuario[]> {
     try {
+      console.log('postUsuarios try: \n');
       return await firstValueFrom(
-        this.httpClient.post<Usuario[]>('http://localhost:3000/personas', { datos })
+        this.httpClient.post<Usuario[]>('http://localhost:3000/usuarios', datos)
       );
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      console.log('Este es el error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
     }
   }
 }
