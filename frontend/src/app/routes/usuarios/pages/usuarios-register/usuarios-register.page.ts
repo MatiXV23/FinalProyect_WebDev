@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../../../../shared/types/usuario';
+import { Usuario, UsuarioConPwd } from '../../../../shared/types/usuario';
 import { UsuarioSinId } from '../../../../shared/types/usuario';
 import {
   IonCardHeader,
@@ -24,7 +24,7 @@ export class UsuariosRegisterPage {
   private router = inject(Router);
   public usuario = signal<Usuario[]>([]);
 
-  async handleRegister(Usuario: UsuarioSinId) {
+  async handleRegister(Usuario: UsuarioConPwd) {
     try {
       const usuarioNuevo = await this.usuarioService.postUsuario(Usuario);
       this.router.navigate(['cuenta']);

@@ -17,19 +17,26 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-usuarios-form',
   templateUrl: './usuarios-form.component.html',
   styleUrls: ['./usuarios-form.component.scss'],
-  imports: [IonInput, IonInputPasswordToggle, IonButton, IonSelect, IonSelectOption, IonCheckbox, FormsModule],
+  imports: [
+    IonInput,
+    IonInputPasswordToggle,
+    IonButton,
+    IonSelect,
+    IonSelectOption,
+    IonCheckbox,
+    FormsModule,
+  ],
 })
 export class UsuariosFormComponent {
-  private mainStore = inject(MainStore)
+  private mainStore = inject(MainStore);
   private departamentoService = inject(DepartamentosService);
 
-
   public departamentos = resource({
-    loader: () => this.departamentoService.getDepartamentos()
-  })
+    loader: () => this.departamentoService.getDepartamentos(),
+  });
 
-  buttonMSG = input<string>('Crear cuenta')
-  isAdmin = this.mainStore.isAdmin
+  buttonMSG = input<string>('Crear cuenta');
+  isAdmin = this.mainStore.isAdmin;
 
   public user = input<UsuarioConPwd>({
     email: '',
@@ -46,6 +53,7 @@ export class UsuariosFormComponent {
   public saved = output<UsuarioConPwd>();
 
   async handleClick(event: any) {
+    console.log('handleClick error: \n');
     this.saved.emit(this.user());
   }
 }

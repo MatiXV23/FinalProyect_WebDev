@@ -3,7 +3,7 @@
     <ion-card-header>
       <ion-card-title class="text-center text-2xl">¡Crea una cuenta ahora!</ion-card-title>
     </ion-card-header>
-    <app-usuarios-form></app-usuarios-form>
+    <app-usuarios-form (saved)="this.handleRegister($event)"></app-usuarios-form>
     <ion-card-subtitle class="mt-6"
       >¡Ya tienes una cuenta?
       <a routerLink="/login" color="secundary" class="cursor-pointer"
