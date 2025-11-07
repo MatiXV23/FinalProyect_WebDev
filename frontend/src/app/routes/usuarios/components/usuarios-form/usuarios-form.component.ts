@@ -11,20 +11,24 @@ import { UsuarioConPwd } from '../../../../shared/types/usuario';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { Departamento } from '../../../../shared/types/departamentos';
 import { MainStore } from '../../../../shared/stores/main.store';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios-form',
   templateUrl: './usuarios-form.component.html',
   styleUrls: ['./usuarios-form.component.scss'],
-  imports: [IonInput, IonInputPasswordToggle, IonButton, IonSelect, IonSelectOption, IonCheckbox],
+  imports: [IonInput, IonInputPasswordToggle, IonButton, IonSelect, IonSelectOption, IonCheckbox, FormsModule],
 })
 export class UsuariosFormComponent {
   private mainStore = inject(MainStore)
   private departamentoService = inject(DepartamentosService);
+
+
   public departamentos = resource({
     loader: () => this.departamentoService.getDepartamentos()
   })
 
+  buttonMSG = input<string>('Crear cuenta')
   isAdmin = this.mainStore.isAdmin
 
   public user = input<UsuarioConPwd>({

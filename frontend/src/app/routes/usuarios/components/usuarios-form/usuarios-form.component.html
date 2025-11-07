@@ -1,6 +1,7 @@
 
-<form class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<form #miForm="ngForm" (ngSubmit)="handleClick($event)" class="grid grid-cols-1 gap-6 md:grid-cols-2">
   <ion-input
+    [(ngModel)]="user().nombres"
     name="nombres"
     class="mt-10"
     label="Nombres"
@@ -8,9 +9,11 @@
     fill="outline"
     type="text"
     placeholder="Enter text"
+    required
   ></ion-input>
     
   <ion-input
+    [(ngModel)]="user().apellidos"
     name="apellidos"
     class="md:mt-10"
     label="Apellidos"
@@ -18,54 +21,65 @@
     fill="outline"
     type="text"
     placeholder="Enter text"
+    required
   ></ion-input>
 
   <ion-input
+    [(ngModel)]="user().email"
     name="email"
     label="Correo electronico"
     label-placement="stacked"
     fill="outline"
     type="email"
     placeholder="Enter text"
+    required
   ></ion-input>
 
   <ion-input
+    [(ngModel)]="user().direccion"
     name="direccion"
     label="Direccion"
     label-placement="stacked"
     fill="outline"
     type="text"
     placeholder="Enter text"
+    required
   ></ion-input>
   
 
   @if (departamentos.hasValue()) {
   <ion-select
+  [(ngModel)]="user().id_departamento"
   name="id_departamento"
   label="Departamento"
   label-placement="stacked"
   fill="outline"
   type="select"
+  required
   >@for (item of departamentos.value(); track $index) {
-  <ion-select-option [value]="item.nombre">{{ item.nombre }}</ion-select-option>
+  <ion-select-option [value]="item.id_departamento">{{ item.nombre }}</ion-select-option>
   }</ion-select>
   }
   
 
   <ion-input
+    [(ngModel)]="user().nro_documento"
     name="nro_documento"
     label="Documento"
     label-placement="stacked"
     fill="outline"
     type="number"
+    required
   ></ion-input>
 
   <ion-input
+    [(ngModel)]="user().password"
     name="password"
     label="Contraseña"
     label-placement="stacked"
     fill="outline"
     placeholder="Enter text"
+    required
   ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
   </ion-input>
 
@@ -75,13 +89,15 @@
     label-placement="stacked"
     fill="outline"
     placeholder="Enter text"
+    required
   ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
   </ion-input>
 
     @if (isAdmin()) {
     <ion-checkbox
+    [(ngModel)]="user().is_admin"
     name="is_admin"  labelPlacement="end"
     >Administrador</ion-checkbox>
   }
-  <ion-button type="submit" class="self-center mt-6 md:col-span-2">Crear cuenta</ion-button>
+  <ion-button type="submit" [disabled]="miForm.invalid" [color]="miForm.invalid ? 'danger' : '' " class="self-center mt-6 md:col-span-2">{{buttonMSG()}}</ion-button>
 </form>
