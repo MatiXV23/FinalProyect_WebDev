@@ -2,7 +2,6 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../errors/errors.ts";
 import { categoriaModel } from "../../../models/market/categoriaModel.ts";
 
 const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -23,8 +22,8 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      await fastify.CategoriasDB.update(req.params.id_categoria, req.body);
+      rep.code(204).send();
     }
   );
 
@@ -44,8 +43,8 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      await fastify.CategoriasDB.delete(req.params.id_categoria);
+      rep.code(204).send();
     }
   );
 };
