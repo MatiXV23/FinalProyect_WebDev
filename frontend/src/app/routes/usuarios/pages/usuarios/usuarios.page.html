@@ -18,7 +18,7 @@
     <ion-col>{{ usuario.nombres }} {{ usuario.apellidos }}</ion-col>
     <ion-col>{{ usuario.email }}</ion-col>
     <ion-col>
-      <ion-button (click)="handleEdit($event)" fill="outline" color="primary">
+      <ion-button (click)="handleEdit(usuario.id_usuario)" fill="outline" color="primary">
         Modificar
       </ion-button>
       <ion-button (click)="handleDelete(usuario.id_usuario)" fill="outline" color="danger">

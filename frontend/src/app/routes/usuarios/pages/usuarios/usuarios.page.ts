@@ -26,13 +26,13 @@ export class UsuariosPage {
     }
   }
 
-  public async handleDelete(event: any) {
-    await this.usuariosService.eliminarUsuario(event);
+  public async handleDelete(id_usuario: number) {
+    await this.usuariosService.eliminarUsuario(id_usuario);
     console.log('Eliminado');
     this.router.navigate(['home']);
   }
 
-  public async handleEdit(event: any) {
-    this.router.navigate([`usuarios/${event.id_usuario}/edit`]);
+  public async handleEdit(id_usuario: number) {
+    this.router.navigate([`usuarios/${id_usuario}/edit`]);
   }
 }

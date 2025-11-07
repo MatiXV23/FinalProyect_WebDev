@@ -1,5 +1,5 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
 import { IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { MainStore } from '../../../../shared/stores/main.store';
@@ -17,16 +17,16 @@ export class UsuariosEditPage implements OnInit{
   private mainStore = inject(MainStore)
   private usuariosService = inject(UsuariosService)
   private router = inject(Router)
+  private route = inject(ActivatedRoute);
 
   user = structuredClone(this.mainStore.user())
   
-  id_persona = input<string>()
 
   async ngOnInit() {
-    const id_persona = this.id_persona()
+    const id_usuario = this.route.snapshot.paramMap.get('id_usuario')
 
-    if (id_persona)
-    this.user = await this.usuariosService.getUserById(id_persona)
+    if (id_usuario)
+    this.user = await this.usuariosService.getUserById(id_usuario)
   }
 
   async updateUser(modUser: UsuarioConPwd) {
