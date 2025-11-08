@@ -5,7 +5,7 @@ import {
   PC_InternalServerError,
 } from "../../errors/errors.ts";
 import type { Pool } from "pg";
-import type { Articulo } from "../../models/market/articuloModel.ts";
+import type { Articulo, ArticuloQuery } from "../../models/market/articuloModel.ts";
 
 // // TODO: ARREGLAR ESTO ! ! !
 export class ArticulosDB extends BasePgRepository<Articulo> {
@@ -15,8 +15,9 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
 
   private getQuery(whereCondition: string | null = null) {
     const query = /*sql*/ `
-            SELECT * from articulos a
+            SELECT a.* from articulos a
             ${whereCondition ?? ""}
+            ;
         `;
 
     return query;
@@ -27,10 +28,42 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
     return users.rows;
   }
 
-  async getAllByCategory(id_categoria: number): Promise<Articulo[]> {
+  async findAll(query: ArticuloQuery): Promise<Articulo[]> {
+    const {id_categoria, id_departamento, id_vendedor} = query
+    let whereCondition = ''
+    let vars:any[] = []
+    
+
+    if (id_categoria || id_departamento || id_vendedor) {
+      let cont = 1;
+      if (id_departamento) {
+        whereCondition = /*sql*/`
+          JOIN usuarios u
+          ON u.id_usuario = a.id_vendedor
+          WHERE u.id_departamento = $1
+        `
+        cont++
+        vars.push(id_departamento)
+      }
+      if (id_categoria) {
+        whereCondition += whereCondition 
+        ? `AND a.id_categoria = $${cont} ` 
+        : `WHERE a.id_categoria = $${cont} `
+        cont++
+        vars.push(id_categoria)
+      }
+      if (id_vendedor) {
+        whereCondition += whereCondition 
+        ? `AND a.id_vendedor = $${cont} ` 
+        : `WHERE a.id_vendedor = $${cont} `
+        cont++
+        vars.push(id_vendedor)
+      }
+    }
+    
     const users = await this.pool.query<Articulo>(
-      this.getQuery("WHERE a.id_categoria = $1;"),
-      [id_categoria]
+      this.getQuery(whereCondition),
+      vars
     );
     return users.rows;
   }
