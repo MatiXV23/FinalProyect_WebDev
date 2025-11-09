@@ -1,0 +1,94 @@
+<form class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  @if (totalCategorias) {
+  <ion-select
+    name="id_categoria"
+    label="Categoria"
+    label-placement="stacked"
+    fill="outline"
+    type="select"
+    required
+    >@for (item of totalCategorias.value(); track $index) {
+    <ion-select-option [value]="item.id_categoria">{{ item.nombre }}</ion-select-option>
+    }</ion-select
+  >
+  }
+
+  <ion-checkbox
+    name="usado"
+    label="Usado"
+    label-placement="stacked"
+    fill="outline"
+    type="checkbox"
+    required
+    >Usado</ion-checkbox
+  >
+
+  <ion-checkbox
+    name="con_envio"
+    label="Con_envio"
+    label-placement="stacked"
+    fill="outline"
+    type="checkbox"
+    required
+    labelPlacement="stacked"
+    >Con envio</ion-checkbox
+  >
+
+  <ion-input
+    name="nombre"
+    label="Nombre"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+    required
+  ></ion-input>
+
+  <ion-input
+    name="precio"
+    label="Precio"
+    label-placement="stacked"
+    fill="outline"
+    type="number"
+    placeholder="Enter number"
+    required
+  ></ion-input>
+
+  @if (moneda) {
+  <ion-select
+    name="moneda"
+    label="Moneda"
+    label-placement="stacked"
+    fill="outline"
+    type="select"
+    required
+  >
+    <ion-select-option [value]="moneda.USD">{{ moneda.USD }}</ion-select-option>
+    <ion-select-option [value]="moneda.UYU">{{ moneda.UYU }}</ion-select-option>
+  </ion-select>
+  }
+
+  <ion-input
+    name="descripcion"
+    label="Descripcion"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+    required
+  ></ion-input>
+
+  <ion-input
+    name="foto_url"
+    label="Foto_url"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter url photo"
+    required
+  ></ion-input>
+
+  <ion-button (click)="handleClick($event)" class="self-center mt-6 md:col-span-2"
+    >Publicar</ion-button
+  >
+</form>
