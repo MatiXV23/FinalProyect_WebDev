@@ -46,8 +46,9 @@ export class ArticuloFormComponent {
 
   async handleClick(event: any) {
     console.log('Publicaste un articulo!');
+    console.log(this.userLogged);
     const articuloExport = {
-      id_vendedor: this.userLogged || 1,
+      id_vendedor: this.userLogged || 69,
       id_categoria: this.articuloPosteado().id_categoria,
       usado: this.articuloPosteado().usado,
       con_envio: this.articuloPosteado().con_envio,
