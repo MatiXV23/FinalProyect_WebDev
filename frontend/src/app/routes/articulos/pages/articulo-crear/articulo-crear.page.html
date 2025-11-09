@@ -1,9 +1,8 @@
-<p>articulo-crear works!</p>
 <main class="w-full h-full flex justify-center items-center">
   <ion-card class="p-6 max-w-full sm:max-w-2xl h-fit">
     <ion-card-header>
       <ion-card-title class="text-center text-2xl">Publica un articulo</ion-card-title>
     </ion-card-header>
-    <app-articulo-form></app-articulo-form>
+    <app-articulo-form (saved)="this.handlePostear($event)"></app-articulo-form>
   </ion-card>
 </main>

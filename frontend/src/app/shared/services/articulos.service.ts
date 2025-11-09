@@ -15,7 +15,7 @@ export class ArticulosService {
   public async postArticulo(datos: Partial<Articulo>): Promise<Articulo[]> {
     try {
       return await firstValueFrom(
-        this.httpClient.post<Articulo[]>(baseApiURL + 'articulos', datos)
+        this.httpClient.post<Articulo[]>(baseApiURL + '/articulos', datos)
       );
     } catch (e: any) {
       throw new Error(e.error.message);
