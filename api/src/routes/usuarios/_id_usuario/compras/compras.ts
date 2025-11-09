@@ -1,11 +1,17 @@
 import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
-import { compraModel } from "../../../../models/market/compraModel.ts";
+import {
+  compraModel,
+  compraPostModel,
+} from "../../../../models/market/compraModel.ts";
 
-const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
-  fastify.addHook("onRequest", fastify.authenticate)
+const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+  fastify.addHook("onRequest", fastify.authenticate);
   fastify.get(
     "",
     {
@@ -23,7 +29,7 @@ const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
       preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      return await fastify.ComprasDB.getAll();
     }
   );
 
@@ -35,18 +41,18 @@ const comprasUserRoutes: FastifyPluginAsync = async (fastify) => {
         tags: ["Articulo", "Comprar"],
         description:
           "Ruta para modificar articulo. No hay requerimientos de uso, pero debo estar loggeado",
-        body: Type.Omit(compraModel, ["id_compra"]),
+        body: Type.Omit(compraPostModel, ["id_compra", "id_resenia"]),
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           204: Type.Null(),
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isNotOwner]
+      preHandler: [fastify.isNotOwner],
     },
     async (req, rep) => {
-      throw new PC_NotImplemented();
-      return;
+      await fastify.ComprasDB.create(req.body);
+      rep.code(204).send();
     }
   );
 };

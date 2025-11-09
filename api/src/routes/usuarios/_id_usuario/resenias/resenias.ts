@@ -11,8 +11,7 @@ const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
       schema: {
         summary: "Obtener las resenias que le realizaron a un usuario",
         tags: ["Usuario"],
-        description:
-          "Ruta para obtener las resenias de un usuario.",
+        description: "Ruta para obtener las resenias de un usuario.",
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           200: Type.Array(reseniaModel),
@@ -20,7 +19,7 @@ const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      return await fastify.ReseniaDB.getAll();
     }
   );
   fastify.delete(
