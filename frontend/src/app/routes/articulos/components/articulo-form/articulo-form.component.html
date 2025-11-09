@@ -1,4 +1,8 @@
-<form class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<form
+  #miForm="ngForm"
+  (ngSubmit)="handleClick($event)"
+  class="grid grid-cols-1 gap-6 md:grid-cols-2"
+>
   @if (totalCategorias) {
   <ion-select
     name="id_categoria"
@@ -88,7 +92,5 @@
     required
   ></ion-input>
 
-  <ion-button (click)="handleClick($event)" class="self-center mt-6 md:col-span-2"
-    >Publicar</ion-button
-  >
+  <ion-button type="submit" class="self-center mt-6 md:col-span-2">Publicar</ion-button>
 </form>
