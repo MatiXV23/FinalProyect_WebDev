@@ -1,12 +1,23 @@
-<p>articulo-detalle works!</p>
-<ion-card>
+<ion-card class="flex w-3/3 h-6/6">
   <img alt="Imagen ampliada del articulo" src="{{ this.articulo.value()?.foto_url }}" />
-  <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content>
-    Here's a small text description for the card content. Nothing more, nothing less.
-  </ion-card-content>
+  <div class="ion-text-center">
+    <ion-card-header>
+      <ion-card-title>{{ this.articulo.value()?.nombre }}</ion-card-title>
+      @if (this.articulo.value()?.con_envio) {
+      <ion-card-subtitle>Envio a domicilio</ion-card-subtitle>
+      } <ion-card-subtitle>Retira en domicilio del vendedor</ion-card-subtitle>
+    </ion-card-header>
+    <ion-button>Chat</ion-button>
+    <ion-button>Perfil del vendedor</ion-button>
+    <ion-card-subtitle>Detalles</ion-card-subtitle>
+    @if (this.articulo.value()?.usado) {
+    <ion-card-subtitle>Estado - Articulo usado</ion-card-subtitle>
+    } <ion-card-subtitle>Estado - Articulo nuevo</ion-card-subtitle>
+    <ion-card-content>{{ this.articulo.value()?.descripcion }}</ion-card-content>
+    @if (this.articulo.value()?.moneda == 'UYU') {
+    <ion-card-content> $ {{ this.articulo.value()?.precio }}</ion-card-content>
+    } @else {<ion-card-content>U$S {{ this.articulo.value()?.precio }}</ion-card-content
+    >} <ion-button>Al carrito</ion-button><br />
+    <ion-button>Comprar</ion-button>
+  </div>
 </ion-card>
