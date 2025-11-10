@@ -1,0 +1,104 @@
+<form
+  #miForm="ngForm"
+  (ngSubmit)="handleClick($event)"
+  class="grid grid-cols-1 gap-6 md:grid-cols-2"
+>
+  @if (totalCategorias) {
+  <ion-select
+    [(ngModel)]="articuloPosteado().id_categoria"
+    name="id_categoria"
+    label="Categoria"
+    label-placement="stacked"
+    fill="outline"
+    type="select"
+    required
+    >@for (item of totalCategorias.value(); track $index) {
+    <ion-select-option [value]="item.id_categoria">{{ item.nombre }}</ion-select-option>
+    }</ion-select
+  >
+  }
+
+  <ion-checkbox
+    [(ngModel)]="articuloPosteado().usado"
+    name="usado"
+    label="Usado"
+    label-placement="stacked"
+    fill="outline"
+    type="checkbox"
+    required
+    >Usado</ion-checkbox
+  >
+
+  <ion-checkbox
+    [(ngModel)]="articuloPosteado().con_envio"
+    name="con_envio"
+    label="Con_envio"
+    label-placement="stacked"
+    fill="outline"
+    type="checkbox"
+    required
+    labelPlacement="stacked"
+    >Con envio</ion-checkbox
+  >
+
+  <ion-input
+    [(ngModel)]="articuloPosteado().nombre"
+    name="nombre"
+    label="Nombre"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+    required
+  ></ion-input>
+
+  <ion-input
+    [(ngModel)]="articuloPosteado().precio"
+    name="precio"
+    label="Precio"
+    label-placement="stacked"
+    fill="outline"
+    type="number"
+    placeholder="Enter number"
+    required
+  ></ion-input>
+
+  @if (moneda) {
+  <ion-select
+    [(ngModel)]="articuloPosteado().moneda"
+    name="moneda"
+    label="Moneda"
+    label-placement="stacked"
+    fill="outline"
+    type="select"
+    required
+  >
+    <ion-select-option [value]="moneda.USD">{{ moneda.USD }}</ion-select-option>
+    <ion-select-option [value]="moneda.UYU">{{ moneda.UYU }}</ion-select-option>
+  </ion-select>
+  }
+
+  <ion-input
+    [(ngModel)]="articuloPosteado().descripcion"
+    name="descripcion"
+    label="Descripcion"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter text"
+    required
+  ></ion-input>
+
+  <ion-input
+    [(ngModel)]="articuloPosteado().foto_url"
+    name="foto_url"
+    label="Foto_url"
+    label-placement="stacked"
+    fill="outline"
+    type="text"
+    placeholder="Enter url photo"
+    required
+  ></ion-input>
+
+  <ion-button type="submit" class="self-center mt-6 md:col-span-2">Publicar</ion-button>
+</form>
