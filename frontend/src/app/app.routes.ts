@@ -158,7 +158,7 @@ export const routes: Routes = [
           },
           // ##TODO: Crear Guard, isAdminOrOwner, para entrar y crear un boton que verifique lo mismo en el template de articulo
           {
-            path: ':id_articulo/editar',
+            path: 'editar',
             canActivate: [isLoggedGuard],
             loadComponent: async () =>
               (
