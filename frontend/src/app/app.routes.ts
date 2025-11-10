@@ -63,7 +63,7 @@ export const routes: Routes = [
       {
         path: 'compras',
         canActivateChild: [isLoggedGuard],
-        children: [
+        children: [ 
           {
             path: '',
             loadComponent: async () =>

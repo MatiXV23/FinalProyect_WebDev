@@ -1,1 +1,18 @@
-<p>articulo-listar works!</p>
+@if (articulos.hasValue()){
+    @let arts = this.articulos.value();
+    <div class="grid max-w-full gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        @for (a of arts; track $index) {
+        <ion-card class="hover:cursor-pointer">
+            <div class="m-2">
+                <img [src]="a.foto_url" class="aspect-square object-cover overflow-hidden w-full rounded-sm">
+                <ion-card-title class="mt-2">
+                    {{a.nombre}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                    {{a.moneda}} {{a.precio}}
+                </ion-card-subtitle>
+            </div>
+        </ion-card>
+    }
+    </div>
+}
