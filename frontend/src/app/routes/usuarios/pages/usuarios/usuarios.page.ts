@@ -2,11 +2,11 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../../../../shared/types/usuario';
-import { IonGrid, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
+import { IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [IonGrid, IonRow, IonCol, IonButton],
+  imports: [IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle],
   templateUrl: './usuarios.page.html',
   styleUrl: './usuarios.page.css',
 })
@@ -15,16 +15,11 @@ export class UsuariosPage {
 
   private usuariosService = inject(UsuariosService);
 
-  public usuarios = signal<Usuario[]>([]);
+  public usuarios = resource({
+    loader: () => this.usuariosService.getUsuarios() 
+  });
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const data = await this.usuariosService.getUsuarios();
-      this.usuarios.set(data);
-    } catch (error) {
-      console.error('Error al cargar usuarios:', error);
-    }
-  }
+  
 
   public async handleDelete(id_usuario: number) {
     await this.usuariosService.eliminarUsuario(id_usuario);
