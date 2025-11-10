@@ -12,6 +12,7 @@ export class ArticulosService {
   private httpClient = inject(HttpClient);
 
   private mainStore = inject(MainStore);
+
   public async postArticulo(datos: Partial<Articulo>): Promise<Articulo[]> {
     try {
       return await firstValueFrom(

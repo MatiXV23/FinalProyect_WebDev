@@ -16,7 +16,7 @@ export class ArticuloCrearPage {
   private articuloService = inject(ArticulosService);
 
   private router = inject(Router);
-  // EN ESTE METODO ESTA PASANDO ALGUN ERROR
+
   async handlePostear(Articulo: ArticuloPost) {
     try {
       const newArticulo = await this.articuloService.postArticulo(Articulo);

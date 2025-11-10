@@ -5,6 +5,7 @@
 >
   @if (totalCategorias) {
   <ion-select
+    [(ngModel)]="articuloPosteado().id_categoria"
     name="id_categoria"
     label="Categoria"
     label-placement="stacked"
@@ -18,6 +19,7 @@
   }
 
   <ion-checkbox
+    [(ngModel)]="articuloPosteado().usado"
     name="usado"
     label="Usado"
     label-placement="stacked"
@@ -28,6 +30,7 @@
   >
 
   <ion-checkbox
+    [(ngModel)]="articuloPosteado().con_envio"
     name="con_envio"
     label="Con_envio"
     label-placement="stacked"
@@ -39,6 +42,7 @@
   >
 
   <ion-input
+    [(ngModel)]="articuloPosteado().nombre"
     name="nombre"
     label="Nombre"
     label-placement="stacked"
@@ -49,6 +53,7 @@
   ></ion-input>
 
   <ion-input
+    [(ngModel)]="articuloPosteado().precio"
     name="precio"
     label="Precio"
     label-placement="stacked"
@@ -60,6 +65,7 @@
 
   @if (moneda) {
   <ion-select
+    [(ngModel)]="articuloPosteado().moneda"
     name="moneda"
     label="Moneda"
     label-placement="stacked"
@@ -73,6 +79,7 @@
   }
 
   <ion-input
+    [(ngModel)]="articuloPosteado().descripcion"
     name="descripcion"
     label="Descripcion"
     label-placement="stacked"
@@ -83,6 +90,7 @@
   ></ion-input>
 
   <ion-input
+    [(ngModel)]="articuloPosteado().foto_url"
     name="foto_url"
     label="Foto_url"
     label-placement="stacked"

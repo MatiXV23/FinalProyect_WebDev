@@ -31,8 +31,8 @@ export class ArticuloFormComponent {
   });
 
   public articuloPosteado = input<ArticuloPost>({
-    id_vendedor: 0,
-    id_categoria: 0,
+    id_vendedor: 1,
+    id_categoria: 1,
     usado: false,
     con_envio: false,
     nombre: '',
@@ -48,7 +48,7 @@ export class ArticuloFormComponent {
     console.log('Publicaste un articulo!');
     console.log(this.userLogged);
     const articuloExport = {
-      id_vendedor: this.userLogged || 69,
+      id_vendedor: this.userLogged || 1,
       id_categoria: this.articuloPosteado().id_categoria,
       usado: this.articuloPosteado().usado,
       con_envio: this.articuloPosteado().con_envio,
