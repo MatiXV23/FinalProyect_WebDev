@@ -1,10 +1,12 @@
-@let user = this.user;
-@if (user) {
-  <ion-card class="p-3">
-    <ion-card-header>
-      <ion-card-title> Editar usuario </ion-card-title>
-    </ion-card-header>
-    <app-usuarios-form buttonMSG="Guardar Usuario" [user]="user" (saved)="this.updateUser($event)"></app-usuarios-form>
-  </ion-card>
+@let user = this.user; @if (user.hasValue()) {
+<ion-card class="p-3">
+  <ion-card-header>
+    <ion-card-title> Editar usuario </ion-card-title>
+  </ion-card-header>
+  <app-usuarios-form
+    buttonMSG="Guardar Usuario"
+    [user]="user.value()"
+    (saved)="this.updateUser($event)"
+  ></app-usuarios-form>
+</ion-card>
 }
-

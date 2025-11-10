@@ -1,5 +1,5 @@
 import { type FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
-import { usuarioModel, usuarioPostModel } from "../../models/market/usuarioModel.ts";
+import { usuarioModel, usuarioPostModel, UsuarioQueryModel } from "../../models/market/usuarioModel.ts";
 import { Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../errors/errors.ts";
 
@@ -10,6 +10,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener los usuarios",
         tags: ["Usuario"],
+        querystring: UsuarioQueryModel,
         description:
           "Ruta para obtener todos los usuarios. No hay requerimientos de uso",
         response: {
@@ -18,7 +19,8 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return fastify.UsuariosDB.getAll()
+      if (req.query)  return await fastify.UsuariosDB.findAll(req.query);
+      return await fastify.UsuariosDB.getAll();
     }
   );
 
