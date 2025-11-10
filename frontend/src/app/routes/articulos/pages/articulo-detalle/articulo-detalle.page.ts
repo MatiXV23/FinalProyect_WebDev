@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, inject, input, resource } from '@angular/core';
+import {
+  IonImg,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+} from '@ionic/angular/standalone';
+import { ArticulosService } from '../../../../shared/services/articulos.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-articulo-detalle',
-  imports: [],
+  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent],
   templateUrl: './articulo-detalle.page.html',
   styleUrl: './articulo-detalle.page.css',
 })
 export class ArticuloDetallePage {
+  private articulosService = inject(ArticulosService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
+  articulo = resource({
+    params: () => ({ id: this.route.snapshot.paramMap.get('id_articulo') }),
+    loader: ({ params }) => {
+      return this.articulosService.getArticuloId(String(params.id));
+    },
+  });
 }

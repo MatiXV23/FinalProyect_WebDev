@@ -24,6 +24,14 @@ export class ArticulosService {
     }
   }
 
+  public async getArticuloId(id: string) {
+    try {
+      return await firstValueFrom(this.httpClient.get<Articulo>(`${baseApiURL}/articulos/${id}`));
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async getAll(queryParams: Record<string, any> = {}) {
     let params = new HttpParams();
 
