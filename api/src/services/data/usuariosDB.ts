@@ -1,5 +1,5 @@
 import { BasePgRepository } from "../../models/common/baseRepository.ts";
-import type { JWTUsuario, Usuario, UsuarioPost } from "../../models/market/usuarioModel.ts";
+import type { JWTUsuario, Usuario, UsuarioPost, UsuarioQuery } from "../../models/market/usuarioModel.ts";
 import type { Credenciales } from "../../models/market/credencialesModel.ts";
 import { PC_NotFound, PC_BadRequest, PC_InternalServerError } from "../../errors/errors.ts";
 import type { Pool } from "pg";
@@ -51,6 +51,37 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
         }
         
     }
+
+    async findAll(query: UsuarioQuery): Promise<Usuario[]> {
+        const {email, nro_documento} = query
+        let whereCondition = ''
+        let vars:any[] = []
+        
+    
+        if (email || nro_documento) {
+          let cont = 1;
+          if (email) {
+            whereCondition = /*sql*/`
+              WHERE u.email = $1
+            `
+            cont++
+            vars.push(email)
+          }
+          if (nro_documento) {
+            whereCondition += whereCondition 
+            ? `OR u.nro_documento = $${cont} ` 
+            : `WHERE u.nro_documento = $${cont} `
+            cont++
+            vars.push(nro_documento)
+          }
+        }
+        console.log({whereCondition})
+        const users = await this.pool.query<Usuario>(
+          this.getQuery(whereCondition),
+          vars
+        );
+        return users.rows;
+      }
     
     async getById(id:number): Promise<Usuario> {
         const query = this.getQuery(`WHERE u.id_usuario = $1`)

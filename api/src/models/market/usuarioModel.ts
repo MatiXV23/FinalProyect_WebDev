@@ -26,6 +26,11 @@ export const usuarioModel = Type.Object({
 ]});
 export type Usuario = Static<typeof usuarioModel>;
 
+export const UsuarioQueryModel = Type.Optional(Type.Object({
+  email: Type.Optional(Type.String()),
+  nro_documento:  Type.Optional(Type.String({maxLength: 8})),
+}))
+export type UsuarioQuery = Static<typeof UsuarioQueryModel>;
 
 export const JWTuserModel = Type.Object({
   id_usuario: Type.Integer(),

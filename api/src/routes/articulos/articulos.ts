@@ -2,7 +2,7 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { articuloModel } from "../../models/market/articuloModel.ts";
+import { articuloModel, articuloQueryModel } from "../../models/market/articuloModel.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -11,9 +11,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Obtener articulos",
         tags: ["Articulo"],
-        querystring: Type.Object({
-          id_categoria: Type.Optional(Type.Integer()),
-        }),
+        querystring: articuloQueryModel,
         description:
           "Ruta para obtener articulos. No hay requerimientos de uso",
         response: {
@@ -22,10 +20,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      if (req.query.id_categoria)
-        return await fastify.ArticulosDB.getAllByCategory(
-          req.query.id_categoria
-        );
+      if (req.query)  return await fastify.ArticulosDB.findAll(req.query);
       return await fastify.ArticulosDB.getAll();
     }
   );
