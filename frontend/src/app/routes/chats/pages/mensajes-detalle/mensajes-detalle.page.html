@@ -1,1 +1,23 @@
-<p>mensajes-detalle works!</p>
+@if (mensajes.hasValue()) {
+    <div class="flex flex-col">
+        @for (m of mensajes.value(); track $index) {
+            @let fecha = this.parseTime(m.fecha_mensaje);
+            @if (fecha !== fecha_anterior) {
+                
+            }
+
+            @if (!isUserLogged(m.id_enviador)) {
+                <div class="w-fit px-3 mb-2 py-2 rounded-lg ml-2 z-1 relative message-received shadow-sm overflow-visible bg-(--ion-color-light) text-(--ion-color-light-contrast)">
+                    <p>{{m.contenido}}</p>
+                    <p>{{fecha}}</p>
+                </div>
+            }@else {
+                <div class="w-fit px-3 py-2 mb-2 self-end rounded-lg z-1 mr-2 relative message-sent shadow-sm overflow-visible bg-(--ion-color-dark) text-(--ion-color-dark-contrast)">
+                    <p>{{m.contenido}}</p>
+                    <p>{{fecha}}</p>
+                </div>
+            }
+        }
+    </div>
+    
+}

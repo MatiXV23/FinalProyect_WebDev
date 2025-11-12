@@ -14,4 +14,8 @@ export class MainStore {
     const user = this.user()
     return !!(user && user.is_admin)
   })
+
+  isUserLogged(id_usuario: number): boolean{ 
+    return this.user()?.id_usuario === id_usuario
+  }
 }
