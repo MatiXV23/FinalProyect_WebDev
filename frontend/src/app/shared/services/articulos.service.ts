@@ -24,6 +24,16 @@ export class ArticulosService {
     }
   }
 
+  public async putArticulo(datos: Articulo): Promise<void> {
+    try {
+      await firstValueFrom(
+        this.httpClient.put(`${baseApiURL}/articulos/${datos.id_articulo}`, datos)
+      );
+    } catch (e: any) {
+      throw new Error(e.error.message);
+    }
+  }
+
   public async getArticuloId(id: string) {
     try {
       return await firstValueFrom(this.httpClient.get<Articulo>(`${baseApiURL}/articulos/${id}`));

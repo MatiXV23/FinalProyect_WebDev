@@ -1,1 +1,7 @@
 <p>articulos-usuario-editar works!</p>
+@if(this.articulo.hasValue()){
+<app-articulo-form
+  [articuloPosteado]="this.articulo.value()"
+  (saved)="this.handleEdit($event)"
+></app-articulo-form>
+}
