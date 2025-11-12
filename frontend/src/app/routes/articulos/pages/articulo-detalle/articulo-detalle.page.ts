@@ -8,13 +8,23 @@ import {
   IonCardContent,
   IonButton,
   IonBackButton,
+  IonRouterLinkWithHref,
 } from '@ionic/angular/standalone';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-articulo-detalle',
-  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton],
+  imports: [
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonButton,
+    IonRouterLinkWithHref,
+    RouterLink,
+  ],
   templateUrl: './articulo-detalle.page.html',
   styleUrl: './articulo-detalle.page.css',
 })
@@ -29,4 +39,7 @@ export class ArticuloDetallePage {
       return this.articulosService.getArticuloId(String(params.id));
     },
   });
+  async handleCarrito() {
+    console.log('Articulo en el carrito!');
+  }
 }

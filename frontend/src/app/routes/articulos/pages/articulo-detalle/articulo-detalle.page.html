@@ -7,8 +7,8 @@
       <ion-card-subtitle>Envio a domicilio</ion-card-subtitle>
       } @else {<ion-card-subtitle>Retira en domicilio del vendedor</ion-card-subtitle>}
     </ion-card-header>
-    <ion-button>Chat</ion-button>
-    <ion-button>Perfil del vendedor</ion-button>
+    <a routerLink="/chats"><ion-button>Chat</ion-button></a>
+    <a routerLink="/cuenta"><ion-button>Perfil del vendedor</ion-button></a>
     <ion-card-subtitle>Detalles</ion-card-subtitle>
     @if (this.articulo.value()?.usado) {
     <ion-card-subtitle>Estado - Articulo usado</ion-card-subtitle>
@@ -17,7 +17,7 @@
     @if (this.articulo.value()?.moneda == 'UYU') {
     <ion-card-content> $ {{ this.articulo.value()?.precio }}</ion-card-content>
     } @else {<ion-card-content>U$S {{ this.articulo.value()?.precio }}</ion-card-content
-    >} <ion-button>Al carrito</ion-button><br />
-    <ion-button>Comprar</ion-button>
+    >} <ion-button (click)="this.handleCarrito()">Al carrito</ion-button><br />
+    <a routerLink="comprar"><ion-button>Comprar</ion-button></a>
   </div>
 </ion-card>
