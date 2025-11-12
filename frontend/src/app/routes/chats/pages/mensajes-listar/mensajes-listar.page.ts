@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject, resource } from '@angular/core';
+import { IonSplitPane, IonMenu, IonToolbar, IonHeader, IonTitle, IonContent, IonButton, IonAvatar } from "@ionic/angular/standalone";
+import { RouterOutlet, RouterLink } from "@angular/router";
+import { ChatsService } from '../../../../shared/services/chats.service';
+import { ChatNombres } from '../../../../shared/types/chats';
+import { MainStore } from '../../../../shared/stores/main.store';
 
 @Component({
   selector: 'app-mensajes-listar',
-  imports: [],
+  imports: [IonSplitPane, IonMenu, IonContent, RouterOutlet, IonButton, RouterLink, IonAvatar],
   templateUrl: './mensajes-listar.page.html',
   styleUrl: './mensajes-listar.page.css',
 })
 export class MensajesListarPage {
+  private chatService = inject(ChatsService)
+  private mainStore = inject(MainStore)
 
+  chats = resource({
+    loader: () => this.chatService.getAllChatsNombres()
+  })
+
+  
 }

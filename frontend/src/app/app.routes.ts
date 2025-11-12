@@ -107,14 +107,10 @@ export const routes: Routes = [
   {
     path: 'chats',
     canActivate: [isLoggedGuard],
-    children: [
-      {
-        path: '',
-        loadComponent: async () =>
+    loadComponent: async () =>
           (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
             .MensajesListarPage,
-        title: 'Listar chats',
-      },
+    children: [
       {
         path: ':id_chat',
         loadComponent: async () =>

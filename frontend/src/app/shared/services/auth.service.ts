@@ -38,7 +38,13 @@ export class AuthService {
   async checkLocalStorage(){ 
     if (!this.mainStore.token() && localStorage.getItem('token')) {
       this.mainStore.token.set(localStorage.getItem('token')!)
-      if (!this.mainStore.user()) this.mainStore.user.set(await this.getUser())
+      if (!this.mainStore.user()){
+        try {
+           this.mainStore.user.set(await this.getUser())
+        }catch (e) {
+          this.logOut()
+        }
+      }
     }
   }
 
