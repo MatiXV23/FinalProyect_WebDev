@@ -1,22 +1,74 @@
 <main class="w-full h-full flex justify-center">
-    <ion-card class="p-6 max-w-sm h-fit top-1/4">
-        <ion-card-header>
-            <ion-card-title class="text-center text-2xl">Iniciar Sesion</ion-card-title>
-        </ion-card-header>
-        
-        <form (ngSubmit)="handleSessionInit($event)" class="flex flex-col">
-            <ion-input [(ngModel)]="this.credenciales().email" name="email" class="mt-10" label="Correo electronico" label-placement="stacked" fill="outline" type="email" placeholder="Enter text"></ion-input>
-            
-            <ion-input [(ngModel)]="this.credenciales().password" name="password" class="mt-6" label="Contraseña" label-placement="stacked" fill="outline" placeholder="Enter text">
-                <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-            </ion-input>
-            
-            <ion-button type="submit" class="self-center mt-6">Iniciar Sesion</ion-button>
-        </form>
-      
-        <ion-card-footer>
-            <ion-card-subtitle class="mt-6">No tienes cuenta? <a routerLink="/registro" color="secundary" class="cursor-pointer">Registrate Aqui</a></ion-card-subtitle>
-        </ion-card-footer>
-    </ion-card>
-    
+  <ion-card class="p-6 max-w-sm h-fit top-1/4">
+    <ion-card-header>
+      <ion-card-title class="text-center text-2xl">Iniciar Sesión</ion-card-title>
+    </ion-card-header>
+
+    <form #loginForm="ngForm" (ngSubmit)="handleSessionInit(loginForm)" class="flex flex-col">
+      <!-- EMAIL -->
+      <ion-input
+        [(ngModel)]="this.credenciales().email"
+        name="email"
+        class="mt-10"
+        label="Correo electrónico"
+        label-placement="stacked"
+        fill="outline"
+        type="text"
+        placeholder="ejemplo@correo.com"
+        required
+        pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+        #emailCtrl="ngModel"
+        autocomplete="email"
+      ></ion-input>
+
+      <ion-text
+        color="danger"
+        class="mt-1 ml-1 text-sm"
+        *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)"
+      >
+        @if (emailCtrl.errors?.['required']) {
+        <small>El correo es obligatorio.</small>
+        } @else if (emailCtrl.errors?.['pattern']) {
+        <small>Ingresa un correo válido (debe incluir @ y dominio).</small>
+        }
+      </ion-text>
+
+      <ion-input
+        [(ngModel)]="this.credenciales().password"
+        name="password"
+        class="mt-6"
+        label="Contraseña"
+        label-placement="stacked"
+        fill="outline"
+        placeholder="Ingresa tu contraseña"
+        type="password"
+        required
+        #passwordCtrl="ngModel"
+        autocomplete="current-password"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-text
+        color="danger"
+        class="mt-1 ml-1 text-sm"
+        *ngIf="passwordCtrl?.touched && passwordCtrl?.errors?.['required']"
+      >
+        <small>La contraseña es obligatoria.</small>
+      </ion-text>
+
+      <ion-button type="submit" class="self-center mt-6" [disabled]="loginForm.invalid">
+        Iniciar Sesión
+      </ion-button>
+    </form>
+
+    <ion-card-footer>
+      <ion-card-subtitle class="mt-6">
+        ¿No tienes cuenta?
+        <a routerLink="/registro" class="cursor-pointer text-blue-400 hover:underline">
+          Regístrate aquí
+        </a>
+      </ion-card-subtitle>
+    </ion-card-footer>
+  </ion-card>
 </main>
