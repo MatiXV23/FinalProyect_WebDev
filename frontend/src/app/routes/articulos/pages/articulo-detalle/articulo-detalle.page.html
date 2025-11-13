@@ -1,6 +1,10 @@
-<ion-card class="flex w-3/3 h-6/6">
-  <img alt="Imagen ampliada del articulo" src="{{ this.articulo.value()?.foto_url }}" />
-  <div class="ion-text-center">
+<ion-card class="flex flex-col w-3/3 h-6/6 lg:flex-row">
+  <img
+    alt="Imagen ampliada del articulo"
+    class="aspect-square overflow-hidden object-cover"
+    src="{{ this.articulo.value()?.foto_url }}"
+  />
+  <div class="ion-text-center w-full">
     <ion-card-header>
       <ion-card-title>{{ this.articulo.value()?.nombre }}</ion-card-title>
       @if (this.articulo.value()?.con_envio) {
