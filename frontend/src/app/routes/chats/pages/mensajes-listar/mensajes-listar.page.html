@@ -1,1 +1,31 @@
-<p>mensajes-listar works!</p>
+<ion-split-pane when="xs" contentId="chatsMenu">
+  <ion-menu contentId="chatsMenu" class="w-xs">
+    <ion-content color="light">
+        @if (chats.hasValue()) {
+            @for (chat of chats.value(); track $index) {
+                <a [routerLink]="[chat.id_chat]">
+                    <ion-button expand="full" color="light" class="flex items-center">
+                        <ion-avatar class="flex items-center">
+                            <img alt="Silhouette of a person's head" class="aspect-square w-full" [src]="chat.foto_url" />
+                        </ion-avatar>
+                        <div class="text-center ml-4">
+                            <p>
+                                {{chat.nombre_persona}}
+                                {{chat.apellido_persona}}
+                            </p>
+                        </div>
+                    </ion-button>
+                </a>
+            }
+        }
+        
+
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="chatsMenu">
+    <ion-content class="ion-padding">
+        <router-outlet></router-outlet>
+    </ion-content>
+  </div>
+</ion-split-pane>
