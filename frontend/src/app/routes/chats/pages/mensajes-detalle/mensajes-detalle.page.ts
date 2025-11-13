@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { IonInput, IonIcon, IonButton } from "@ionic/angular/standalone";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mensajes-detalle',
-  imports: [IonInput, IonIcon, IonButton],
+  imports: [IonInput, IonIcon, IonButton, FormsModule],
   templateUrl: './mensajes-detalle.page.html',
   styleUrl: './mensajes-detalle.page.css',
 })
@@ -19,11 +20,14 @@ export class MensajesDetallePage {
 
   fecha_vieja = '1/1/2001'
 
+  contenido = ''
+
   mensajes = resource({
     params: () => ({id: this.id_chat}),
     loader: ({params}) => this.chatService.getMensajes(params.id!)
   })
 
+  
   isUserLogged(id_usuario: number): boolean {
     return this.mainStore.isUserLogged(id_usuario)
   }
@@ -47,6 +51,15 @@ export class MensajesDetallePage {
 
   debeImprimirFecha(fecha_actual: string, fecha_vieja:string): boolean{
     return fecha_vieja !== fecha_actual
+  }
+
+  async sendMessage(event: any){
+    if (!this.contenido) return
+    await this.chatService.sendMessage(this.id_chat!, this.contenido)
+    setTimeout(() => {
+      this.contenido = ''
+    }, 0)
+    this.mensajes.reload()
   }
 }
 

@@ -15,26 +15,26 @@
             @if (!isUserLogged(m.id_enviador)) {
                 <div class="w-fit px-3 mb-2 py-2 rounded-lg ml-2 z-1 relative message-received shadow-sm overflow-visible bg-(--ion-color-light) text-(--ion-color-light-contrast)">
                     <p>{{m.contenido}}</p>
-                    <p>{{hora}}</p>
+                    <p class="text-xs opacity-50">{{hora}}</p>
                 </div>
             }@else {
                 <div class="w-fit px-3 py-2 mb-2 self-end rounded-lg z-1 mr-2 relative message-sent shadow-sm overflow-visible bg-(--ion-color-dark) text-(--ion-color-dark-contrast)">
                     <p>{{m.contenido}}</p>
-                    <p>{{hora}}</p>
+                    <p class="text-xs text-end opacity-60">{{hora}}</p>
                 </div>
             }
         }
 
-        <div class="w-full fixed bottom-0 right-0 p-4 flex items-center">
+        <form class="w-full fixed bottom-0 right-0 p-4 flex items-center" (ngSubmit)="sendMessage($event)">
             <div class="mr-4 w-full">
-                <ion-input fill="outline" placeholder="Enviar mensaje"></ion-input>
+                <ion-input fill="outline" placeholder="Enviar mensaje" name="contenido" [(ngModel)]="contenido"></ion-input>
             </div>
             <div>
-                <ion-button shape="round" class="w-5">
+                <ion-button shape="round" class="w-5" type="submit">
                     <ion-icon slot="icon-only" fill="outline" src="/assets/icons/send.svg"></ion-icon>
                 </ion-button>
             </div>
-        </div>
+        </form>
         
     </div>
     

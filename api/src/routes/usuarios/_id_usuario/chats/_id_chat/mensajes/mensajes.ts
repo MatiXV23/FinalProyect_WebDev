@@ -53,7 +53,7 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     async (req, rep) => {
       const msg: Partial<Mensaje> = {
         id_chat: req.params.id_chat,
-        id_enviador: req.params.id_chat,
+        id_enviador: req.params.id_usuario,
         contenido: req.body.contenido
       }
       rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(msg))

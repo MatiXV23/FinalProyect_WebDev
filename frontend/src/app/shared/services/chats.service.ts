@@ -59,5 +59,37 @@ export class ChatsService {
       throw new Error(e.error.message);
     }
   }
+
+  public async getChatId(id_comprador: number, id_vendedor: number): Promise<number> {
+    try {
+      const id_usuario = this.mainStore.user()?.id_usuario
+
+      const chats = await firstValueFrom(this.httpClient.get<Chat[]>(`${baseApiURL}/usuarios/${id_usuario}/chats`))
+
+      const chat = chats.find((c)=> (c.id_comprador===id_comprador && c.id_vendedor===id_vendedor) || (c.id_comprador===id_vendedor && c.id_vendedor===id_comprador))
+
+      if (chat) return chat.id_chat
+
+      const nuevo_chat = await firstValueFrom(this.httpClient.post<Chat>(`${baseApiURL}/usuarios/${id_usuario}/chats`, {id_comprador, id_vendedor}))
+      return nuevo_chat.id_chat
+
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
+  public async sendMessage(id_chat: string, contenido: string) {
+    try {
+      const id_usuario = this.mainStore.user()?.id_usuario
+
+      await firstValueFrom(this.httpClient.post(`${baseApiURL}/usuarios/${id_usuario}/chats/${id_chat}/mensajes`, {contenido}))
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
 }
 

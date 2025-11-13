@@ -1,29 +1,53 @@
-<ion-card class="flex flex-col w-3/3 h-6/6 lg:flex-row">
-  <img
-    alt="Imagen ampliada del articulo"
-    class="aspect-square overflow-hidden object-cover"
-    src="{{ this.articulo.value()?.foto_url }}"
-  />
-  <div class="ion-text-center w-full">
-    <ion-card-header>
-      <ion-card-title>{{ this.articulo.value()?.nombre }}</ion-card-title>
-      @if (this.articulo.value()?.con_envio) {
-      <ion-card-subtitle>Envio a domicilio</ion-card-subtitle>
-      } @else {<ion-card-subtitle>Retira en domicilio del vendedor</ion-card-subtitle>}
-    </ion-card-header>
-    <a routerLink="/chats"><ion-button>Chat</ion-button></a>
-    <a routerLink="/cuenta"><ion-button>Perfil del vendedor</ion-button></a>
-    <ion-card-subtitle>Detalles</ion-card-subtitle>
-    @if (this.articulo.value()?.usado) {
-    <ion-card-subtitle>Estado - Articulo usado</ion-card-subtitle>
-    } @else {<ion-card-subtitle>Estado - Articulo nuevo</ion-card-subtitle>}
-    <ion-card-content>{{ this.articulo.value()?.descripcion }}</ion-card-content>
-    @if (this.articulo.value()?.moneda == 'UYU') {
-    <ion-card-content> $ {{ this.articulo.value()?.precio }}</ion-card-content>
-    } @else {<ion-card-content>U$S {{ this.articulo.value()?.precio }}</ion-card-content
-    >} <ion-button (click)="this.handleCarrito()">Al carrito</ion-button><br />
-    <a routerLink="comprar"><ion-button>Comprar</ion-button></a>
-    <hr />
-    <a routerLink="editar"><ion-button>🔧</ion-button></a>
-  </div>
-</ion-card>
+@if (this.articulo.hasValue()) {
+  @let articulo = this.articulo.value();
+
+  <ion-card class="flex flex-col w-full h-full lg:flex-row">
+    <img
+      alt="Imagen ampliada del articulo"
+      class="aspect-square w-full overflow-hidden object-cover"
+      src="{{ articulo.foto_url }}"
+    />
+    <div class="ion-text-center w-full p-5">
+      <ion-card-header>
+        <ion-card-title class="mb-5">{{ articulo.nombre }}</ion-card-title>
+        @if (articulo.con_envio) {
+          <ion-card-subtitle class="mb-5">Envio a domicilio</ion-card-subtitle>
+        } @else {
+          <ion-card-subtitle class="mb-5">Retira en domicilio del vendedor</ion-card-subtitle>
+        }
+      </ion-card-header>
+
+      
+      <ion-button class="mr-4" (click)="handleChatBtn($event, articulo.id_articulo)">Chat</ion-button>
+      
+      <a routerLink="/cuenta">
+        <ion-button>Perfil del vendedor</ion-button>
+      </a>
+      <ion-card-subtitle>Detalles</ion-card-subtitle>
+
+      @if (articulo.usado) {
+        <ion-card-subtitle>Estado - Articulo usado</ion-card-subtitle>
+      } @else {
+        <ion-card-subtitle>Estado - Articulo nuevo</ion-card-subtitle>
+      }
+      
+      <ion-card-content>{{ articulo.descripcion }}</ion-card-content>
+      
+      @if (articulo.moneda == 'UYU') {
+        <ion-card-content> $ {{ articulo.precio }}</ion-card-content>
+      } @else {
+        <ion-card-content>U$S {{ articulo.precio }}</ion-card-content>
+      } 
+      <ion-button (click)="this.handleCarrito()">Al carrito</ion-button>
+      <br />
+      <a routerLink="comprar">
+        <ion-button>Comprar</ion-button>
+      </a>
+      <hr />
+      <a routerLink="editar">
+        <ion-button>🔧</ion-button>
+      </a>
+    </div>
+  </ion-card>
+}
+

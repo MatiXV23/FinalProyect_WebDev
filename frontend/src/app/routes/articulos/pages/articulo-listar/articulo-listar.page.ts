@@ -38,7 +38,6 @@ export class ArticuloListarPage {
     loader: () => this.articulosService.getAll(this.params)
   })
 
-  artEf = effect(()=> console.log(this.articulos.value()))
 
   // Funcion aux
   range(n: number) {
