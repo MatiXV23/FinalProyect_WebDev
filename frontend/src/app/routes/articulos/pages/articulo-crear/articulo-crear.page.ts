@@ -20,7 +20,7 @@ export class ArticuloCrearPage {
   async handlePostear(Articulo: ArticuloPost) {
     try {
       const newArticulo = await this.articuloService.postArticulo(Articulo);
-      this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     } catch (e) {
       throw e;
     }

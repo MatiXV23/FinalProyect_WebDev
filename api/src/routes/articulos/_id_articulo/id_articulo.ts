@@ -6,6 +6,25 @@ import { articuloModel } from "../../../models/market/articuloModel.ts";
 
 //necesito autorizacion, solo el admin puede moficar el artículo
 const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
+  fastify.get(
+    "",
+    {
+      schema: {
+        summary: "Obtener un articulo",
+        tags: ["Articulo"],
+        description:
+          "Ruta para obtener un unico articulo por id. No hay requerimientos de uso",
+        params: Type.Pick(articuloModel, ["id_articulo"]),
+        response: {
+          200: articuloModel,
+        },
+      },
+    },
+    async (req, rep) => {
+      return fastify.ArticulosDB.getById(req.params.id_articulo);
+    }
+  );
+
   fastify.put(
     "",
     {

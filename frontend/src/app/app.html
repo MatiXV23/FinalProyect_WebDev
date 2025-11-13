@@ -1,6 +1,5 @@
 @let user = this.user();
 <ion-split-pane when="md" contentId="main">
-
   <ion-menu menuId="menu" contentId="main" class="w-xs">
     <ion-header>
       <ion-toolbar>
@@ -11,54 +10,92 @@
         </ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content color="darkbg"> 
+    <ion-content color="darkbg">
       <nav class="h-full">
         <ul class="w-full h-full flex-col flex">
           <li class="flex-1 flex justify-center items-center m-5">
-             <a routerLink="cuenta" (click)="closeMenu()">
+            <a routerLink="cuenta" (click)="closeMenu()">
               <ion-avatar>
-                <img alt="Silhouette of a person's head" class="aspect-square" [src]="avatarImgUrl()" />
+                <img
+                  alt="Silhouette of a person's head"
+                  class="aspect-square"
+                  [src]="avatarImgUrl()"
+                />
               </ion-avatar>
             </a>
             @if (user) {
-              <div class="text-center ml-4">
-                <h4>{{user.nombres}} {{user.apellidos}}</h4>
-                <a routerLink="cuenta" (click)="closeMenu()" class="text-xs cursor-pointer" color="terciary">Detalles</a>
-              </div>
-            } 
+            <div class="text-center ml-4">
+              <h4>{{ user.nombres }} {{ user.apellidos }}</h4>
+              <a
+                routerLink="cuenta"
+                (click)="closeMenu()"
+                class="text-xs cursor-pointer"
+                color="terciary"
+                >Detalles</a
+              >
+            </div>
+            }
           </li>
           <div class="flex-8">
             @if (user && user.is_admin) {
-              <li> 
-                <a routerLink="usuarios"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Dashboard</ion-button></a>
-              </li>
+            <li>
+              <a routerLink="usuarios"
+                ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                  >Dashboard</ion-button
+                ></a
+              >
+            </li>
             }
-            <li> 
-              <a routerLink="articulos/crear"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Publicar Articulo</ion-button></a>
+            <li>
+              <a routerLink="articulos/crear"
+                ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                  >Publicar Articulo</ion-button
+                ></a
+              >
+            </li>
+            <li>
+              <a routerLink="home"
+                ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                  >Mis Articulos</ion-button
+                ></a
+              >
             </li>
             @if (user) {
-              <li><ion-button expand="full" color="darkbg" (click)="handleLogOut($event)">Cerrar Sesion</ion-button></li>
+            <li>
+              <ion-button expand="full" color="darkbg" (click)="handleLogOut($event)"
+                >Cerrar Sesion</ion-button
+              >
+            </li>
             } @else {
-              <li><a routerLink="login"><ion-button expand="full" color="darkbg" (click)="closeMenu()">Iniciar Sesion</ion-button></a></li>
+            <li>
+              <a routerLink="login"
+                ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                  >Iniciar Sesion</ion-button
+                ></a
+              >
+            </li>
             }
-          <li>
-            <div class="grid grid-cols-2 w-full">
-              <a routerLink="chats"><ion-button expand="full" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/chatbubbles-outline.svg"></ion-icon></ion-button>
-              </a>
-              <a routerLink="chats"><ion-button expand="full" color="darkbg" (click)="closeMenu()"><ion-icon src="assets/icons/cart.svg"></ion-icon></ion-button>
-              </a>
-            </div>
-            
-          </li>
+            <li>
+              <div class="grid grid-cols-2 w-full">
+                <a routerLink="chats"
+                  ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                    ><ion-icon src="assets/icons/chatbubbles-outline.svg"></ion-icon
+                  ></ion-button>
+                </a>
+                <a routerLink="chats"
+                  ><ion-button expand="full" color="darkbg" (click)="closeMenu()"
+                    ><ion-icon src="assets/icons/cart.svg"></ion-icon
+                  ></ion-button>
+                </a>
+              </div>
+            </li>
           </div>
 
           @if(this.isMobile()){
-            <li class="flex-0">
-              <ion-button expand="full" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
-            </li>
+          <li class="flex-0">
+            <ion-button expand="full" color="darkbg" (click)="closeMenu()">Cerrar Menu</ion-button>
+          </li>
           }
-
-          
         </ul>
       </nav>
     </ion-content>
@@ -70,10 +107,11 @@
         <ion-title>
           <div class="flex items-center">
             @if(this.isMobile()){
-              <ion-menu-button auto-hide="false" class="flex-0"></ion-menu-button>
+            <ion-menu-button auto-hide="false" class="flex-0"></ion-menu-button>
             }
-            <a routerLink="home" class="flex-1 text-center cursor-pointer" color="terciary">CNP Market</a>
-          
+            <a routerLink="home" class="flex-1 text-center cursor-pointer" color="terciary"
+              >CNP Market</a
+            >
           </div>
         </ion-title>
       </ion-toolbar>
@@ -83,4 +121,3 @@
     </ion-content>
   </div>
 </ion-split-pane>
-
