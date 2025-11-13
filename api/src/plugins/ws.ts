@@ -4,10 +4,10 @@ import type { FastifyPluginAsync } from "fastify";
 import websocket from '@fastify/websocket'
 
 
-const jwtPlugin: FastifyPluginAsync = fp(async (fastify) => {
+const websocketPlugin: FastifyPluginAsync = fp(async (fastify) => {
   await fastify.register(websocket);
 });
 
-export default jwtPlugin;
+export default websocketPlugin;
 
 export const clientConnections = new Map()
