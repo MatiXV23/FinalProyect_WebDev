@@ -9,3 +9,5 @@ const jwtPlugin: FastifyPluginAsync = fp(async (fastify) => {
 });
 
 export default jwtPlugin;
+
+export const clientConnections = new Map()

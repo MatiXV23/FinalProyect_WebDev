@@ -24,8 +24,8 @@
                 </div>
             }
         }
-
-        <form class="w-full fixed bottom-0 right-0 p-4 flex items-center" (ngSubmit)="sendMessage($event)">
+        <div class="bottom-0 right-0 w-full py-12" id="bottomCont"></div>
+        <form class="w-full fixed bottom-0 right-0 p-4 flex items-center z-1 bg-(--ion-color-darkbg)" (ngSubmit)="sendMessage($event)">
             <div class="mr-4 w-full">
                 <ion-input fill="outline" placeholder="Enviar mensaje" name="contenido" [(ngModel)]="contenido"></ion-input>
             </div>

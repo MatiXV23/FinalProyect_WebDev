@@ -56,7 +56,16 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         id_enviador: req.params.id_usuario,
         contenido: req.body.contenido
       }
-      rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(msg))
+      const mensaje = await fastify.ChatsDB.createMensajeForChat(msg)
+
+      const chat = await fastify.ChatsDB.getById(req.params.id_chat)
+
+      const id_reciever = chat.id_comprador === req.params.id_usuario ? chat.id_vendedor : chat.id_comprador
+      fastify.notifyClient(id_reciever, {
+        type: "nuevo_mensaje",
+        id_chat: chat.id_chat,
+      })
+      rep.code(201).send(mensaje)
     }
   );
 };
