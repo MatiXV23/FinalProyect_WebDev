@@ -1,9 +1,10 @@
-import { Component, effect, inject, input, resource } from '@angular/core';
+import { Component, effect, inject, input, OnInit, resource } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { IonInput, IonIcon, IonButton } from "@ionic/angular/standalone";
 import { FormsModule } from '@angular/forms';
+import { WebsocketService } from '../../../../shared/services/websocket.service';
 
 @Component({
   selector: 'app-mensajes-detalle',
@@ -11,7 +12,9 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './mensajes-detalle.page.html',
   styleUrl: './mensajes-detalle.page.css',
 })
-export class MensajesDetallePage {
+export class MensajesDetallePage implements OnInit{
+  
+  private wsService = inject(WebsocketService)
   private route = inject(ActivatedRoute);
   private chatService = inject(ChatsService)
   private mainStore = inject(MainStore)
@@ -27,7 +30,25 @@ export class MensajesDetallePage {
     loader: ({params}) => this.chatService.getMensajes(params.id!)
   })
 
+  msgScroll = effect(()=> {
+    const msgs = this.mensajes.value()
+    if (msgs) {
+      this.scrollDown()
+    }
+  })
+
+  msgReload = effect(()=> {
+    if (this.wsService.shouldReload()) {
+      console.log("Mensaje entrante, recargando...")
+      this.mensajes.reload()
+      this.wsService.resetReload()
+    }
+  })
   
+  ngOnInit(): void {
+    this.wsService.connect(this.mainStore.user()!.id_usuario)
+  }
+
   isUserLogged(id_usuario: number): boolean {
     return this.mainStore.isUserLogged(id_usuario)
   }
@@ -60,6 +81,19 @@ export class MensajesDetallePage {
       this.contenido = ''
     }, 0)
     this.mensajes.reload()
+  }
+
+  scrollDown() {
+    setTimeout(() => {
+      const element = document.getElementById('bottomCont')
+      if (element) {
+        console.log(element)
+        element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            })
+      }
+    });
   }
 }
 
