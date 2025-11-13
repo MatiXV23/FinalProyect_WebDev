@@ -99,8 +99,8 @@ export class ChatsDB {
         }
     }
 
-    async createMensajeForChat(id_chat: number, data: Partial<Mensaje>): Promise<Mensaje> {
-        const {id_enviador, contenido} = data
+    async createMensajeForChat(data: Partial<Mensaje>): Promise<Mensaje> {
+        const {id_enviador, contenido, id_chat} = data
 
         let query = /*sql*/` 
                     WITH nuevo_chat AS (

@@ -1,23 +1,41 @@
 @if (mensajes.hasValue()) {
-    <div class="flex flex-col">
+    <div class="flex flex-col h-full">
+        
         @for (m of mensajes.value(); track $index) {
-            @let fecha = this.parseTime(m.fecha_mensaje);
-            @if (fecha !== fecha_anterior) {
-                
+            @let hora = this.parseTime(m.fecha_mensaje);
+            @let fecha = this.parseDate(m.fecha_mensaje);
+            @let fecha_vieja = this.parseDate(mensajes.value()[$index - 1 >= 0 ? $index - 1 : 0].fecha_mensaje);
+            @let esNuevaFecha = $index - 1 >= 0 ? this.debeImprimirFecha(fecha, fecha_vieja) : true;
+            @if (esNuevaFecha) {
+                <div class="w-fit px-3 mb-2 py-2 self-center rounded-lg shadow-sm bg-(--ion-color-light) text-(--ion-color-light-contrast)">
+                    <p>{{fecha}}</p>
+                </div>
             }
 
             @if (!isUserLogged(m.id_enviador)) {
                 <div class="w-fit px-3 mb-2 py-2 rounded-lg ml-2 z-1 relative message-received shadow-sm overflow-visible bg-(--ion-color-light) text-(--ion-color-light-contrast)">
                     <p>{{m.contenido}}</p>
-                    <p>{{fecha}}</p>
+                    <p>{{hora}}</p>
                 </div>
             }@else {
                 <div class="w-fit px-3 py-2 mb-2 self-end rounded-lg z-1 mr-2 relative message-sent shadow-sm overflow-visible bg-(--ion-color-dark) text-(--ion-color-dark-contrast)">
                     <p>{{m.contenido}}</p>
-                    <p>{{fecha}}</p>
+                    <p>{{hora}}</p>
                 </div>
             }
         }
+
+        <div class="w-full fixed bottom-0 right-0 p-4 flex items-center">
+            <div class="mr-4 w-full">
+                <ion-input fill="outline" placeholder="Enviar mensaje"></ion-input>
+            </div>
+            <div>
+                <ion-button shape="round" class="w-5">
+                    <ion-icon slot="icon-only" fill="outline" src="/assets/icons/send.svg"></ion-icon>
+                </ion-button>
+            </div>
+        </div>
+        
     </div>
     
 }

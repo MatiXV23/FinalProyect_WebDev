@@ -2,10 +2,11 @@ import { Component, effect, inject, input, resource } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { MainStore } from '../../../../shared/stores/main.store';
+import { IonInput, IonIcon, IonButton } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-mensajes-detalle',
-  imports: [],
+  imports: [IonInput, IonIcon, IonButton],
   templateUrl: './mensajes-detalle.page.html',
   styleUrl: './mensajes-detalle.page.css',
 })
@@ -16,7 +17,7 @@ export class MensajesDetallePage {
 
   id_chat = this.route.snapshot.paramMap.get('id_chat');
 
-  fecha_nueva = true
+  fecha_vieja = '1/1/2001'
 
   mensajes = resource({
     params: () => ({id: this.id_chat}),
@@ -32,7 +33,7 @@ export class MensajesDetallePage {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    
+
     return `${day}/${month}/${year}`;
   }
 
@@ -42,6 +43,10 @@ export class MensajesDetallePage {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     
     return `${hours}:${minutes}`;
+  }
+
+  debeImprimirFecha(fecha_actual: string, fecha_vieja:string): boolean{
+    return fecha_vieja !== fecha_actual
   }
 }
 

@@ -2,7 +2,7 @@ import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typ
 import { PC_NotImplemented } from "../../../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../../../models/market/chatModel.ts";
-import { mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
+import { type Mensaje, mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
 
 const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.addHook("onRequest", fastify.authenticate)
@@ -39,7 +39,7 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         tags: ["Usuario", "Chats"],
         description:
           "Ruta para enviar un mensaje a un usuario. Se requiere ser el usuario dueño ",
-        body: Type.Omit(mensajeModel, ["fecha_mensaje", "id_chat"]),
+        body: Type.Pick(mensajeModel, ["contenido"]),
         params: Type.Intersect([
           Type.Pick(usuarioModel, ["id_usuario"]),
           Type.Pick(chatModel, ["id_chat"]),
@@ -51,7 +51,12 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(req.params.id_chat, req.body))
+      const msg: Partial<Mensaje> = {
+        id_chat: req.params.id_chat,
+        id_enviador: req.params.id_chat,
+        contenido: req.body.contenido
+      }
+      rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(msg))
     }
   );
 };
