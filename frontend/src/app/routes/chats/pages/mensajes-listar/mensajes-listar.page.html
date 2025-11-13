@@ -1,6 +1,6 @@
 <ion-split-pane when="xs" contentId="chatsMenu">
   <ion-menu contentId="chatsMenu" class="w-xs">
-    <ion-content color="light">
+    <ion-content color="darkbg">
         @if (chats.hasValue()) {
             @for (chat of chats.value(); track $index) {
                 <a [routerLink]="[chat.id_chat]">

@@ -39,7 +39,6 @@ export class MensajesDetallePage implements OnInit{
 
   msgReload = effect(()=> {
     if (this.wsService.shouldReload()) {
-      console.log("Mensaje entrante, recargando...")
       this.mensajes.reload()
       this.wsService.resetReload()
     }
@@ -87,11 +86,10 @@ export class MensajesDetallePage implements OnInit{
     setTimeout(() => {
       const element = document.getElementById('bottomCont')
       if (element) {
-        console.log(element)
         element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            })
+          behavior: 'smooth',
+          block: 'start',
+        })
       }
     });
   }

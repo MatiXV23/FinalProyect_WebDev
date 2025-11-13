@@ -14,13 +14,11 @@ export class WebsocketService {
     this.ws = new WebSocket(`ws://localhost:3000/ws?id_usuario=${id_usuario}`);
     
     this.ws.onopen = () => {
-      console.log('WebSocket conectado');
       this.connected.set(true);
     };
     
     this.ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
-      console.log('WS msg: ', msg);
       
       if (msg.messageData && msg.messageData.type === "nuevo_mensaje") {
         this.shouldReload.set(true);
@@ -32,7 +30,6 @@ export class WebsocketService {
     };
     
     this.ws.onclose = () => {
-      console.log('WS Cerrado');
       this.connected.set(false);
     };
   }
