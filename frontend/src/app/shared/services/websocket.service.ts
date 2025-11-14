@@ -5,9 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class WebsocketService {
   private ws?: WebSocket;
-  
-  shouldReload = signal(false);
-  
+
+  shouldMsgReload = signal(false);
+
   connected = signal(false);
 
   connect(id_usuario: number) {
@@ -15,19 +15,22 @@ export class WebsocketService {
     this.ws.onopen = () => {
       this.connected.set(true);
     };
-    
+
     this.ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
-      
-      if (msg.messageData && msg.messageData.type === "nuevo_mensaje") {
-        this.shouldReload.set(true);
+
+      if (msg.data) {
+        switch (msg.data.type) {
+          case 'nuevo_mensaje':
+            this.shouldMsgReload.set(true);
+        }
       }
     };
-    
+
     this.ws.onerror = (error) => {
       console.error('WS Error:', error);
     };
-    
+
     this.ws.onclose = () => {
       this.connected.set(false);
     };
@@ -39,6 +42,6 @@ export class WebsocketService {
   }
 
   resetReload() {
-    this.shouldReload.set(false);
+    this.shouldMsgReload.set(false);
   }
 }
