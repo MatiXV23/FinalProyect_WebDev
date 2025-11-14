@@ -1,12 +1,18 @@
-import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
 import { chatModel } from "../../../../../../models/market/chatModel.ts";
-import { type Mensaje, mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
+import {
+  type Mensaje,
+  mensajeModel,
+} from "../../../../../../models/market/mensajeModel.ts";
 
 const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
-  fastify.addHook("onRequest", fastify.authenticate)
-  fastify.addHook("preHandler", fastify.isOwner)
+  fastify.addHook("onRequest", fastify.authenticate);
+  fastify.addHook("preHandler", fastify.isOwner);
 
   fastify.get(
     "",
@@ -27,7 +33,7 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return await fastify.ChatsDB.getMensajesFromChat(req.params.id_chat)
+      return await fastify.ChatsDB.getMensajesFromChat(req.params.id_chat);
     }
   );
 
@@ -54,9 +60,16 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       const msg: Partial<Mensaje> = {
         id_chat: req.params.id_chat,
         id_enviador: req.params.id_usuario,
-        contenido: req.body.contenido
-      }
-      rep.code(201).send(await fastify.ChatsDB.createMensajeForChat(msg))
+        contenido: req.body.contenido,
+      };
+      const mensajeCreado = await fastify.ChatsDB.createMensajeForChat(msg);
+      const chatActual = await fastify.ChatsDB.getById(Number(msg.id_chat));
+      const idOtro =
+        chatActual.id_comprador == msg.id_enviador
+          ? chatActual.id_vendedor
+          : chatActual.id_comprador;
+      fastify.notifyClient(idOtro, { type: "Nuevo_mensaje" });
+      rep.code(201).send(mensajeCreado);
     }
   );
 };
