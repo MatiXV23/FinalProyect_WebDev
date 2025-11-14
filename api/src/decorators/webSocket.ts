@@ -17,6 +17,6 @@ export default fastifyPlugin(async function (fastify) {
 
 declare module "fastify" {
   interface FastifyInstance {
-    notifyClient(id_usuario: number, messageData: any): void;
+    notifyClient(id_usuario: number, data: any): void;
   }
 }
