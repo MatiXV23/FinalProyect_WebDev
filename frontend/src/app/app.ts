@@ -1,8 +1,9 @@
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { IonContent, IonTitle, IonHeader, IonToolbar, IonMenu, MenuController, IonIcon, IonSplitPane } from "@ionic/angular/standalone";
 import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
+import { WebsocketService } from './shared/services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,9 @@ import { MainStore } from './shared/stores/main.store';
   styleUrl: './app.css',
 })
 export class App implements OnInit{
-  protected readonly title = signal('frontend');
+  protected readonly title = signal('frontend')
 
+  private wsService = inject(WebsocketService)
   private router = inject(Router)
   private authService = inject(AuthService)
   private mainStore = inject(MainStore)
@@ -25,6 +27,12 @@ export class App implements OnInit{
   user = this.mainStore.user
   
   avatarImgUrl = computed(()=> this.user() ? this.user()?.foto_url : '/assets/imgs/avatar.png')
+
+  wsConnetion = effect(()=> {
+    if (this.user()) {
+      this.wsService.connect(this.mainStore.user()!.id_usuario)
+    }
+  })
 
   async ngOnInit() {
     await this.authService.checkLocalStorage()

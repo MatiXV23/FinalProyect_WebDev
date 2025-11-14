@@ -12,7 +12,7 @@ import { WebsocketService } from '../../../../shared/services/websocket.service'
   templateUrl: './mensajes-detalle.page.html',
   styleUrl: './mensajes-detalle.page.css',
 })
-export class MensajesDetallePage implements OnInit{
+export class MensajesDetallePage{
   
   private wsService = inject(WebsocketService)
   private route = inject(ActivatedRoute);
@@ -44,10 +44,6 @@ export class MensajesDetallePage implements OnInit{
     }
   })
   
-  ngOnInit(): void {
-    this.wsService.connect(this.mainStore.user()!.id_usuario)
-  }
-
   isUserLogged(id_usuario: number): boolean {
     return this.mainStore.isUserLogged(id_usuario)
   }

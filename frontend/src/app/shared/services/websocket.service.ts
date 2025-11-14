@@ -12,7 +12,6 @@ export class WebsocketService {
 
   connect(id_usuario: number) {
     this.ws = new WebSocket(`ws://localhost:3000/ws?id_usuario=${id_usuario}`);
-    
     this.ws.onopen = () => {
       this.connected.set(true);
     };
