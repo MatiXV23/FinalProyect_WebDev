@@ -1,8 +1,7 @@
 import fp from "fastify-plugin";
 import { PC_NotFound } from "../errors/errors.ts";
 import type { FastifyPluginAsync } from "fastify";
-import websocket from '@fastify/websocket'
-
+import websocket from "@fastify/websocket";
 
 const websocketPlugin: FastifyPluginAsync = fp(async (fastify) => {
   await fastify.register(websocket);
@@ -10,4 +9,4 @@ const websocketPlugin: FastifyPluginAsync = fp(async (fastify) => {
 
 export default websocketPlugin;
 
-export const clientConnections = new Map()
+export const clientConnections = new Map();

@@ -2,14 +2,17 @@ import fastifyPlugin from "fastify-plugin";
 import { clientConnections } from "../plugins/ws.ts";
 
 export default fastifyPlugin(async function (fastify) {
-  fastify.decorate('notifyClient', async function (id_usuario: number, messageData: any) {
-    const socket = clientConnections.get(id_usuario);
-    if (!socket) return
-    
-    const message = JSON.stringify({ messageData });
-    
-    socket.send(message);
-  }); 
+  fastify.decorate(
+    "notifyClient",
+    async function (id_usuario: number, data: any) {
+      const socket = clientConnections.get(id_usuario);
+      if (!socket) return;
+
+      const message = JSON.stringify({ data });
+
+      socket.send(message);
+    }
+  );
 });
 
 declare module "fastify" {
