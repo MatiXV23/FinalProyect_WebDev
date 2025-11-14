@@ -10,45 +10,47 @@ import { baseApiURL } from '../../core/configs';
   providedIn: 'root',
 })
 export class AuthService {
-  private httpClient = inject(HttpClient)
+  private httpClient = inject(HttpClient);
 
-  private mainStore = inject(MainStore)
+  private mainStore = inject(MainStore);
 
-
-  async logIn(credenciales: Credenciales){
+  async logIn(credenciales: Credenciales) {
     try {
-      const {token} = await firstValueFrom(this.httpClient.post<{token: string}>(baseApiURL+'/auth', credenciales))
+      const { token } = await firstValueFrom(
+        this.httpClient.post<{ token: string }>(baseApiURL + '/auth', credenciales)
+      );
 
-      localStorage.setItem("token", token)
+      localStorage.setItem('token', token);
 
-      this.mainStore.token.set(token)
-      this.mainStore.user.set(await this.getUser())
-    }
-    catch (e) {
-      throw e
+      this.mainStore.token.set(token);
+      await this.getUser();
+    } catch (e) {
+      throw e;
     }
   }
 
-  async logOut(){
+  async logOut() {
     this.mainStore.token.set(undefined);
     this.mainStore.user.set(undefined);
-    localStorage.removeItem("token")
+    localStorage.removeItem('token');
   }
 
-  async checkLocalStorage(){ 
+  async checkLocalStorage() {
     if (!this.mainStore.token() && localStorage.getItem('token')) {
-      this.mainStore.token.set(localStorage.getItem('token')!)
-      if (!this.mainStore.user()){
+      this.mainStore.token.set(localStorage.getItem('token')!);
+      if (!this.mainStore.user()) {
         try {
-           this.mainStore.user.set(await this.getUser())
-        }catch (e) {
-          this.logOut()
+          await this.getUser();
+        } catch (e) {
+          this.logOut();
         }
       }
     }
   }
 
-  async getUser(): Promise<Usuario>{
-    return await firstValueFrom(this.httpClient.get<Usuario>(baseApiURL+'/auth'))
+  async getUser(): Promise<Usuario> {
+    const userLogeado = await firstValueFrom(this.httpClient.get<Usuario>(baseApiURL + '/auth'));
+    this.mainStore.user.set(userLogeado);
+    return userLogeado;
   }
 }
