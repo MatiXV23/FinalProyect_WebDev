@@ -24,9 +24,15 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
   }
 
   async getAll(): Promise<Resenia[]> {
-    const reseniasTotales = await this.pool.query<Resenia>(this.getQuery());
-    console.log("ojito", reseniasTotales);
-    return reseniasTotales.rows;
+    try {
+      const reseniasTotales = await this.pool.query<Resenia>(this.getQuery());
+      console.log("ojito", reseniasTotales);
+      return reseniasTotales.rows;
+    } catch (e){ 
+      console.log(e)
+      throw new PC_InternalServerError()
+    }
+    
   }
 
   async getById(id: number): Promise<Resenia> {
@@ -34,21 +40,24 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
   }
 
   async create(data: Partial<ReseniaPost>): Promise<Resenia> {
-    const { id_vendedor, comentario, reputacion } = data;
+    const { id_vendedor, comentario, reputacion, id_articulo } = data;
+    console.log(data)
     let query = `
         WITH nueva_resenia AS (
-            insert into resenias ( id_vendedor, comentario, reputacion)
-                VALUES ($1, $2, $3)
+            insert into resenias ( id_vendedor, comentario, reputacion, id_articulo)
+                VALUES ($1, $2, $3, $4)
                 RETURNING *
             )
         SELECT * from nueva_resenia;
     `;
     try {
-      const res = await this.pool.query(query, [
+      const res = await this.pool.query<Resenia>(query, [
         id_vendedor,
         comentario,
         reputacion,
+        id_articulo
       ]);
+      console.log(res)
       return res.rows[0];
     } catch (e: any) {
       throw new PC_InternalServerError(

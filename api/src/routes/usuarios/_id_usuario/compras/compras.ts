@@ -55,11 +55,12 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       preHandler: async (req, rep) => {
         const {id_articulo} = req.body
         const articulo = await fastify.ArticulosDB.getById(id_articulo)
+        console.log('llego1')
         if (articulo.id_vendedor === req.params.id_usuario) throw new PC_NoAuthorized("No puedes comprar un articulo que tu publicaste");
       }
     },
     async (req, rep) => {
-      
+      console.log('llego')
       await fastify.ComprasDB.create({
           id_comprador: req.params.id_usuario,
           id_articulo: req.body.id_articulo

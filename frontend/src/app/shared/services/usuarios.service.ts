@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Usuario } from '../types/usuario';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment'; 
+import { Resenia } from '../types/resenia';
 
 @Injectable({
   providedIn: 'root',
@@ -58,10 +59,18 @@ export class UsuariosService {
 
   public async updateUserPwd(id_usuario:number, password: string): Promise<void> {
     try {
-      console.log(id_usuario, password)
-      console.log('updateuserPwd try: \n');
       await firstValueFrom(this.httpClient.put(`${environment.apiUrl}/usuarios/${id_usuario}/pwd`, {password: password}))
       
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
+  public async getUserResenias(id_usuario:string): Promise<Resenia[]>{
+    try {
+      return await firstValueFrom(this.httpClient.get<Resenia[]>(`${environment.apiUrl}/usuarios/${id_usuario}/resenias`,))
     } catch (e: any) {
       console.log('Error: ' + e.error.message);
       if (e.status === 0) throw new Error(e.message);

@@ -1,1 +1,60 @@
-<a routerLink="edit"><ion-button expand="full">Editar user</ion-button></a>
+@if (this.user.hasValue()) {
+    @let user = this.user.value();
+    <main class="m-0">
+        <div class="w-full min-h-50 h-70 md:h-fit bg-(--ion-color-light) flex items-center relative justify-center flex-col md:flex-row md:justify-normal">
+            <img alt="Silhouette of a person's head" class="aspect-square w-40 rounded-full mx-auto md:ml-6 md:mr-6" [src]="user.foto_url"/>
+            <div class="my-5 mx-auto md:ml-6 md:mr-6 flex flex-col">
+                <div class="text-4xl">
+                    {{user.nombres}}
+                    {{user.apellidos}}
+                </div>
+                <div>
+                    Calificacion del vendedor:
+                    {{user.reputacion}} / 5
+                </div>
+            </div>
+            
+            <a routerLink="edit" class="absolute bottom-0 right-0"><ion-button>Editar</ion-button></a>
+        </div>
+
+        <section class="w-full flex">
+            
+            <div class="w-full m-3">
+                <h1 class="text-2xl text-left ml-4">Detalles del usuario</h1>
+                <ion-list [inset]="true">
+                    <ion-item>
+                        <ion-label>Nombre Completo: {{user.nombres}} {{user.apellidos}}</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Correo: {{user.email}}</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Direccion: {{dptoName()}}, {{user.direccion}}</ion-label>
+                    </ion-item>
+                    @if (user.id_usuario === loggedUser()?.id_usuario) {
+                        <ion-item>
+                            <ion-label>Numero de documento: {{user.nro_documento}}</ion-label>
+                        </ion-item>
+                    }
+                    
+                </ion-list>
+            </div>
+        </section>
+        
+
+        <section>
+            <h1>Resenias al vendedor</h1>
+            @if (resenias.hasValue()) {
+                @for (res of resenias.value(); track $index) {
+                    <ion-card>
+                        {{res.id_articulo}}
+                        {{res.comentario}}
+                        {{res.reputacion}}
+                    </ion-card>
+                }
+            }
+        </section>
+    </main>
+}
+
+

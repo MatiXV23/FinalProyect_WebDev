@@ -26,7 +26,7 @@ export class ComprasDB extends BasePgRepository<Compra> {
 
   async getAll(): Promise<Compra[]> {
     const compras = await this.pool.query<Compra>(this.getQuery());
-    console.log(compras);
+    
     return compras.rows;
   }
 
@@ -55,7 +55,7 @@ export class ComprasDB extends BasePgRepository<Compra> {
       return res.rows[0];
     } catch (e: any) {
       throw new PC_InternalServerError(
-        "Error en la creacion de una compra!" + e
+        "Error en la creacion de una compra!"
       );
     }
   }
