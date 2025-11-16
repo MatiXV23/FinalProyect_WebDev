@@ -24,12 +24,14 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
   }
 
   async getAll(): Promise<Articulo[]> {
-    const users = await this.pool.query<Articulo>(this.getQuery());
+    const users = await this.pool.query<Articulo>(this.getQuery(`LEFT JOIN compras c ON a.id_articulo = c.id_articulo
+                                                                  WHERE c.id_articulo IS NULL`));
     return users.rows;
   }
 
   async findAll(query: ArticuloQuery): Promise<Articulo[]> {
     const {id_categoria, id_departamento, id_vendedor} = query
+    let baseWhereCond = `LEFT JOIN compras c ON a.id_articulo = c.id_articulo `
     let whereCondition = ''
     let vars:any[] = []
     
@@ -61,6 +63,10 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
       }
     }
     
+    whereCondition += whereCondition 
+    ? `AND c.id_articulo IS NULL` 
+    : `WHERE c.id_articulo IS NULL`
+    whereCondition = baseWhereCond + whereCondition
     const users = await this.pool.query<Articulo>(
       this.getQuery(whereCondition),
       vars

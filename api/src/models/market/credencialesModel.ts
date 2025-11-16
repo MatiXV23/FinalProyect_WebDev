@@ -8,6 +8,10 @@ export const credencialesModel = Type.Object({
     {
       email: "agu@gmail.com",
       password:"pass",
+    },
+    {
+      email: "mati@yahoo.net",
+      password:"pass",
     }
   ]
 });

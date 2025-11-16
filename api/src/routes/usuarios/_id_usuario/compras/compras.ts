@@ -3,12 +3,14 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../errors/errors.ts";
+import { PC_NoAuthorized, PC_NotImplemented } from "../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
 import {
+  type Compra,
   compraModel,
   compraPostModel,
 } from "../../../../models/market/compraModel.ts";
+import { ErrorSchema } from "../../../../models/common/errorModel.ts";
 
 const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.addHook("onRequest", fastify.authenticate);
@@ -41,17 +43,27 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         tags: ["Articulo", "Comprar"],
         description:
           "Ruta para modificar articulo. No hay requerimientos de uso, pero debo estar loggeado",
-        body: Type.Omit(compraPostModel, ["id_compra", "id_resenia"]),
+        body: Type.Pick(compraPostModel, ["id_articulo"]),
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           204: Type.Null(),
+          404: ErrorSchema,
+          403: ErrorSchema
         },
         security: [{ bearerAuth: [] }],
       },
-      preHandler: [fastify.isNotOwner],
+      preHandler: async (req, rep) => {
+        const {id_articulo} = req.body
+        const articulo = await fastify.ArticulosDB.getById(id_articulo)
+        if (articulo.id_vendedor === req.params.id_usuario) throw new PC_NoAuthorized("No puedes comprar un articulo que tu publicaste");
+      }
     },
     async (req, rep) => {
-      await fastify.ComprasDB.create(req.body);
+      
+      await fastify.ComprasDB.create({
+          id_comprador: req.params.id_usuario,
+          id_articulo: req.body.id_articulo
+        });
       rep.code(204).send();
     }
   );

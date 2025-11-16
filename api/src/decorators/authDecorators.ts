@@ -31,9 +31,9 @@ export default fastifyPlugin(async function (fastify) {
     if (usuario.administrador === false) throw new PC_NoAuthorized();
   });
 
-  fastify.decorate("isNotOwner", (req:any, rep:any) => {
+  fastify.decorate("isNotOwner", async (req:any, rep:any) => {
     const usuario = req.user;
-    console.log(usuario);
+    console.log({usuario, id: req.params.id_usuario});
     if (req.params.id_usuario === usuario.id_usuario)
       throw new PC_NoAuthorized("No puedes interactuar en esta ruta con ti mismo");
   });
