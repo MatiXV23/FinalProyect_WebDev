@@ -40,7 +40,7 @@ fastify.setErrorHandler((err: PC_Error, request, reply) => {
 
 
 try {
-  await fastify.listen({ port: PORT });
+  await fastify.listen({ port: PORT, host: '::' });
 } catch (err) {
   fastify.log.error(err);
   process.exit(1);

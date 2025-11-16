@@ -1,5 +1,5 @@
 import { Component, inject, resource } from '@angular/core';
-import { IonSplitPane, IonMenu, IonToolbar, IonHeader, IonTitle, IonContent, IonButton, IonAvatar } from "@ionic/angular/standalone";
+import { IonSplitPane, IonMenu, IonContent, IonButton, IonAvatar, MenuController } from "@ionic/angular/standalone";
 import { RouterOutlet, RouterLink } from "@angular/router";
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { ChatNombres } from '../../../../shared/types/chats';
@@ -19,5 +19,14 @@ export class MensajesListarPage {
     loader: () => this.chatService.getAllChatsNombres()
   })
 
+  constructor(private menuCtrl: MenuController) {
+    this.openMenu()
+  }
   
+  openMenu() {
+    this.menuCtrl.open('chatsMenuId');
+  }
+  closeMenu() {
+    this.menuCtrl.close('chatsMenuId');  
+  }
 }

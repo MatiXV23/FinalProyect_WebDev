@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { baseApiURL } from '../../core/configs';
+import { environment } from '../../../environments/environment'; 
 import { Categorias } from '../types/categorias';
 
 @Injectable({
@@ -10,6 +10,6 @@ import { Categorias } from '../types/categorias';
 export class CategoriasService {
   private httpClient = inject(HttpClient);
   async getCategorias(): Promise<Categorias[]> {
-    return await firstValueFrom(this.httpClient.get<Categorias[]>(baseApiURL + '/categorias'));
+    return await firstValueFrom(this.httpClient.get<Categorias[]>(environment.apiUrl + '/categorias'));
   }
 }

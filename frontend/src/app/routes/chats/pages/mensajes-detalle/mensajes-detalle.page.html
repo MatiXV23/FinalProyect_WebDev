@@ -1,6 +1,34 @@
+@let chat = this.chat;
+<div class="w-full fixed h-24 top-0 right-0 p-4 flex items-center z-2 bg-(--ion-color-darkbg)">
+    @if (isMobile()) {
+        <ion-button expand="full" (click)="openMenu()">
+            <ion-icon src="assets/icons/burger.svg" size="large"></ion-icon>
+        </ion-button>
+    }
+    
+    @if (chat.hasValue()) {
+        @let chat = this.chat.value();
+        @if (chat) {
+            <div class="mr-4 w-full flex justify-end items-center">
+            <div class="text-center m-auto">
+                <p>
+                    {{chat.nombre_otro}}
+                    {{chat.apellido_otro}}
+                </p>
+            </div>
+            <a [routerLink]="['/usuarios', chat.id_otro]">
+                <ion-avatar class="flex items-center">
+                    <img alt="Silhouette of a person's head" class="aspect-square w-full" [src]="chat.foto_url" />
+                </ion-avatar>
+            </a>
+        </div>
+        }
+    }
+    
+</div>
+<div class="w-full py-13"></div>
 @if (mensajes.hasValue()) {
-    <div class="flex flex-col h-full">
-        
+    <div class="flex flex-col">
         @for (m of mensajes.value(); track $index) {
             @let hora = this.parseTime(m.fecha_mensaje);
             @let fecha = this.parseDate(m.fecha_mensaje);

@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class WebsocketService {
   connected = signal(false);
 
   connect(id_usuario: number) {
-    this.ws = new WebSocket(`ws://localhost:3000/ws?id_usuario=${id_usuario}`);
+    this.ws = new WebSocket(environment.wsUrl + id_usuario);
     this.ws.onopen = () => {
       this.connected.set(true);
     };

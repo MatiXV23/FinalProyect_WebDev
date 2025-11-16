@@ -1,14 +1,15 @@
-import { Component, effect, inject, input, OnInit, resource } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, computed, effect, HostListener, inject, input, OnInit, resource, signal } from '@angular/core';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { MainStore } from '../../../../shared/stores/main.store';
-import { IonInput, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonInput, IonIcon, IonButton, MenuController, IonAvatar } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { WebsocketService } from '../../../../shared/services/websocket.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-mensajes-detalle',
-  imports: [IonInput, IonIcon, IonButton, FormsModule],
+  imports: [IonInput, IonIcon, IonButton, FormsModule, IonAvatar, RouterLink],
   templateUrl: './mensajes-detalle.page.html',
   styleUrl: './mensajes-detalle.page.css',
 })
@@ -18,14 +19,28 @@ export class MensajesDetallePage {
   private chatService = inject(ChatsService);
   private mainStore = inject(MainStore);
 
-  id_chat = this.route.snapshot.paramMap.get('id_chat');
+  private params = toSignal(this.route.paramMap);
+  
+  isMobile = signal<boolean>(Boolean(window.innerWidth < 991))
+  
+  @HostListener('window:resize')
+  onResize() {
+    const isMobile = Boolean(window.innerWidth < 991)
+    this.isMobile.set(isMobile)
+  }
 
+  id_chat = computed(() => this.params()?.get('id_chat') ?? null);
   fecha_vieja = '1/1/2001';
-
+  
   contenido = '';
+  
+  chat = resource({
+    params: () => ({ id: this.id_chat() }),
+    loader: ({ params }) => this.chatService.getChatNombresById(params.id!),
+  })
 
   mensajes = resource({
-    params: () => ({ id: this.id_chat }),
+    params: () => ({ id: this.id_chat() }),
     loader: ({ params }) => this.chatService.getMensajes(params.id!),
   });
 
@@ -37,11 +52,12 @@ export class MensajesDetallePage {
   });
 
   msgScroll = effect(() => {
-    const msgs = this.mensajes.value();
-    if (msgs) {
+    if (this.mensajes.value()) {
       this.scrollDown();
     }
   });
+
+  constructor(private menuCtrl: MenuController) {}
 
   isUserLogged(id_usuario: number): boolean {
     return this.mainStore.isUserLogged(id_usuario);
@@ -70,7 +86,7 @@ export class MensajesDetallePage {
 
   async sendMessage(event: any) {
     if (!this.contenido) return;
-    await this.chatService.sendMessage(this.id_chat!, this.contenido);
+    await this.chatService.sendMessage(this.id_chat()!, this.contenido);
     setTimeout(() => {
       this.contenido = '';
     }, 0);
@@ -88,4 +104,12 @@ export class MensajesDetallePage {
       }
     });
   }
+
+  openMenu() {
+    this.menuCtrl.open('chatsMenuId');
+  }
+  closeMenu() {
+    this.menuCtrl.close('chatsMenuId');
+  }
 }
+

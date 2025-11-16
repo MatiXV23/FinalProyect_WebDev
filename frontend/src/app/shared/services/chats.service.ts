@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { baseApiURL } from '../../core/configs';
+import { environment } from '../../../environments/environment';
 import { Chat, ChatNombres, Mensaje } from '../types/chats';
 import { MainStore } from '../stores/main.store';
 import { UsuariosService } from './usuarios.service';
@@ -18,7 +18,7 @@ export class ChatsService {
     try {
       const id_usuario = this.mainStore.user()?.id_usuario
 
-      return await firstValueFrom(this.httpClient.get<Chat[]>(`${baseApiURL}/usuarios/${id_usuario}/chats`))
+      return await firstValueFrom(this.httpClient.get<Chat[]>(`${environment.apiUrl}/usuarios/${id_usuario}/chats`))
     } catch (e: any) {
       console.log('Error: ' + e.error.message);
       if (e.status === 0) throw new Error(e.message);
@@ -40,11 +40,44 @@ export class ChatsService {
         id_chat: chat.id_chat,
         id_comprador: chat.id_comprador,
         id_vendedor: chat.id_vendedor,
-        nombre_persona: user.nombres,
-        apellido_persona: user.apellidos,
+        id_otro: id_persona,
+        nombre_otro: user.nombres,
+        apellido_otro: user.apellidos,
         foto_url: user.foto_url || "/assets/imgs/avatar.png"
       })
     }
+    return chatsNombres
+  }
+
+  public async getChatById(id_chat: string): Promise<Chat> {
+    try {
+      const id_usuario = this.mainStore.user()?.id_usuario
+
+      return await firstValueFrom(this.httpClient.get<Chat>(`${environment.apiUrl}/usuarios/${id_usuario}/chats/${id_chat}`))
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
+  public async getChatNombresById(id_chat: string): Promise<ChatNombres> {
+    const chat: Chat = await this.getChatById(id_chat)
+    const id_usuario = this.mainStore.user()?.id_usuario
+  
+    const id_persona = id_usuario === chat.id_comprador? chat.id_vendedor: chat.id_comprador
+    const user = await this.usuarioService.getUserById(String(id_persona))
+
+    const chatsNombres = {
+      id_chat: chat.id_chat,
+      id_comprador: chat.id_comprador,
+      id_vendedor: chat.id_vendedor,
+      id_otro: id_persona,
+      nombre_otro: user.nombres,
+      apellido_otro: user.apellidos,
+      foto_url: user.foto_url || "/assets/imgs/avatar.png"
+    }
+
     return chatsNombres
   }
 
@@ -52,7 +85,7 @@ export class ChatsService {
     try {
       const id_usuario = this.mainStore.user()?.id_usuario
 
-      return await firstValueFrom(this.httpClient.get<Mensaje[]>(`${baseApiURL}/usuarios/${id_usuario}/chats/${id_chat}/mensajes`))
+      return await firstValueFrom(this.httpClient.get<Mensaje[]>(`${environment.apiUrl}/usuarios/${id_usuario}/chats/${id_chat}/mensajes`))
     } catch (e: any) {
       console.log('Error: ' + e.error.message);
       if (e.status === 0) throw new Error(e.message);
@@ -64,13 +97,13 @@ export class ChatsService {
     try {
       const id_usuario = this.mainStore.user()?.id_usuario
 
-      const chats = await firstValueFrom(this.httpClient.get<Chat[]>(`${baseApiURL}/usuarios/${id_usuario}/chats`))
+      const chats = await firstValueFrom(this.httpClient.get<Chat[]>(`${environment.apiUrl}/usuarios/${id_usuario}/chats`))
 
       const chat = chats.find((c)=> (c.id_comprador===id_comprador && c.id_vendedor===id_vendedor) || (c.id_comprador===id_vendedor && c.id_vendedor===id_comprador))
 
       if (chat) return chat.id_chat
 
-      const nuevo_chat = await firstValueFrom(this.httpClient.post<Chat>(`${baseApiURL}/usuarios/${id_usuario}/chats`, {id_comprador, id_vendedor}))
+      const nuevo_chat = await firstValueFrom(this.httpClient.post<Chat>(`${environment.apiUrl}/usuarios/${id_usuario}/chats`, {id_comprador, id_vendedor}))
       return nuevo_chat.id_chat
 
     } catch (e: any) {
@@ -84,7 +117,7 @@ export class ChatsService {
     try {
       const id_usuario = this.mainStore.user()?.id_usuario
 
-      await firstValueFrom(this.httpClient.post(`${baseApiURL}/usuarios/${id_usuario}/chats/${id_chat}/mensajes`, {contenido}))
+      await firstValueFrom(this.httpClient.post(`${environment.apiUrl}/usuarios/${id_usuario}/chats/${id_chat}/mensajes`, {contenido}))
     } catch (e: any) {
       console.log('Error: ' + e.error.message);
       if (e.status === 0) throw new Error(e.message);
