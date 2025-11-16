@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { baseApiURL } from '../../core/configs';
+import { environment } from '../../../environments/environment';
 import { Articulo } from '../types/articulos';
 import { firstValueFrom } from 'rxjs';
 import { Categoria } from '../types/categoria';
@@ -17,7 +17,7 @@ export class ArticulosService {
   public async postArticulo(datos: Partial<Articulo>): Promise<Articulo[]> {
     try {
       return await firstValueFrom(
-        this.httpClient.post<Articulo[]>(baseApiURL + '/articulos', datos)
+        this.httpClient.post<Articulo[]>(environment.apiUrl + '/articulos', datos)
       );
     } catch (e: any) {
       throw new Error(e.error.message);
@@ -27,7 +27,7 @@ export class ArticulosService {
   public async putArticulo(datos: Articulo): Promise<void> {
     try {
       await firstValueFrom(
-        this.httpClient.put(`${baseApiURL}/articulos/${datos.id_articulo}`, datos)
+        this.httpClient.put(`${environment.apiUrl}/articulos/${datos.id_articulo}`, datos)
       );
     } catch (e: any) {
       throw new Error(e.error.message);
@@ -36,7 +36,7 @@ export class ArticulosService {
 
   public async getArticuloId(id: string) {
     try {
-      return await firstValueFrom(this.httpClient.get<Articulo>(`${baseApiURL}/articulos/${id}`));
+      return await firstValueFrom(this.httpClient.get<Articulo>(`${environment.apiUrl}/articulos/${id}`));
     } catch (e) {
       throw e;
     }
@@ -53,7 +53,7 @@ export class ArticulosService {
 
     try {
       const articulos = await firstValueFrom(
-        this.httpClient.get<Articulo[]>(baseApiURL + '/articulos', { params })
+        this.httpClient.get<Articulo[]>(environment.apiUrl + '/articulos', { params })
       );
 
       return articulos;
@@ -66,7 +66,7 @@ export class ArticulosService {
   async getCategorias() {
     try {
       const categorias = await firstValueFrom(
-        this.httpClient.get<Categoria[]>(baseApiURL + '/categorias')
+        this.httpClient.get<Categoria[]>(environment.apiUrl + '/categorias')
       );
 
       return categorias;

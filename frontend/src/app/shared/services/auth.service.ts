@@ -4,7 +4,8 @@ import { MainStore } from '../stores/main.store';
 import { Credenciales } from '../types/credenciales';
 import { firstValueFrom } from 'rxjs';
 import { Usuario } from '../types/usuario';
-import { baseApiURL } from '../../core/configs';
+import { environment } from '../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AuthService {
 
   async logIn(credenciales: Credenciales){
     try {
-      const {token} = await firstValueFrom(this.httpClient.post<{token: string}>(baseApiURL+'/auth', credenciales))
+      const {token} = await firstValueFrom(this.httpClient.post<{token: string}>(environment.apiUrl+'/auth', credenciales))
 
       localStorage.setItem("token", token)
 
@@ -49,6 +50,6 @@ export class AuthService {
   }
 
   async getUser(): Promise<Usuario>{
-    return await firstValueFrom(this.httpClient.get<Usuario>(baseApiURL+'/auth'))
+    return await firstValueFrom(this.httpClient.get<Usuario>(environment.apiUrl+'/auth'))
   }
 }

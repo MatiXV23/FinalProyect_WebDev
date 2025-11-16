@@ -22,6 +22,12 @@ export class App implements OnInit{
 
   isMobile = signal<boolean>(Boolean(window.innerWidth < 768))
   
+  @HostListener('window:resize')
+  onResize() {
+    const isMobile = Boolean(window.innerWidth < 768)
+    this.isMobile.set(isMobile)
+  }
+  
 
   isLogged = this.mainStore.isLogged
   user = this.mainStore.user
@@ -41,29 +47,11 @@ export class App implements OnInit{
 
   constructor(private menuCtrl: MenuController) {}
 
-  @HostListener('window:resize')
-  onResize() {
-    const isMobile = Boolean(window.innerWidth < 768)
-    if (!isMobile) return
-    
-    this.isMobile.set(isMobile)
-    
-  }
 
   openMenu() {
-    /**
-     * Open the menu by menu-id
-     * We refer to the menu using an ID
-     * because multiple "start" menus exist.
-     */
     this.menuCtrl.open('menu');
   }
   closeMenu() {
-    /**
-     * Open the menu by menu-id
-     * We refer to the menu using an ID
-     * because multiple "start" menus exist.
-     */
     this.menuCtrl.close('menu');
   }
 

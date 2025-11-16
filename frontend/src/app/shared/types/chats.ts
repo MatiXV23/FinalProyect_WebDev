@@ -8,8 +8,9 @@ export type ChatNombres = {
     id_chat: number,
     id_comprador: number,
     id_vendedor: number,
-    nombre_persona: string,
-    apellido_persona: string,
+    id_otro: number,
+    nombre_otro: string,
+    apellido_otro: string,
     foto_url: string,
 }
 

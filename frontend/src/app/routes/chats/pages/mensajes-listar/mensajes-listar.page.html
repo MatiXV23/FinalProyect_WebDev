@@ -1,17 +1,17 @@
-<ion-split-pane when="xs" contentId="chatsMenu">
-  <ion-menu contentId="chatsMenu" class="w-xs">
+<ion-split-pane when="lg" contentId="chatsMenu">
+  <ion-menu contentId="chatsMenu" menuId="chatsMenuId" class="w-full sm:w-xs">
     <ion-content color="darkbg">
         @if (chats.hasValue()) {
             @for (chat of chats.value(); track $index) {
-                <a [routerLink]="[chat.id_chat]">
+                <a [routerLink]="[chat.id_chat]" (click)="closeMenu()">
                     <ion-button expand="full" color="light" class="flex items-center">
                         <ion-avatar class="flex items-center">
                             <img alt="Silhouette of a person's head" class="aspect-square w-full" [src]="chat.foto_url" />
                         </ion-avatar>
                         <div class="text-center ml-4">
                             <p>
-                                {{chat.nombre_persona}}
-                                {{chat.apellido_persona}}
+                                {{chat.nombre_otro}}
+                                {{chat.apellido_otro}}
                             </p>
                         </div>
                     </ion-button>

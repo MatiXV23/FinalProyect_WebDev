@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, HostListener, Injectable, signal } from '@angular/core';
 import { Usuario } from '../types/usuario';
 
 @Injectable({

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { type Departamento } from '../types/departamentos';
-import { baseApiURL } from '../../core/configs';
+import { environment } from '../../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class DepartamentosService {
   private httpClient = inject(HttpClient);
   async getDepartamentos(): Promise<Departamento[]> {
     return await firstValueFrom(
-      this.httpClient.get<Departamento[]>(baseApiURL+'/departamentos')
+      this.httpClient.get<Departamento[]>(environment.apiUrl+'/departamentos')
     );
   }
 }

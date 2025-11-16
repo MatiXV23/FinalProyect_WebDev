@@ -38,6 +38,12 @@ export const routes: Routes = [
     ]
   },
 
+  {
+    path: 'usuarios/:id_usuario',
+    loadComponent: async () =>
+      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page')).UsuarioDetallePage,
+    title: 'Editar usuarios',
+  },
   
 
   {
@@ -111,6 +117,13 @@ export const routes: Routes = [
           (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
             .MensajesListarPage,
     children: [
+      {
+        path: '',
+        loadComponent: async () =>
+          (await import('./routes/chats/pages/no-chat/no-chat.page'))
+            .NoChatPage,
+        title: 'Chat con :id_chat',
+      },
       {
         path: ':id_chat',
         loadComponent: async () =>
