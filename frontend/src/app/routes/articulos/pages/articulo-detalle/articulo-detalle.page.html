@@ -1,4 +1,5 @@
-@if (this.articulo.hasValue()) { @let articulo = this.articulo.value();
+@if (this.articulo.hasValue()) { 
+  @let articulo = this.articulo.value();
 
 <ion-card class="flex flex-col w-full h-full lg:flex-row">
   <img
@@ -18,7 +19,7 @@
 
     <ion-button class="mr-4" (click)="handleChatBtn($event, articulo.id_articulo)">Chat</ion-button>
 
-    <a routerLink="/cuenta">
+    <a [routerLink]="['/usuarios', articulo.id_vendedor]">
       <ion-button>Perfil del vendedor</ion-button>
     </a>
     <ion-card-subtitle>Detalles</ion-card-subtitle>
