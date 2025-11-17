@@ -1,0 +1,9 @@
+<div class="star-rating">
+  @for (star of stars; track $index) {
+    <ion-icon 
+      [name]="star" 
+      [style.color]="color"
+      [style.font-size.px]="size()">
+    </ion-icon>
+  }
+</div>

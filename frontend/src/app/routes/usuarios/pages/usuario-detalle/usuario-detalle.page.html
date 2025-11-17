@@ -1,58 +1,235 @@
 @if (this.user.hasValue()) {
     @let user = this.user.value();
     <main class="m-0">
-        <div class="w-full min-h-50 h-70 md:h-fit bg-(--ion-color-light) flex items-center relative justify-center flex-col md:flex-row md:justify-normal">
-            <img alt="Silhouette of a person's head" class="aspect-square w-40 rounded-full mx-auto md:ml-6 md:mr-6" [src]="user.foto_url"/>
-            <div class="my-5 mx-auto md:ml-6 md:mr-6 flex flex-col">
-                <div class="text-4xl">
-                    {{user.nombres}}
-                    {{user.apellidos}}
+        <!-- SECCION BANNER -->
+        <section>
+            <div class="w-full min-h-[280px] relative overflow-hidden">
+  
+                <div class="absolute inset-0 bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-90"></div>
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row items-center md:items-center gap-6 p-8 md:p-10">
+                    
+                
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-linear-to-r from-yellow-400 via-pink-400 to-purple-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+                        <img 
+                            [src]="user.foto_url" 
+                            alt="Foto de perfil" 
+                            class="relative aspect-square w-40 h-40 rounded-full object-cover border-4 border-white shadow-2xl"
+                        />
+                    </div>
+                    
+                    
+                    <div class="flex-1 text-center md:text-left text-white">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-lg">
+                            {{user.nombres}} {{user.apellidos}}
+                        </h1>
+                        
+                        
+                        <div class="flex items-center justify-center md:justify-start gap-3 bg-white/20 backdrop-blur-sm rounded-full px-5 py-3 w-fit mx-auto md:mx-0">
+                            <ion-icon name="ribbon" class="text-yellow-300 text-2xl"></ion-icon>
+                            <div class="flex flex-col items-start">
+                            <span class="text-xs font-semibold text-white/90 uppercase tracking-wide">
+                                Calificación del vendedor
+                            </span>
+                            <div class="flex items-center gap-2 mt-1">
+                                <app-rating-star [rating]="user.reputacion" [size]="24"></app-rating-star>
+                                <span class="text-xl font-bold text-white">
+                                {{user.reputacion.toFixed(1)}}
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="flex gap-6 mt-5 justify-center md:justify-start text-sm">
+                            <div class="flex items-center gap-2">
+                            <ion-icon name="shield-checkmark-outline" class="text-xl"></ion-icon>
+                            <span class="font-medium">Vendedor confiable</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <a routerLink="edit" class="md:absolute md:top-6 md:right-6">
+                    <ion-button 
+                        class="shadow-lg hover:shadow-xl transition-all duration-300" 
+                        color="light"
+                        size="default">
+                        <ion-icon slot="start" name="create-outline"></ion-icon>
+                        Editar Perfil
+                    </ion-button>
+                    </a>
                 </div>
-                <div>
-                    Calificacion del vendedor:
-                    {{user.reputacion}} / 5
+                
+                <div class="absolute bottom-0 left-0 right-0">
+                    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                    <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="var(--ion-background-color, #ffffff)"/>
+                    </svg>
                 </div>
-            </div>
-            
-            <a routerLink="edit" class="absolute bottom-0 right-0"><ion-button>Editar</ion-button></a>
-        </div>
+            </div>  
+        </section>
 
+        <!-- SECCION DETALLES -->
         <section class="w-full flex">
             
-            <div class="w-full m-3">
-                <h1 class="text-2xl text-left ml-4">Detalles del usuario</h1>
-                <ion-list [inset]="true">
-                    <ion-item>
-                        <ion-label>Nombre Completo: {{user.nombres}} {{user.apellidos}}</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Correo: {{user.email}}</ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Direccion: {{dptoName()}}, {{user.direccion}}</ion-label>
-                    </ion-item>
-                    @if (user.id_usuario === loggedUser()?.id_usuario) {
-                        <ion-item>
-                            <ion-label>Numero de documento: {{user.nro_documento}}</ion-label>
-                        </ion-item>
-                    }
-                    
-                </ion-list>
+            <div class="w-full p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-linear-to-r from-indigo-500 to-purple-500 rounded-lg p-3 shadow-lg">
+                <ion-icon name="person-circle" class="text-white text-2xl"></ion-icon>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
+                Detalles del usuario
+                </h2>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+                
+                <div class="flex items-start gap-4 p-5 border-b border-gray-100 dark:border-gray-700">
+                <div class="bg-blue-100 dark:bg-blue-900/30 rounded-full p-3 mt-1">
+                    <ion-icon name="person" class="text-blue-600 dark:text-blue-400 text-xl"></ion-icon>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Nombre Completo
+                    </p>
+                    <p class="text-lg font-medium text-gray-900 dark:text-white">
+                    {{user.nombres}} {{user.apellidos}}
+                    </p>
+                </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-5 border-b border-gray-100 dark:border-gray-700 ">
+                <div class="bg-purple-100 dark:bg-purple-900/30 rounded-full p-3 mt-1">
+                    <ion-icon name="mail" class="text-purple-600 dark:text-purple-400 text-xl"></ion-icon>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Correo Electrónico
+                    </p>
+                    <p class="text-lg font-medium text-gray-900 dark:text-white break-all">
+                    {{user.email}}
+                    </p>
+                    <a [href]="'mailto:' + user.email" class="text-sm text-purple-600 dark:text-purple-400 hover:underline mt-1 inline-block">
+                    Enviar correo →
+                    </a>
+                </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-5 border-b border-gray-100 dark:border-gray-700 ">
+                <div class="bg-green-100 dark:bg-green-900/30 rounded-full p-3 mt-1">
+                    <ion-icon name="location" class="text-green-600 dark:text-green-400 text-xl"></ion-icon>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Dirección
+                    </p>
+                    <p class="text-lg font-medium text-gray-900 dark:text-white">
+                    {{user.direccion}}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-1">
+                    <ion-icon name="map" class="text-base"></ion-icon>
+                    {{dptoName()}}
+                    </p>
+                </div>
+                </div>
+
+                @if (user.id_usuario === loggedUser()?.id_usuario) {
+                <div class="flex items-start gap-4 p-5 ">
+                    <div class="bg-amber-100 dark:bg-amber-900/30 rounded-full p-3 mt-1">
+                    <ion-icon name="card" class="text-amber-600 dark:text-amber-400 text-xl"></ion-icon>
+                    </div>
+                    <div class="flex-1">
+                    <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1 flex items-center gap-2">
+                        Número de Documento
+                        <span class="bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-xs px-2 py-0.5 rounded-full font-bold">
+                        Privado
+                        </span>
+                    </p>
+                    <p class="text-lg font-medium text-gray-900 dark:text-white font-mono">
+                        {{user.nro_documento}}
+                    </p>
+                    </div>
+                </div>
+                }
+
+            </div>
+
+            <div class="mt-4 flex items-start gap-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <ion-icon name="information-circle" class="text-blue-600 dark:text-blue-400 text-xl shrink-0 mt-0.5"></ion-icon>
+                <p class="text-sm text-blue-800 dark:text-blue-300">
+                Esta información es visible solo para ti. Los datos privados están protegidos y no se comparten con otros usuarios.
+                </p>
+            </div>
             </div>
         </section>
         
 
-        <section>
-            <h1>Resenias al vendedor</h1>
-            @if (resenias.hasValue()) {
-                @for (res of resenias.value(); track $index) {
-                    <ion-card>
-                        {{res.id_articulo}}
-                        {{res.comentario}}
-                        {{res.reputacion}}
-                    </ion-card>
-                }
-            }
+        <!-- SECCION RESENIAS -->
+        <section class="w-full">
+            <div class="w-full p-6">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-linear-to-r from-amber-500 to-orange-500 rounded-lg p-3 shadow-lg">
+                    <ion-icon name="star" class="text-white text-2xl"></ion-icon>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
+                    Reseñas al vendedor
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    @if (resenias.hasValue()) {
+                    @for (res of resenias.value(); track $index) {
+                        <ion-card class="overflow-hidden shadow-lg transition-shadow duration-300 m-0">
+                        <div class="bg-linear-to-r from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 p-5">
+                            <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-3">
+                                <ion-icon name="cube-outline" class="text-purple-600 dark:text-purple-400 text-xl"></ion-icon>
+                                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                    {{articulosName().get(res.id_articulo)}}
+                                </span>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                <app-rating-star [rating]="res.reputacion" [size]="28"></app-rating-star>
+                                <span class="text-2xl font-bold text-gray-900 dark:text-white">
+                                    {{res.reputacion.toFixed(1)}}
+                                </span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white dark:bg-gray-800 rounded-full p-3 shadow-md">
+                                <ion-icon name="star" class="text-yellow-500 text-2xl"></ion-icon>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <ion-card-content class="p-5">
+                            <div class="relative">
+                            <ion-icon 
+                                name="chatbox-ellipses" 
+                                class="absolute -top-2 -left-2 text-4xl text-gray-200 dark:text-gray-700 opacity-50">
+                            </ion-icon>
+                            
+                            <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 relative z-10 pl-6">
+                                {{res.comentario}}
+                            </p>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                <ion-icon name="checkmark-circle" class="text-lg text-green-500"></ion-icon>
+                                <span>Reseña verificada</span>
+                            </div>
+                            </div>
+                        </ion-card-content>
+                        </ion-card>
+                    }
+                    }
+                </div>
+            </div>
         </section>
     </main>
 }
