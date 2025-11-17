@@ -13,15 +13,15 @@
       </ion-row>   
 
       @for (usuario of usuarios.value(); track usuario.id_usuario) {
-      <ion-row class="p-3">
+      <ion-row class="p-3 cursor-pointer hover:bg-(--ion-color-light)" (click)="viewProfile(usuario.id_usuario)">
         <ion-col size="1" class="text-center">{{ usuario.id_usuario }}</ion-col>
         <ion-col>{{ usuario.nombres }} {{ usuario.apellidos }}</ion-col>
         <ion-col>{{ usuario.email }}</ion-col>
         <ion-col size="4" class="flex justify-around">
-          <ion-button (click)="handleEdit(usuario.id_usuario)" fill="outline" class="w-2/5" color="primary">
+          <ion-button (click)="handleEdit($event, usuario.id_usuario)" fill="outline" class="w-2/5" color="primary">
             Modificar
           </ion-button>
-          <ion-button (click)="handleDelete(usuario.id_usuario)" fill="outline" class="w-2/5" color="danger">
+          <ion-button (click)="handleDelete($event, usuario.id_usuario)" fill="outline" class="w-2/5" color="danger">
             Eliminar
           </ion-button>
         </ion-col>

@@ -54,6 +54,7 @@ DROP TABLE IF EXISTS resenias CASCADE;
 CREATE TABLE IF NOT EXISTS resenias (
     id_resenia SERIAL PRIMARY KEY,
     id_vendedor INTEGER NOT NULL REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+    id_articulo INTEGER NOT NULL REFERENCES articulos(id_articulo) ON DELETE CASCADE UNIQUE,
     comentario VARCHAR(120) NOT NULL,
     reputacion INTEGER CHECK (reputacion >= 1 AND reputacion <= 5)
 );
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS resenias (
 DROP TABLE IF EXISTS compras CASCADE;
 CREATE TABLE IF NOT EXISTS compras (
     id_compra SERIAL PRIMARY KEY,
-    id_articulo INTEGER NOT NULL REFERENCES articulos(id_articulo) ON DELETE CASCADE,
+    id_articulo INTEGER NOT NULL REFERENCES articulos(id_articulo) ON DELETE CASCADE UNIQUE,
     id_comprador INTEGER NOT NULL REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     id_resenia INTEGER REFERENCES resenias(id_resenia) ON DELETE CASCADE,
     fecha_compra TIMESTAMP NOT NULL DEFAULT NOW()

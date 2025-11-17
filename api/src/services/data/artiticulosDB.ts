@@ -77,7 +77,7 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
   async getById(id: number): Promise<Articulo> {
     const query = this.getQuery(`WHERE a.id_articulo = $1`);
     const vars = [id];
-    console.info(query, "id: ", id);
+
     const res = await this.pool.query<Articulo>(query, vars);
 
     if (res.rowCount === 0)
