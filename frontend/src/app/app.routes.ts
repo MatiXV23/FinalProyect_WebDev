@@ -7,7 +7,7 @@ import { isAdminGuard } from './core/guards/is-admin-guard';
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: ArticuloListarPage, title: 'Home' },
-  
+
   {
     path: 'usuarios',
     canActivateChild: [isLoggedGuard, isAdminGuard],
@@ -21,7 +21,8 @@ export const routes: Routes = [
       {
         path: ':id_usuario/edit',
         loadComponent: async () =>
-          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
+          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page'))
+            .UsuariosEditPage,
         title: 'Editar usuarios',
       },
 
@@ -35,16 +36,16 @@ export const routes: Routes = [
           ).ArticulosUsuarioListarPage,
         title: 'Usuario lista articulos publicados',
       },
-    ]
+    ],
   },
 
   {
     path: 'usuarios/:id_usuario',
     loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page')).UsuarioDetallePage,
+      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
+        .UsuarioDetallePage,
     title: 'Editar usuarios',
   },
-  
 
   {
     path: 'cuenta',
@@ -60,21 +61,23 @@ export const routes: Routes = [
       {
         path: 'edit',
         loadComponent: async () =>
-          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page')).UsuariosEditPage,
+          (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page'))
+            .UsuariosEditPage,
         title: 'Editar cuenta',
       },
-
-      
 
       {
         path: 'compras',
         canActivateChild: [isLoggedGuard],
-        children: [ 
+        children: [
           {
             path: '',
             loadComponent: async () =>
-              (await import('./routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'))
-                .ComprasUsuarioListarPage,
+              (
+                await import(
+                  './routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'
+                )
+              ).ComprasUsuarioListarPage,
             title: 'Listar compras usuario',
           },
           {
@@ -84,12 +87,10 @@ export const routes: Routes = [
                 .ComprasReviewPage,
             title: 'Review Articulo',
           },
-        ]
+        ],
       },
-    ]
+    ],
   },
-
-  
 
   {
     path: 'login',
@@ -109,19 +110,17 @@ export const routes: Routes = [
     title: 'Regsitrar usuario',
   },
 
-
   {
     path: 'chats',
     canActivate: [isLoggedGuard],
     loadComponent: async () =>
-          (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
-            .MensajesListarPage,
+      (await import('./routes/chats/pages/mensajes-listar/mensajes-listar.page'))
+        .MensajesListarPage,
     children: [
       {
         path: '',
         loadComponent: async () =>
-          (await import('./routes/chats/pages/no-chat/no-chat.page'))
-            .NoChatPage,
+          (await import('./routes/chats/pages/no-chat/no-chat.page')).NoChatPage,
         title: 'Chat con :id_chat',
       },
       {
@@ -131,10 +130,9 @@ export const routes: Routes = [
             .MensajesDetallePage,
         title: 'Chat con :id_chat',
       },
-    ]
+    ],
   },
 
-  
   {
     path: 'articulos',
     children: [
@@ -145,6 +143,17 @@ export const routes: Routes = [
           (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
             .ArticuloCrearPage,
         title: 'Crear Articulo',
+      },
+      {
+        path: 'usuario',
+        canActivate: [isLoggedGuard],
+        loadComponent: async () =>
+          (
+            await import(
+              './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
+            )
+          ).ArticulosUsuarioListarPage,
+        title: 'Listar articulos del usuario',
       },
 
       {
@@ -177,16 +186,10 @@ export const routes: Routes = [
               ).ArticulosUsuarioEditarPage,
             title: 'Usuario edita articulos publicados',
           },
-        ]
+        ],
       },
-    ]
+    ],
   },
-
-  
-
-  
-
-  
 
   {
     path: '**',

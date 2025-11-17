@@ -36,7 +36,9 @@ export class ArticulosService {
 
   public async getArticuloId(id: string) {
     try {
-      return await firstValueFrom(this.httpClient.get<Articulo>(`${environment.apiUrl}/articulos/${id}`));
+      return await firstValueFrom(
+        this.httpClient.get<Articulo>(`${environment.apiUrl}/articulos/${id}`)
+      );
     } catch (e) {
       throw e;
     }
@@ -70,6 +72,17 @@ export class ArticulosService {
       );
 
       return categorias;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async deleteArticulo(id: number) {
+    try {
+      await firstValueFrom(
+        this.httpClient.delete<Articulo>(environment.apiUrl + `/articulos/${id}`)
+      );
     } catch (e) {
       console.error(e);
       throw e;

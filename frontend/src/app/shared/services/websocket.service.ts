@@ -8,7 +8,6 @@ export class WebsocketService {
   private ws?: WebSocket;
 
   shouldMsgReload = signal(false);
-
   shouldUserReload = signal(false);
 
   connected = signal(false);
