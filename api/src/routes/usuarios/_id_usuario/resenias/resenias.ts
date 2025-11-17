@@ -1,10 +1,9 @@
-import { type FastifyPluginAsync } from "fastify";
-import { Type } from "@fastify/type-provider-typebox";
+import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../../errors/errors.ts";
 import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
 import { reseniaModel } from "../../../../models/market/reseniaModel.ts";
 
-const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
+const reseniasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
     "",
     {
@@ -19,7 +18,7 @@ const reseniasUserRoutes: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return await fastify.ReseniaDB.getAll();
+      return await fastify.ReseniaDB.getAllUserRes(req.params.id_usuario);
     }
   );
   fastify.delete(

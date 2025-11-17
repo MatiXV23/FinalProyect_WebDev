@@ -8,7 +8,7 @@ import { DepartamentosService } from '../../../../shared/services/departamentos.
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { RatingStarComponent } from '../../components/rating-star/rating-star.component';
 import { addIcons } from 'ionicons';
-import { cubeOutline, star, chatboxEllipses, calendarOutline, ellipsisHorizontal, ribbon, createOutline, personCircle, person, mail, location, map, card, informationCircle, checkmarkCircle } from 'ionicons/icons';
+import { cubeOutline, star, chatboxEllipses, calendarOutline, ellipsisHorizontal, ribbon, createOutline, personCircle, person, mail, location, map, card, informationCircle, checkmarkCircle, shieldCheckmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-usuario-detalle',
@@ -27,6 +27,15 @@ export class UsuarioDetallePage {
   id_usuario = computed(() => this.params()?.get('id_usuario') ?? null);
 
   loggedUser = this.mainStore.user
+
+  resenias = resource({
+    params: () => ({ id: this.id_usuario() }),
+    loader: ({ params }) => {
+      if (!params.id)
+        return this.usuariosService.getUserResenias(String(this.mainStore.user()?.id_usuario));
+      return this.usuariosService.getUserResenias(params.id);
+    },
+  })
 
   user = resource({
     params: () => ({ id: this.id_usuario() }),
@@ -47,14 +56,7 @@ export class UsuarioDetallePage {
     return
   })
   
-  resenias = resource({
-    params: () => ({ id: this.id_usuario() }),
-    loader: ({ params }) => {
-      if (!params.id)
-        return this.usuariosService.getUserResenias(String(this.mainStore.user()?.id_usuario));
-      return this.usuariosService.getUserResenias(params.id);
-    },
-  })
+ 
   
   articulosName = signal<Map<number, string>>(new Map());
 
@@ -93,7 +95,8 @@ export class UsuarioDetallePage {
       map,
       card,
       informationCircle,
-      checkmarkCircle
+      checkmarkCircle,
+      shieldCheckmarkOutline
     });
   }
 }

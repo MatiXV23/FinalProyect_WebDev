@@ -26,7 +26,7 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
   async getAll(): Promise<Resenia[]> {
     try {
       const reseniasTotales = await this.pool.query<Resenia>(this.getQuery());
-      console.log("ojito", reseniasTotales);
+
       return reseniasTotales.rows;
     } catch (e){ 
       console.log(e)
@@ -41,7 +41,6 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
 
   async create(data: Partial<ReseniaPost>): Promise<Resenia> {
     const { id_vendedor, comentario, reputacion, id_articulo } = data;
-    console.log(data)
     let query = `
         WITH nueva_resenia AS (
             insert into resenias ( id_vendedor, comentario, reputacion, id_articulo)
@@ -57,7 +56,6 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
         reputacion,
         id_articulo
       ]);
-      console.log(res)
       return res.rows[0];
     } catch (e: any) {
       throw new PC_InternalServerError(
@@ -72,5 +70,17 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
 
   async delete(id: number): Promise<void> {
     throw new PC_NotImplemented();
+  }
+
+  async getAllUserRes(id_usuario: number): Promise<Resenia[]> {
+    try {
+      const reseniasTotales = await this.pool.query<Resenia>(this.getQuery(`WHERE r.id_vendedor = $1`), [id_usuario]);
+
+      return reseniasTotales.rows;
+    } catch (e){ 
+      console.log(e)
+      throw new PC_InternalServerError()
+    }
+    
   }
 }
