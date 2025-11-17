@@ -8,6 +8,7 @@ export class WebsocketService {
   private ws?: WebSocket;
 
   shouldMsgReload = signal(false);
+  shouldUserReload = signal(false);
 
   connected = signal(false);
 
@@ -24,6 +25,10 @@ export class WebsocketService {
         switch (msg.data.type) {
           case 'nuevo_mensaje':
             this.shouldMsgReload.set(true);
+            break;
+          case 'Usuario_editado':
+            this.shouldUserReload.set(true);
+            break;
         }
       }
     };
@@ -44,5 +49,6 @@ export class WebsocketService {
 
   resetReload() {
     this.shouldMsgReload.set(false);
+    this.shouldUserReload.set(false);
   }
 }

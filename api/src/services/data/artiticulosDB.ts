@@ -5,7 +5,10 @@ import {
   PC_InternalServerError,
 } from "../../errors/errors.ts";
 import type { Pool } from "pg";
-import type { Articulo, ArticuloQuery } from "../../models/market/articuloModel.ts";
+import type {
+  Articulo,
+  ArticuloQuery,
+} from "../../models/market/articuloModel.ts";
 
 // // TODO: ARREGLAR ESTO ! ! !
 export class ArticulosDB extends BasePgRepository<Articulo> {
@@ -24,49 +27,50 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
   }
 
   async getAll(): Promise<Articulo[]> {
-    const users = await this.pool.query<Articulo>(this.getQuery(`LEFT JOIN compras c ON a.id_articulo = c.id_articulo
-                                                                  WHERE c.id_articulo IS NULL`));
+    const users = await this.pool.query<Articulo>(
+      this.getQuery(`LEFT JOIN compras c ON a.id_articulo = c.id_articulo
+                                                                  WHERE c.id_articulo IS NULL`)
+    );
     return users.rows;
   }
 
   async findAll(query: ArticuloQuery): Promise<Articulo[]> {
-    const {id_categoria, id_departamento, id_vendedor} = query
-    let baseWhereCond = `LEFT JOIN compras c ON a.id_articulo = c.id_articulo `
-    let whereCondition = ''
-    let vars:any[] = []
-    
+    const { id_categoria, id_departamento, id_vendedor } = query;
+    let baseWhereCond = `LEFT JOIN compras c ON a.id_articulo = c.id_articulo `;
+    let whereCondition = "";
+    let vars: any[] = [];
 
     if (id_categoria || id_departamento || id_vendedor) {
       let cont = 1;
       if (id_departamento) {
-        whereCondition = /*sql*/`
+        whereCondition = /*sql*/ `
           JOIN usuarios u
           ON u.id_usuario = a.id_vendedor
           WHERE u.id_departamento = $1
-        `
-        cont++
-        vars.push(id_departamento)
+        `;
+        cont++;
+        vars.push(id_departamento);
       }
       if (id_categoria) {
-        whereCondition += whereCondition 
-        ? `AND a.id_categoria = $${cont} ` 
-        : `WHERE a.id_categoria = $${cont} `
-        cont++
-        vars.push(id_categoria)
+        whereCondition += whereCondition
+          ? `AND a.id_categoria = $${cont} `
+          : `WHERE a.id_categoria = $${cont} `;
+        cont++;
+        vars.push(id_categoria);
       }
       if (id_vendedor) {
-        whereCondition += whereCondition 
-        ? `AND a.id_vendedor = $${cont} ` 
-        : `WHERE a.id_vendedor = $${cont} `
-        cont++
-        vars.push(id_vendedor)
+        whereCondition += whereCondition
+          ? `AND a.id_vendedor = $${cont} `
+          : `WHERE a.id_vendedor = $${cont} `;
+        cont++;
+        vars.push(id_vendedor);
       }
     }
-    
-    whereCondition += whereCondition 
-    ? `AND c.id_articulo IS NULL` 
-    : `WHERE c.id_articulo IS NULL`
-    whereCondition = baseWhereCond + whereCondition
+
+    whereCondition += whereCondition
+      ? `AND c.id_articulo IS NULL`
+      : `WHERE c.id_articulo IS NULL`;
+    whereCondition = baseWhereCond + whereCondition;
     const users = await this.pool.query<Articulo>(
       this.getQuery(whereCondition),
       vars

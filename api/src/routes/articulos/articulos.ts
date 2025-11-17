@@ -2,7 +2,11 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { articuloModel, articuloQueryModel } from "../../models/market/articuloModel.ts";
+import {
+  articuloModel,
+  articuloQueryModel,
+} from "../../models/market/articuloModel.ts";
+import { usuarioModel } from "../../models/market/usuarioModel.ts";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -20,7 +24,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      if (req.query)  return await fastify.ArticulosDB.findAll(req.query);
+      if (req.query) return await fastify.ArticulosDB.findAll(req.query);
       return await fastify.ArticulosDB.getAll();
     }
   );
