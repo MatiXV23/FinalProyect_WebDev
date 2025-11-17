@@ -1,19 +1,21 @@
 import { type FastifyPluginAsync } from "fastify";
-import {type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
 import { PC_NotImplemented } from "../../../errors/errors.ts";
 import { usuarioModel } from "../../../models/market/usuarioModel.ts";
 import { credencialesModel } from "../../../models/market/credencialesModel.ts";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
-const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
+const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
     "",
     {
       schema: {
         summary: "Obtener usuario",
         tags: ["Usuario"],
-        description:
-          "Ruta para obtener un usuario.",
+        description: "Ruta para obtener un usuario.",
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           200: usuarioModel,
@@ -44,8 +46,9 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
       preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      await fastify.UsuariosDB.update(req.params.id_usuario ,req.body)
-      rep.code(204).send()
+      await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
+      fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      rep.code(204).send();
     }
   );
 
@@ -68,8 +71,9 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
       preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      await fastify.UsuariosDB.update(req.params.id_usuario, req.body)
-      rep.code(204).send()
+      await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
+      fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      rep.code(204).send();
     }
   );
 
@@ -103,7 +107,7 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
         tags: ["Usuario"],
         description:
           "Ruta para modificar la password un usuario. Se requiere ser el usuario dueño",
-        body: Type.Object({password: Type.String()}),
+        body: Type.Object({ password: Type.String() }),
         params: Type.Pick(usuarioModel, ["id_usuario"]),
         response: {
           204: Type.Null(),
@@ -114,8 +118,12 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox= async (fastify) => {
       preHandler: [fastify.isOwner],
     },
     async (req, rep) => {
-      await fastify.UsuariosDB.updatePass(req.params.id_usuario ,req.body.password)
-      rep.code(204).send()
+      await fastify.UsuariosDB.updatePass(
+        req.params.id_usuario,
+        req.body.password
+      );
+      fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      rep.code(204).send();
     }
   );
 };
