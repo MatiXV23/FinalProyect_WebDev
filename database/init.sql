@@ -130,3 +130,42 @@ values
 (3, 1),
 (1, 2),
 (2, 3);
+
+
+-- TRIGGERS DE COMPRAS Y ARTICULOS CARRITO
+CREATE OR REPLACE FUNCTION validar_articulo_no_comprado()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM compras 
+        WHERE id_articulo = NEW.id_articulo
+    ) THEN
+        RAISE EXCEPTION 'No se puede agregar el artículo % al carrito porque ya ha sido comprado', 
+                        NEW.id_articulo;
+    END IF;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_validar_articulo_carrito
+BEFORE INSERT ON articulos_carritos
+FOR EACH ROW
+EXECUTE FUNCTION validar_articulo_no_comprado();
+
+-- TRIGGER 2: Eliminar artículo de todos los carritos cuando se compra
+CREATE OR REPLACE FUNCTION eliminar_articulo_de_carritos()
+RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM articulos_carritos 
+    WHERE id_articulo = NEW.id_articulo;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_eliminar_articulo_carritos
+AFTER INSERT ON compras
+FOR EACH ROW
+EXECUTE FUNCTION eliminar_articulo_de_carritos();

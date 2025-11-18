@@ -103,14 +103,6 @@
           </div>
         </div>
 
-        @if (articulo.moneda == 'UYU') {
-        <ion-card-content> $ {{ articulo.precio }}</ion-card-content>
-        } @else {
-        <ion-card-content>U$S {{ articulo.precio }}</ion-card-content>
-        }
-        <ion-button (click)="this.handleCarrito()">Al carrito</ion-button>
-        <br />
-        <ion-button (click)="this.handleCompra(this.articulo.value())">Comprar</ion-button>
 
         <div class="space-y-3">
           <div class="flex gap-3">
