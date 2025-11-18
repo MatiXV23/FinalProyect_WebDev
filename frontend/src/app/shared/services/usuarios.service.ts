@@ -99,10 +99,10 @@ export class UsuariosService {
     }
   }
 
-  public async getComprasByIdUser(id: number) {
+  public async postCompraUsuario(id: number, datos: any) {
     try {
       return await firstValueFrom(
-        this.httpClient.get<Compras[]>(`${environment.apiUrl}/usuarios/${id}/compras`)
+        this.httpClient.post<Compras>(`${environment.apiUrl}/${id}/compras`, datos)
       );
     } catch (e) {
       throw e;

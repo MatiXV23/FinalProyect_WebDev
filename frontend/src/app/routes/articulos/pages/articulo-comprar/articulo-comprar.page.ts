@@ -4,6 +4,7 @@ import { MainStore } from '../../../../shared/stores/main.store';
 import { IonInput } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
+import { UsuariosService } from '../../../../shared/services/usuarios.service';
 
 @Component({
   selector: 'app-articulo-comprar',
@@ -15,6 +16,7 @@ export class ArticuloComprarPage {
   private router = inject(Router);
   private mainStore = inject(MainStore);
   private articulosService = inject(ArticulosService);
+  private usuarioService = inject(UsuariosService);
 
   public articulosActuales = this.mainStore.articuloCompraActual;
   id_articuloActual = this.mainStore.articuloCompraActual?.id_articulo;
@@ -34,6 +36,10 @@ export class ArticuloComprarPage {
     setTimeout(() => {
       alert('Pago simulado completado correctamente 🎉');
       this.articulosService.deleteArticulo(Number(this.id_articuloActual));
+      this.usuarioService.postCompraUsuario(
+        Number(this.mainStore.user()?.id_usuario),
+        this.articulosActuales
+      );
       this.mainStore.articuloCompraActual = undefined;
       this.router.navigate(['/home']);
     }, 500);
