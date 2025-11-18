@@ -39,7 +39,6 @@ export class ArticuloFormComponent {
     foto_url: '',
   });
 
-  log = effect(()=> console.log(this.articuloPosteado()))
   public saved = output<ArticuloPost>();
 
   async handleClick(event: any) {
