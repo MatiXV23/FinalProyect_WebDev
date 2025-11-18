@@ -76,7 +76,7 @@ export class ArticuloComprarPage {
     );
 
     setTimeout(() => {
-      alert('Pago simulado completado correctamente 🎉');
+      // alert('Pago simulado completado correctamente 🎉');
       this.usuarioService.postCompraUsuario(
         Number(this.mainStore.user()?.id_usuario),
         this.articulos
