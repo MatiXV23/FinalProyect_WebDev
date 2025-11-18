@@ -2,6 +2,7 @@ import { Component, HostListener, inject, signal } from '@angular/core';
 import { IonIcon, MenuController, IonButton } from "@ionic/angular/standalone";
 import { MainStore } from '../../../../shared/stores/main.store';
 
+
 @Component({
   selector: 'app-no-chat',
   templateUrl: './no-chat.page.html',
@@ -18,7 +19,8 @@ export class NoChatPage {
     this.isMobile.set(isMobile)
   }
 
-  constructor(private menuCtrl: MenuController) {}
+  constructor(private menuCtrl: MenuController) {
+  }
 
   openMenu() {
     this.menuCtrl.open('chatsMenuId');

@@ -1,31 +1,57 @@
 <ion-split-pane when="lg" contentId="chatsMenu">
   <ion-menu contentId="chatsMenu" menuId="chatsMenuId">
-    <ion-content color="darkbg">
-        @if (chats.hasValue()) {
-            @for (chat of chats.value(); track $index) {
-                <a [routerLink]="[chat.id_chat]" (click)="closeMenu()">
-                    <ion-button expand="full" color="light" class="flex items-center">
-                        <ion-avatar class="flex items-center">
-                            <img alt="Silhouette of a person's head" class="aspect-square w-full" [src]="chat.foto_url" />
-                        </ion-avatar>
-                        <div class="text-center ml-4">
-                            <p>
-                                {{chat.nombre_otro}}
-                                {{chat.apellido_otro}}
-                            </p>
-                        </div>
-                    </ion-button>
-                </a>
-            }
-        }
-        
+    <ion-content class="bg-white dark:bg-gray-900">
+      
+      <div class="bg-linear-to-br from-indigo-500 to-purple-600 p-6 mb-2">
+        <div class="flex items-center gap-3 mb-2">
+          <ion-icon name="chatbubbles" class="text-white text-3xl"></ion-icon>
+          <h2 class="text-2xl font-bold text-white">Mensajes</h2>
+        </div>
+        <p class="text-white/80 text-sm">Tus conversaciones activas</p>
+      </div>
 
+      <div class="px-2">
+        @if (chats.hasValue()) {
+          @for (chat of chats.value(); track $index) {
+            <a [routerLink]="[chat.id_chat]" (click)="closeMenu()" class="block">
+              <div class="flex items-center gap-3 p-4 mb-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer border border-transparent hover:border-indigo-200 dark:hover:border-indigo-800 group">
+                <div class="relative">
+                  <ion-avatar class="w-14 h-14 ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-indigo-400 transition-all">
+                    <img 
+                      [src]="chat.foto_url" 
+                      [alt]="chat.nombre_otro"
+                      class="w-full h-full object-cover"
+                    />
+                  </ion-avatar>
+                  <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+                </div>
+                
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-gray-900 dark:text-white truncate">
+                    {{chat.nombre_otro}} {{chat.apellido_otro}}
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                    Última conversación
+                  </p>
+                </div>
+
+                
+              </div>
+            </a>
+          }
+        } @else {
+          <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+            <ion-icon name="chatbubbles-outline" class="text-5xl mb-2 opacity-30"></ion-icon>
+            <p class="text-sm">Cargando conversaciones...</p>
+          </div>
+        }
+      </div>
     </ion-content>
   </ion-menu>
 
   <div class="ion-page" id="chatsMenu">
-    <ion-content class="ion-padding">
-        <router-outlet></router-outlet>
+    <ion-content class="bg-gray-50 dark:bg-gray-900">
+      <router-outlet></router-outlet>
     </ion-content>
   </div>
 </ion-split-pane>
