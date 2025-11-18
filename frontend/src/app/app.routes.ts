@@ -112,11 +112,23 @@ export const routes: Routes = [
 
   {
     path: 'carrito',
-    loadComponent: async () =>
+    canActivateChild: [isLoggedGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: async () =>
       (await import('./routes/carrito/carrito.page'))
         .CarritoPage,
-    canActivate: [isLoggedGuard],
-    title: 'Logear usuario',
+        title: 'Ver Carrito',
+      },
+      {
+        path: 'comprar',
+        loadComponent: async () =>
+          (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
+            .ArticuloComprarPage,
+        title: 'Compar Carrito entero',
+      },
+    ]
   },
 
   {

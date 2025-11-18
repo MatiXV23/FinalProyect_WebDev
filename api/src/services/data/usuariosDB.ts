@@ -185,7 +185,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
 
             return await this.getById(id);
         }catch(err: any){
-            if (err.code !== "23505") throw new PC_InternalServerError('aca')
+            if (err.code !== "23505") throw new PC_InternalServerError()
 
             switch (err.constraint) {
                 case "usuarios_nro_documento_key":

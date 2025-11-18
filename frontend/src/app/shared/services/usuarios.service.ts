@@ -108,4 +108,18 @@ export class UsuariosService {
       throw e;
     }
   }
+
+  public async comprarArticulo(id_usuario: number, id_articulo: number) {
+    try {
+      await firstValueFrom(
+        this.httpClient.post(`${environment.apiUrl}/usuarios/${id_usuario}/compras`, {
+          id_articulo,
+        })
+      );
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
 }
