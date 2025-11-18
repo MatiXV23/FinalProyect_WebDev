@@ -8,7 +8,7 @@ import { addIcons } from 'ionicons';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { WebsocketService } from '../../shared/services/websocket.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-carrito',
@@ -21,6 +21,7 @@ export class CarritoPage  {
   private articulosService = inject(ArticulosService)
   private usuariosService = inject(UsuariosService)
   private webSocketService =  inject(WebsocketService)
+  private router = inject(Router)
 
   user = this.mainStore.user
 
@@ -57,6 +58,12 @@ export class CarritoPage  {
 
   async getAllCartArticulos() {
     return await Promise.all(this.user()!.articulos_carrito.map(id_articulo => this.articulosService.getArticuloId(String(id_articulo))))
+  }
+
+  navComprarForm(){
+    this.router.navigate(['carrito', 'comprar'], { 
+      queryParams: { ids_articulos: this.articulos_carrito.value()?.map((a)=> a.id_articulo) } 
+    });
   }
 
   

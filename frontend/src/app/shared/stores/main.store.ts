@@ -19,5 +19,4 @@ export class MainStore {
     return this.user()?.id_usuario === id_usuario;
   }
 
-  articuloCompraActual = <Articulo | undefined>undefined;
 }

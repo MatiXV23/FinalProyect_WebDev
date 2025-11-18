@@ -71,8 +71,6 @@ export class ArticuloDetallePage {
   }
 
   async handleCompra(articulo: Articulo) {
-    this.mainStore.articuloCompraActual = articulo;
-    console.log(this.mainStore.articuloCompraActual);
     this.router.navigate([`/articulos/${articulo.id_articulo}/comprar`]);
   }
 
@@ -105,7 +103,9 @@ export class ArticuloDetallePage {
   }
 
   navComprar() {
-    this.router.navigate(['articulos', this.id_articulo(), 'comprar']);
+    this.router.navigate(['articulos', this.id_articulo(), 'comprar'], { 
+      queryParams: { ids_articulos: [this.id_articulo()] } 
+    });
   }
 
   constructor() {
