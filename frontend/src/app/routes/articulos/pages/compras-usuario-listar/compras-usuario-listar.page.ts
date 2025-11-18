@@ -8,17 +8,21 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonButton,
+  IonRouterLinkWithHref,
 } from '@ionic/angular/standalone';
 import { ComprasService } from '../../../../shared/services/compras.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compras-usuario-listar',
-  imports: [IonCard, IonCardTitle, IonGrid, IonRow, IonCol],
+  imports: [IonCard, IonCardTitle, IonGrid, IonRow, IonCol, IonButton],
   templateUrl: './compras-usuario-listar.page.html',
   styleUrl: './compras-usuario-listar.page.css',
 })
 export class ComprasUsuarioListarPage {
+  private router = inject(Router);
   private mainStore = inject(MainStore);
   private comprasService = inject(ComprasService);
   private articulosService = inject(ArticulosService);
@@ -46,13 +50,11 @@ export class ComprasUsuarioListarPage {
     this.listadoArticulos.set(articulos);
   });
 
-  // public listadoArticulos = resource.from(this.articulosComprados, {
-  //   loader: async ({ value }) => {
-  //     if (!value) return [];
+  handleReview(id: number) {
+    this.router.navigate([`cuenta/compras/${id}/review`]);
+  }
 
-  //     const comprasViejas = value.map((compra:any) => this.articulosService.getArticuloId(String(compra.id_articulo));
-
-  //     return Promise.all(comprasViejas);
-  //   },
-  // });
+  handleVendedor(id: number) {
+    this.router.navigate([`usuarios/${id}`]);
+  }
 }

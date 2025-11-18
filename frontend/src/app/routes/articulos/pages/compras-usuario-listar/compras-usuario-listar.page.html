@@ -10,6 +10,7 @@
         <ion-col>Nombre</ion-col>
         <ion-col>Moneda</ion-col>
         <ion-col>Precio</ion-col>
+        <ion-col>Acciones</ion-col>
       </ion-row>
 
       @for (compra of listadoArticulos(); track $index) {
@@ -17,6 +18,14 @@
         <ion-col>{{ compra.nombre }}</ion-col>
         <ion-col>{{ compra.moneda }}</ion-col>
         <ion-col>{{ compra.precio }}</ion-col>
+        <ion-col
+          ><ion-button (click)="handleVendedor(compra.id_vendedor)"
+            >Perfil Vendedor</ion-button
+          ></ion-col
+        >
+        <ion-col
+          ><ion-button (click)="handleReview(compra.id_articulo)">Hacer reseña</ion-button></ion-col
+        >
       </ion-row>
       } @empty {
       <ion-row>
