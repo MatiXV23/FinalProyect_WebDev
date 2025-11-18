@@ -23,7 +23,7 @@ import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
 import { WebsocketService } from './shared/services/websocket.service';
 import { addIcons } from 'ionicons'
-import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, } from 'ionicons/icons';
+import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, } from 'ionicons/icons';
 @Component({
   selector: 'app-root',
   imports: [
@@ -72,20 +72,24 @@ export class App implements OnInit {
   }
 
 
-  constructor(private menuCtrl: MenuController) {
-    addIcons({bicycle, home, location, documentText, cube, ribbon, chatbubbles, logOut, person, cart, flash, shieldCheckmark, logIn, statsChart, addCircle, close, storefront })
-  }
-
+  
   openMenu() {
     this.menuCtrl.open('menu');
   }
   closeMenu() {
     this.menuCtrl.close('menu');
   }
-
+  
   async handleLogOut(event: any) {
     this.closeMenu();
     this.authService.logOut();
     this.router.navigate(['/login']);
+  }
+  constructor(private menuCtrl: MenuController) {
+    addIcons({bicycle, home, location, documentText, cube, ribbon, chatbubbles, logOut, person, cart, flash, shieldCheckmark, logIn, statsChart, addCircle, close, storefront
+        , chatbubblesOutline, menu,
+      arrowForwardCircle,
+      notifications, arrowBack, chevronForward, send
+     })
   }
 }

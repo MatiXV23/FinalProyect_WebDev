@@ -1,69 +1,106 @@
 @let chat = this.chat;
-<div class="w-full fixed h-24 top-0 right-0 p-4 flex items-center z-2 bg-(--ion-color-darkbg)">
-    @if (isMobile()) {
-        <ion-button expand="full" (click)="openMenu()">
-            <ion-icon src="assets/icons/burger.svg" size="large"></ion-icon>
-        </ion-button>
-    }
-    
-    @if (chat.hasValue()) {
-        @let chat = this.chat.value();
-        @if (chat) {
-            <div class="mr-4 w-full flex justify-end items-center">
-            <div class="text-center m-auto">
-                <p>
-                    {{chat.nombre_otro}}
-                    {{chat.apellido_otro}}
-                </p>
-            </div>
-            <a [routerLink]="['/usuarios', chat.id_otro]">
-                <ion-avatar class="flex items-center">
-                    <img alt="Silhouette of a person's head" class="aspect-square w-full" [src]="chat.foto_url" />
-                </ion-avatar>
-            </a>
-        </div>
-        }
-    }
-    
-</div>
-<div class="w-full py-13"></div>
-@if (mensajes.hasValue()) {
-    <div class="flex flex-col">
-        @for (m of mensajes.value(); track $index) {
-            @let hora = this.parseTime(m.fecha_mensaje);
-            @let fecha = this.parseDate(m.fecha_mensaje);
-            @let fecha_vieja = this.parseDate(mensajes.value()[$index - 1 >= 0 ? $index - 1 : 0].fecha_mensaje);
-            @let esNuevaFecha = $index - 1 >= 0 ? this.debeImprimirFecha(fecha, fecha_vieja) : true;
-            @if (esNuevaFecha) {
-                <div class="w-fit px-3 mb-2 py-2 self-center rounded-lg shadow-sm bg-(--ion-color-light) text-(--ion-color-light-contrast)">
-                    <p>{{fecha}}</p>
-                </div>
-            }
 
-            @if (!isUserLogged(m.id_enviador)) {
-                <div class="w-fit px-3 mb-2 py-2 rounded-lg ml-2 z-1 relative message-received shadow-sm overflow-visible bg-(--ion-color-light) text-(--ion-color-light-contrast)">
-                    <p>{{m.contenido}}</p>
-                    <p class="text-xs opacity-50">{{hora}}</p>
-                </div>
-            }@else {
-                <div class="w-fit px-3 py-2 mb-2 self-end rounded-lg z-1 mr-2 relative message-sent shadow-sm overflow-visible bg-(--ion-color-dark) text-(--ion-color-dark-contrast)">
-                    <p>{{m.contenido}}</p>
-                    <p class="text-xs text-end opacity-60">{{hora}}</p>
-                </div>
-            }
-        }
-        <div class="bottom-0 right-0 w-full py-12" id="bottomCont"></div>
-        <form class="w-full fixed bottom-0 right-0 p-4 flex items-center z-1 bg-(--ion-color-darkbg)" (ngSubmit)="sendMessage($event)">
-            <div class="mr-4 w-full">
-                <ion-input fill="outline" placeholder="Enviar mensaje" name="contenido" [(ngModel)]="contenido"></ion-input>
-            </div>
-            <div>
-                <ion-button shape="round" class="w-5" type="submit">
-                    <ion-icon slot="icon-only" fill="outline" src="/assets/icons/send.svg"></ion-icon>
-                </ion-button>
-            </div>
-        </form>
+<!-- Header del chat -->
+<div class="w-full fixed h-20 top-0 right-0 px-4 md:px-6 flex items-center z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+  @if (isMobile()) {
+    <ion-button fill="clear" (click)="openMenu()" class="mr-2">
+      <ion-icon name="arrow-back" class="text-2xl"></ion-icon>
+    </ion-button>
+  }
+  
+  @if (chat.hasValue()) {
+    @let chatData = this.chat.value();
+    @if (chatData) {
+      <a [routerLink]="['/usuarios', chatData.id_otro]" class="flex items-center gap-3 flex-1 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg p-2 transition-colors">
+        <ion-avatar class="w-12 h-12 ring-2 ring-gray-200 dark:ring-gray-700">
+          <img 
+            [src]="chatData.foto_url" 
+            [alt]="chatData.nombre_otro"
+            class="w-full h-full object-cover"
+          />
+        </ion-avatar>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-gray-900 dark:text-white truncate">
+            {{chatData.nombre_otro}} {{chatData.apellido_otro}}
+          </p>
+          <p class="text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            En línea
+          </p>
+        </div>
+        <ion-icon name="chevron-forward" class="text-gray-400 text-xl"></ion-icon>
+      </a>
+    }
+  }
+</div>
+
+
+<!-- Área de mensajes -->
+<div class="pt-20 pb-24 px-4 md:px-6 bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-screen">
+    <div class="w-full py-8"></div>
+  @if (mensajes.hasValue()) {
+    <div class="max-w-4xl mx-auto">
+      @for (m of mensajes.value(); track $index) {
+        @let hora = this.parseTime(m.fecha_mensaje);
+        @let fecha = this.parseDate(m.fecha_mensaje);
+        @let fecha_vieja = this.parseDate(mensajes.value()[$index - 1 >= 0 ? $index - 1 : 0].fecha_mensaje);
+        @let esNuevaFecha = $index - 1 >= 0 ? this.debeImprimirFecha(fecha, fecha_vieja) : true;
         
+        <!-- Separador de fecha -->
+        @if (esNuevaFecha) {
+          <div class="flex justify-center my-6">
+            <div class="bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-md border border-gray-200 dark:border-gray-700">
+              <p class="text-xs font-semibold text-gray-600 dark:text-gray-400">{{fecha}}</p>
+            </div>
+          </div>
+        }
+
+        <!-- Mensajes recibidos -->
+        @if (!isUserLogged(m.id_enviador)) {
+          <div class="flex items-end gap-2 mb-4 animate-fade-in">
+            <div class="max-w-[75%] md:max-w-[60%]">
+              <div class="bg-white dark:bg-gray-800 rounded-2xl rounded-bl-sm px-4 py-3 shadow-md border border-gray-200 dark:border-gray-700">
+                <p class="text-gray-900 dark:text-white wrap-break-words">{{m.contenido}}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{hora}}</p>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <!-- Mensajes enviados -->
+          <div class="flex items-end gap-2 mb-4 justify-end animate-fade-in">
+            <div class="max-w-[75%] md:max-w-[60%]">
+              <div class="bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl rounded-br-sm px-4 py-3 shadow-lg">
+                <p class="text-white wrap-break-word">{{m.contenido}}</p>
+                <p class="text-xs text-white/70 mt-1 text-right">{{hora}}</p>
+              </div>
+            </div>
+          </div>
+        }
+      }
+      <div id="bottomCont" class="h-4"></div>
     </div>
+  }
+</div>
+
+<!-- Input de mensaje fijo -->
+<form 
+  (ngSubmit)="sendMessage($event)"
+  class="w-full fixed bottom-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+  <div class="max-w-4xl mx-auto px-4 py-4 flex items-center gap-3">
+    <ion-input
+      fill="outline"
+      placeholder="Escribe un mensaje..."
+      name="contenido"
+      [(ngModel)]="contenido"
+      class="flex-1 custom-input">
+    </ion-input>
     
-}
+    <ion-button 
+      type="submit"
+      shape="round"
+      size="large"
+      [disabled]="!contenido">
+      <ion-icon slot="icon-only" name="send"></ion-icon>
+    </ion-button>
+  </div>
+</form>

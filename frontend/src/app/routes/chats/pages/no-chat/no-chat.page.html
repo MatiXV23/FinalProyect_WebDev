@@ -1,18 +1,53 @@
-<div class="w-full fixed h-24 top-0 right-0 p-4 flex items-center z-2 bg-(--ion-color-darkbg)">
-    @if (isMobile()) {
-        <ion-button expand="full" (click)="openMenu()">
-            <ion-icon src="assets/icons/burger.svg" size="large"></ion-icon>
-        </ion-button>
-    }
+<div class="w-full fixed h-20 top-0 right-0 px-6 flex items-center z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+  @if (isMobile()) {
+    <ion-button fill="clear" (click)="openMenu()">
+      <ion-icon name="menu" class="text-2xl"></ion-icon>
+    </ion-button>
+  }
+  <h1 class="text-xl font-bold text-gray-900 dark:text-white ml-4">Mensajes</h1>
 </div>
 
-<main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
-  <div class="text-center">
-    <p class="text-base font-semibold text-indigo-400">Chats</p>
-    <h1 class="mt-4 text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">Servicio de mensajeria instantanea</h1>
-    <p class="mt-6 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">Medinte este medio puedes comunicarte con clientes y vendedores de manera facil y rapida.</p>
-    <div class="mt-10 flex items-center justify-center gap-x-6">
-        <a (click)="openMenu()" class="text-sm font-semibold text-white cursor-pointer">Abre un chat <span aria-hidden="true">&rarr;</span></a>
+<main class="flex items-center justify-center min-h-screen px-6 pt-20">
+  <div class="text-center max-w-2xl">
+    <div class="inline-flex items-center justify-center w-24 h-24 bg-linear-to-br from-indigo-500 to-purple-600 rounded-3xl mb-6 shadow-2xl">
+      <ion-icon name="chatbubbles" class="text-white text-5xl"></ion-icon>
+    </div>
+
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      Mensajería instantánea
+    </h2>
+    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+      Comunícate con clientes y vendedores de manera fácil y rápida. 
+      Selecciona una conversación para comenzar.
+    </p>
+
+    @if (isMobile()) {
+      <ion-button 
+        size="large"
+        (click)="openMenu()"
+        class="font-bold">
+        <ion-icon slot="start" name="arrow-forward-circle"></ion-icon>
+        Abrir conversaciones
+      </ion-button>
+    }
+    
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+        <ion-icon name="flash" class="text-indigo-600 dark:text-indigo-400 text-3xl mb-3"></ion-icon>
+        <h3 class="font-bold text-gray-900 dark:text-white mb-2">Instantáneo</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Respuestas en tiempo real</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+        <ion-icon name="shield-checkmark" class="text-green-600 dark:text-green-400 text-3xl mb-3"></ion-icon>
+        <h3 class="font-bold text-gray-900 dark:text-white mb-2">Seguro</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Conversaciones privadas</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+        <ion-icon name="notifications" class="text-purple-600 dark:text-purple-400 text-3xl mb-3"></ion-icon>
+        <h3 class="font-bold text-gray-900 dark:text-white mb-2">Notificaciones</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">No te pierdas nada</p>
+      </div>
     </div>
   </div>
 </main>
