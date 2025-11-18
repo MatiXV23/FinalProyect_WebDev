@@ -70,12 +70,6 @@ export class App implements OnInit {
     await this.authService.checkLocalStorage();
   }
 
-  public recargarUsuario = effect(() => {
-    if (this.wsService.shouldUserReload()) {
-      this.authService.getUser();
-      this.wsService.resetReload();
-    }
-  });
 
   constructor(private menuCtrl: MenuController) {}
 

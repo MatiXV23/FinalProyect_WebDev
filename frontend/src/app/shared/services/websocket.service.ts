@@ -1,14 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
+  private authService = inject(AuthService)
+
   private ws?: WebSocket;
 
   shouldMsgReload = signal(false);
-  shouldUserReload = signal(false);
+  shouldCarritoReload = signal(false);
 
   connected = signal(false);
 
@@ -18,7 +21,7 @@ export class WebsocketService {
       this.connected.set(true);
     };
 
-    this.ws.onmessage = (event) => {
+    this.ws.onmessage = async (event) => {
       const msg = JSON.parse(event.data);
 
       if (msg.data) {
@@ -26,8 +29,12 @@ export class WebsocketService {
           case 'nuevo_mensaje':
             this.shouldMsgReload.set(true);
             break;
-          case 'Usuario_editado':
-            this.shouldUserReload.set(true);
+          case 'usuario_editado':
+            await this.authService.getUser()
+            break;
+          case 'carrito_editado':
+            await this.authService.getUser()
+            this.shouldCarritoReload.set(true);
             break;
         }
       }
@@ -45,10 +52,5 @@ export class WebsocketService {
   disconnect() {
     this.ws?.close();
     this.connected.set(false);
-  }
-
-  resetReload() {
-    this.shouldMsgReload.set(false);
-    this.shouldUserReload.set(false);
   }
 }
