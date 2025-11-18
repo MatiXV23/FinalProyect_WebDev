@@ -1,21 +1,18 @@
-import { Component, inject, input, OnInit, output, resource } from '@angular/core';
-import {
-  IonInput,
-  IonButton,
-  IonCheckbox,
-  IonSelect,
-  IonSelectOption,
-} from '@ionic/angular/standalone';
+import { Component, effect, inject, input, OnInit, output, resource } from '@angular/core';
+import { IonInput, IonButton, IonCheckbox, IonSelect, IonSelectOption, IonIcon } from '@ionic/angular/standalone';
 import { ArticuloPost, MonedaEnum } from '../../../../shared/types/articulos';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { CategoriasService } from '../../../../shared/services/categorias.service';
 import { FormsModule } from '@angular/forms';
+import { addIcons } from 'ionicons'
+import { addCircle, apps, pricetag, cash, card, documentText, image, cube, bicycle, arrowBack, checkmarkCircle } from 'ionicons/icons';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-articulo-form',
   templateUrl: './articulo-form.component.html',
   styleUrls: ['./articulo-form.component.scss'],
-  imports: [IonInput, IonButton, IonCheckbox, IonSelect, IonSelectOption, FormsModule],
+  imports: [IonInput, IonButton, IonCheckbox, IonSelect, IonSelectOption, FormsModule, IonIcon, RouterLink],
 })
 export class ArticuloFormComponent {
   private mainStore = inject(MainStore);
@@ -60,5 +57,10 @@ export class ArticuloFormComponent {
     };
 
     this.saved.emit(articuloExport);
+  }
+
+
+  constructor(){
+    addIcons({     addCircle, apps, pricetag, cash, card,    documentText, image, cube, bicycle,    arrowBack, checkmarkCircle  });
   }
 }

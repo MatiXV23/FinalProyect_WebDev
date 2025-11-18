@@ -1,5 +1,5 @@
 <ion-split-pane when="lg" contentId="chatsMenu">
-  <ion-menu contentId="chatsMenu" menuId="chatsMenuId" class="w-full sm:w-xs">
+  <ion-menu contentId="chatsMenu" menuId="chatsMenuId">
     <ion-content color="darkbg">
         @if (chats.hasValue()) {
             @for (chat of chats.value(); track $index) {

@@ -22,7 +22,8 @@ import {
 import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
 import { WebsocketService } from './shared/services/websocket.service';
-
+import { addIcons } from 'ionicons'
+import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, } from 'ionicons/icons';
 @Component({
   selector: 'app-root',
   imports: [
@@ -37,7 +38,7 @@ import { WebsocketService } from './shared/services/websocket.service';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrls: ['./app.scss'],
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
@@ -70,14 +71,10 @@ export class App implements OnInit {
     await this.authService.checkLocalStorage();
   }
 
-  public recargarUsuario = effect(() => {
-    if (this.wsService.shouldUserReload()) {
-      this.authService.getUser();
-      this.wsService.resetReload();
-    }
-  });
 
-  constructor(private menuCtrl: MenuController) {}
+  constructor(private menuCtrl: MenuController) {
+    addIcons({bicycle, home, location, documentText, cube, ribbon, chatbubbles, logOut, person, cart, flash, shieldCheckmark, logIn, statsChart, addCircle, close, storefront })
+  }
 
   openMenu() {
     this.menuCtrl.open('menu');

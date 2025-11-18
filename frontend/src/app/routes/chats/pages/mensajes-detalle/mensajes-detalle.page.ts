@@ -47,7 +47,7 @@ export class MensajesDetallePage {
   msgReload = effect(() => {
     if (this.wsService.shouldMsgReload()) {
       this.mensajes.reload();
-      this.wsService.resetReload();
+      this.wsService.shouldMsgReload.set(false);
     }
   });
 

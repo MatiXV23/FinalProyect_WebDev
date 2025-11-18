@@ -1,4 +1,4 @@
-import { Component, inject, input, resource } from '@angular/core';
+import { Component, computed, inject, input, resource } from '@angular/core';
 import {
   IonImg,
   IonCard,
@@ -9,25 +9,33 @@ import {
   IonButton,
   IonBackButton,
   IonRouterLinkWithHref,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { Articulo } from '../../../../shared/types/articulos';
+import { addIcons } from 'ionicons';
+import {
+  bicycle,
+  home,
+  location,
+  documentText,
+  cube,
+  ribbon,
+  chatbubbles,
+  person,
+  cart,
+  flash,
+  shieldCheckmark,
+} from 'ionicons/icons';
+import { UsuariosService } from '../../../../shared/services/usuarios.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-articulo-detalle',
-  imports: [
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardContent,
-    IonButton,
-    IonRouterLinkWithHref,
-    RouterLink,
-  ],
+  imports: [IonButton, IonRouterLinkWithHref, RouterLink, IonIcon, IonCardContent],
   templateUrl: './articulo-detalle.page.html',
   styleUrl: './articulo-detalle.page.css',
 })
@@ -35,15 +43,32 @@ export class ArticuloDetallePage {
   private articulosService = inject(ArticulosService);
   private mainStore = inject(MainStore);
   private chatsService = inject(ChatsService);
+  private usuariosService = inject(UsuariosService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  user = this.mainStore.user;
+
+  private params = toSignal(this.route.paramMap);
+  id_articulo = computed(() => this.params()?.get('id_articulo') ?? null);
+
   articulo = resource({
-    params: () => ({ id: this.route.snapshot.paramMap.get('id_articulo') }),
+    params: () => ({ id: this.id_articulo() }),
     loader: ({ params }) => {
       return this.articulosService.getArticuloId(String(params.id));
     },
   });
+
+  disabled = computed(() => this.articulo.value()?.id_vendedor === this.user()?.id_usuario);
+  inCarrito = computed(() =>
+    Boolean(
+      this.mainStore.user()!.articulos_carrito.find((a) => a === this.articulo.value()!.id_articulo)
+    )
+  );
+
+  async handleCarrito() {
+    console.log('Articulo agregado al carrito!');
+  }
 
   async handleCompra(articulo: Articulo) {
     this.mainStore.articuloCompraActual = articulo;
@@ -70,7 +95,32 @@ export class ArticuloDetallePage {
     return chatId;
   }
 
-  async handleCarrito() {
-    console.log('Articulo en el carrito!');
+  async agregarAlCarrito(id_articulo: number) {
+    let articulos_carrito = this.mainStore.user()!.articulos_carrito;
+
+    if (articulos_carrito.find((a) => a === id_articulo)) return;
+
+    articulos_carrito.push(id_articulo);
+    await this.usuariosService.updateCarrito(this.mainStore.user()!.id_usuario, articulos_carrito);
+  }
+
+  navComprar() {
+    this.router.navigate(['articulos', this.id_articulo(), 'comprar']);
+  }
+
+  constructor() {
+    addIcons({
+      bicycle,
+      home,
+      location,
+      documentText,
+      cube,
+      ribbon,
+      chatbubbles,
+      person,
+      cart,
+      flash,
+      shieldCheckmark,
+    });
   }
 }

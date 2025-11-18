@@ -1,0 +1,164 @@
+@let cartItems = this.articulos_carrito.value();
+@if (cartItems) {
+<div class="w-full p-6">
+  <!-- Título de la sección -->
+  <div class="flex items-center gap-3 mb-6">
+    <div class="bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg p-3 shadow-lg">
+      <ion-icon name="cart" class="text-white text-2xl"></ion-icon>
+    </div>
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
+      Carrito de Compras
+    </h2>
+    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold ml-auto">
+      {{cartItems.length}} items
+    </span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Lista de productos -->
+    <div class="lg:col-span-2 space-y-4">
+      
+      @for (articulo of cartItems; track articulo.id_articulo) {
+        <a [routerLink]="['/articulos', articulo.id_articulo]">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
+            <div class="flex gap-4 p-5">
+              
+              <div class="relative shrink-0">
+                <img 
+                  [src]="articulo.foto_url" 
+                  [alt]="articulo.nombre"
+                  class="w-28 h-28 object-cover rounded-lg"
+                />
+              </div>
+
+              <div class="flex items-center w-full justify-end mt-3">
+                <div class="flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                      {{articulo.nombre}}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {{articulo.descripcion}}
+                    </p>
+                    <div class="flex items-center gap-2">
+                      <ion-icon name="pricetag" class="text-green-600 dark:text-green-400"></ion-icon>
+                      <span class="text-xl font-bold text-green-600 dark:text-green-400">
+                        ${{articulo.precio}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="flex self-end items-center gap-3">
+                  <ion-button 
+                    fill="clear" 
+                    color="danger"
+                    (click)="removeItem(articulo.id_articulo)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      }
+      @empty {
+      <!-- Carrito vacío -->
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-12 text-center">
+        <div class="bg-gray-100 dark:bg-gray-700 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+          <ion-icon name="cart-outline" class="text-gray-400 text-5xl"></ion-icon>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Tu carrito está vacío
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">
+          Agrega productos para comenzar tu compra
+        </p>
+        <ion-button routerLink="/home">
+          <ion-icon slot="start" name="search"></ion-icon>
+          Explorar productos
+        </ion-button>
+      </div>
+      }
+    </div>
+
+    <!-- Resumen del pedido -->
+    <div class="lg:col-span-1">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 sticky top-6">
+        <div class="bg-linear-to-r from-purple-500 to-pink-500 p-5 rounded-t-xl">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <ion-icon name="receipt"></ion-icon>
+            Resumen del pedido
+          </h3>
+        </div>
+
+        <div class="p-5 space-y-4">
+          <!-- Subtotal -->
+          <div class="flex justify-between text-gray-700 dark:text-gray-300">
+            <span>Subtotal ({{cartItems.length}} articulo)</span>
+            <span class="font-semibold">$ / U$S</span>
+          </div>
+          @for (art of articulos_carrito.value(); track $index) {
+            <div class="flex justify-between text-gray-700 dark:text-gray-300">
+              <span>{{art.nombre}}</span>
+              <span class="font-semibold">{{art.moneda === 'UYU' ? '$' : 'U$S'}} {{art.precio}}</span>
+            </div>
+          }
+
+         
+          <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+            <div class="flex justify-between text-xl font-bold text-gray-900 dark:text-white">
+              <span>Total</span>
+              <span>$ {{totalUYU()}}</span>
+            </div>
+            @if (totalUSD() > 0) {
+              <div class="flex justify-end text-xl font-bold text-gray-900 dark:text-white">
+                <span>U$S {{totalUSD()}}</span>
+              </div>
+            }
+          </div>
+
+
+          
+          <div class="space-y-3 pt-2">
+            <!-- 
+            ///////////////////////////////////////////////////////
+            / TODO: (SCRUM-47) IMPLEMENTAR PAGAR CARRITO COMPLETO /
+            ///////////////////////////////////////////////////////
+            
+            <ion-button 
+              expand="block" 
+              size="large"
+              class="font-bold"
+              (click)="procederAlPago()"
+              [disabled]="cartItems.length === 0">
+              <ion-icon slot="start" name="carrito/pagar"></ion-icon>
+              Proceder al pago
+            </ion-button> -->
+            
+            <ion-button 
+              expand="block" 
+              fill="outline"
+              routerLink="/home">
+              <ion-icon slot="start" name="arrow-back"></ion-icon>
+              Seguir comprando
+            </ion-button>
+          </div>
+
+          
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+            <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-2">
+              Métodos de pago aceptados
+            </p>
+            <div class="flex justify-center gap-3">
+              <ion-icon name="card" class="text-2xl text-gray-400"></ion-icon>
+              <ion-icon name="logo-paypal" class="text-2xl text-gray-400"></ion-icon>
+              <ion-icon name="wallet" class="text-2xl text-gray-400"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

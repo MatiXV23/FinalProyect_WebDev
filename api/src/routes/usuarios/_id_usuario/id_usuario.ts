@@ -47,7 +47,8 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
-      fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      fastify.notifyClient(req.params.id_usuario, { type: "usuario_editado" });
+      if (req.body.articulos_carrito) fastify.notifyClient(req.params.id_usuario, { type: "carrito_editado" });
       rep.code(204).send();
     }
   );
@@ -72,7 +73,8 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
-      fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      fastify.notifyClient(req.params.id_usuario, { type: "usuario_editado" });
+      if (req.body.articulos_carrito) fastify.notifyClient(req.params.id_usuario, { type: "carrito_editado" });      
       rep.code(204).send();
     }
   );

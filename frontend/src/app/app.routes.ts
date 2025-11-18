@@ -10,13 +10,20 @@ export const routes: Routes = [
 
   {
     path: 'usuarios',
-    canActivateChild: [isLoggedGuard, isAdminGuard],
     children: [
       {
         path: '',
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuarios/usuarios.page')).UsuariosPage,
         title: 'Usuarios',
+        canActivate: [isLoggedGuard, isAdminGuard],
+      },
+      {
+        path: ':id_usuario',
+        loadComponent: async () =>
+          (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
+            .UsuarioDetallePage,
+        title: 'Editar usuarios',
       },
       {
         path: ':id_usuario/edit',
@@ -24,6 +31,7 @@ export const routes: Routes = [
           (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page'))
             .UsuariosEditPage,
         title: 'Editar usuarios',
+        canActivate: [isLoggedGuard, isAdminGuard],
       },
 
       {
@@ -37,14 +45,6 @@ export const routes: Routes = [
         title: 'Usuario lista articulos publicados',
       },
     ],
-  },
-
-  {
-    path: 'usuarios/:id_usuario',
-    loadComponent: async () =>
-      (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
-        .UsuarioDetallePage,
-    title: 'Editar usuarios',
   },
 
   {
@@ -108,6 +108,15 @@ export const routes: Routes = [
         .UsuariosRegisterPage,
     canActivate: [isNotLoggedGuard],
     title: 'Regsitrar usuario',
+  },
+
+  {
+    path: 'carrito',
+    loadComponent: async () =>
+      (await import('./routes/carrito/carrito.page'))
+        .CarritoPage,
+    canActivate: [isLoggedGuard],
+    title: 'Logear usuario',
   },
 
   {
@@ -190,6 +199,7 @@ export const routes: Routes = [
       },
     ],
   },
+
 
   {
     path: '**',
