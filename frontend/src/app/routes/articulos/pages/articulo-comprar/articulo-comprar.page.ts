@@ -4,11 +4,22 @@ import { MainStore } from '../../../../shared/stores/main.store';
 import { IonInput, IonIcon, IonButton, IonAlert } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
-import { addIcons } from 'ionicons'
-import {   card,  cart,  lockClosed,  cardOutline,  calendarOutline,  shieldCheckmarkOutline,  shieldCheckmark,  checkmarkCircle,  informationCircle,  returnDownBack} from 'ionicons/icons';
-import { Articulo } from '../../../../shared/types/articulos';
-import { IonInputCustomEvent,InputInputEventDetail } from '@ionic/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
+import { addIcons } from 'ionicons';
+import {
+  card,
+  cart,
+  lockClosed,
+  cardOutline,
+  calendarOutline,
+  shieldCheckmarkOutline,
+  shieldCheckmark,
+  checkmarkCircle,
+  informationCircle,
+  returnDownBack,
+} from 'ionicons/icons';
+import { Articulo } from '../../../../shared/types/articulos';
+import { IonInputCustomEvent, InputInputEventDetail } from '@ionic/core';
 import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
@@ -18,36 +29,37 @@ import { AuthService } from '../../../../shared/services/auth.service';
   styleUrl: './articulo-comprar.page.css',
 })
 export class ArticuloComprarPage {
-
   private router = inject(Router);
   private mainStore = inject(MainStore);
   private articulosService = inject(ArticulosService);
-  private userService = inject(UsuariosService)
+  private usuarioService = inject(UsuariosService);
+  private userService = inject(UsuariosService);
   private route = inject(ActivatedRoute);
-  private authService = inject(AuthService)
+  private authService = inject(AuthService);
 
   public ids_articulos: number[] = [];
 
   articulos = resource({
-    loader: () => Promise.all(this.ids_articulos.map(id => this.articulosService.getArticuloId(String(id))))
-  }) 
+    loader: () =>
+      Promise.all(this.ids_articulos.map((id) => this.articulosService.getArticuloId(String(id)))),
+  });
 
   totalUYU = computed(() => {
-    let total = 0
-    this.articulos.value()?.forEach((a: Articulo)=> total += a.moneda === 'UYU' ? a.precio : 0)
-    return total
-  })
+    let total = 0;
+    this.articulos.value()?.forEach((a: Articulo) => (total += a.moneda === 'UYU' ? a.precio : 0));
+    return total;
+  });
 
   totalUSD = computed(() => {
-    let total = 0
-    this.articulos.value()?.forEach((a: Articulo)=> total += a.moneda === 'USD' ? a.precio : 0)
-    return total
-  })
+    let total = 0;
+    this.articulos.value()?.forEach((a: Articulo) => (total += a.moneda === 'USD' ? a.precio : 0));
+    return total;
+  });
 
   tarjeta = '';
   expira = '';
   cvv = '';
-  alertButtons = ['Action']
+  alertButtons = ['Action'];
 
   async procesarPago() {
     if (!this.tarjeta || !this.expira || !this.cvv) {
@@ -55,12 +67,22 @@ export class ArticuloComprarPage {
       return;
     }
 
-    if (!this.articulos.hasValue()) return
+    if (!this.articulos.hasValue()) return;
 
-    await Promise.all(this.ids_articulos.map(id => this.userService.comprarArticulo(this.mainStore.user()!.id_usuario, id)));
+    await Promise.all(
+      this.ids_articulos.map((id) =>
+        this.userService.comprarArticulo(this.mainStore.user()!.id_usuario, id)
+      )
+    );
 
     setTimeout(() => {
-      this.authService.getUser()
+      // alert('Pago simulado completado correctamente 🎉');
+      this.usuarioService.postCompraUsuario(
+        Number(this.mainStore.user()?.id_usuario),
+        this.articulos
+      );
+      this.mainStore.articuloCompraActual = undefined;
+      this.authService.getUser();
       this.router.navigate(['/home']);
     }, 500);
   }
@@ -76,19 +98,25 @@ export class ArticuloComprarPage {
   }
 
   constructor() {
-    addIcons({ 
-      card, cart, lockClosed, cardOutline,
-      calendarOutline, shieldCheckmarkOutline,
-      shieldCheckmark, checkmarkCircle,
-      informationCircle, returnDownBack
+    addIcons({
+      card,
+      cart,
+      lockClosed,
+      cardOutline,
+      calendarOutline,
+      shieldCheckmarkOutline,
+      shieldCheckmark,
+      checkmarkCircle,
+      informationCircle,
+      returnDownBack,
     });
 
     this.route.queryParams.subscribe((params: any) => {
-      this.ids_articulos = params['ids_articulos'] 
-        ? String(params['ids_articulos']).split(',').map(Number) 
+      this.ids_articulos = params['ids_articulos']
+        ? String(params['ids_articulos']).split(',').map(Number)
         : [];
-      
+
       console.log(this.ids_articulos);
     });
-}
+  }
 }

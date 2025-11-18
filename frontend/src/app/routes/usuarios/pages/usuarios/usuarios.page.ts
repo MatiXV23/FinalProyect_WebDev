@@ -2,11 +2,18 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { Router, RouterLink } from '@angular/router';
 import { Usuario } from '../../../../shared/types/usuario';
-import { IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle } from '@ionic/angular/standalone';
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonCard,
+  IonCardTitle,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle, RouterLink],
+  imports: [IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle],
   templateUrl: './usuarios.page.html',
   styleUrl: './usuarios.page.css',
 })
@@ -16,20 +23,18 @@ export class UsuariosPage {
   private usuariosService = inject(UsuariosService);
 
   public usuarios = resource({
-    loader: () => this.usuariosService.getUsuarios() 
+    loader: () => this.usuariosService.getUsuarios(),
   });
 
-  
-
   public async handleDelete(event: any, id_usuario: number) {
-    event.stopPropagation()
+    event.stopPropagation();
     await this.usuariosService.eliminarUsuario(id_usuario);
     console.log('Eliminado');
     this.router.navigate(['home']);
   }
 
   public handleEdit(event: any, id_usuario: number) {
-    event.stopPropagation()
+    event.stopPropagation();
     this.router.navigate([`usuarios/${id_usuario}/edit`]);
   }
 

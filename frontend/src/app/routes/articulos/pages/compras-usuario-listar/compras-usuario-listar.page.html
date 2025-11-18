@@ -1,1 +1,37 @@
-<p>compras-usuario-listar works!</p>
+<!-- ACA ESTA EL GOYETE MISMO -->
+<main class="flex justify-center mt-12">
+  <ion-card class="p-3 w-2/3">
+    <ion-card-title>
+      <h2>Listado de Compras</h2>
+    </ion-card-title>
+
+    <ion-grid class="border rounded-sm">
+      <ion-row class="bg-gray-800 p-3">
+        <ion-col>Nombre</ion-col>
+        <ion-col>Moneda</ion-col>
+        <ion-col>Precio</ion-col>
+        <ion-col>Acciones</ion-col>
+      </ion-row>
+
+      @for (compra of listadoArticulos(); track $index) {
+      <ion-row class="p-3 cursor-pointer hover:bg-(--ion-color-light)">
+        <ion-col>{{ compra.nombre }}</ion-col>
+        <ion-col>{{ compra.moneda }}</ion-col>
+        <ion-col>{{ compra.precio }}</ion-col>
+        <ion-col
+          ><ion-button (click)="handleVendedor(compra.id_vendedor)"
+            >Perfil Vendedor</ion-button
+          ></ion-col
+        >
+        <ion-col
+          ><ion-button (click)="handleReview(compra.id_articulo)">Hacer reseña</ion-button></ion-col
+        >
+      </ion-row>
+      } @empty {
+      <ion-row>
+        <ion-col size="12">Usted no realizo compras aun.</ion-col>
+      </ion-row>
+      }
+    </ion-grid>
+  </ion-card>
+</main>

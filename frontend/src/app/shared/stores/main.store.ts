@@ -18,5 +18,5 @@ export class MainStore {
   isUserLogged(id_usuario: number): boolean {
     return this.user()?.id_usuario === id_usuario;
   }
-
+  articuloCompraActual = <Articulo | undefined>undefined;
 }
