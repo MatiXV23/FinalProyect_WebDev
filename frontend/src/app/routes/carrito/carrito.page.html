@@ -19,46 +19,48 @@
     <div class="lg:col-span-2 space-y-4">
       
       @for (articulo of cartItems; track articulo.id_articulo) {
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
-          <div class="flex gap-4 p-5">
-            
-            <div class="relative shrink-0">
-              <img 
-                [src]="articulo.foto_url" 
-                [alt]="articulo.nombre"
-                class="w-28 h-28 object-cover rounded-lg"
-              />
-            </div>
+        <a [routerLink]="['/articulos', articulo.id_articulo]">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
+            <div class="flex gap-4 p-5">
+              
+              <div class="relative shrink-0">
+                <img 
+                  [src]="articulo.foto_url" 
+                  [alt]="articulo.nombre"
+                  class="w-28 h-28 object-cover rounded-lg"
+                />
+              </div>
 
-            <div class="flex items-center w-full justify-end mt-3">
-              <div class="flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                    {{articulo.nombre}}
-                  </h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    {{articulo.descripcion}}
-                  </p>
-                  <div class="flex items-center gap-2">
-                    <ion-icon name="pricetag" class="text-green-600 dark:text-green-400"></ion-icon>
-                    <span class="text-xl font-bold text-green-600 dark:text-green-400">
-                      ${{articulo.precio}}
-                    </span>
+              <div class="flex items-center w-full justify-end mt-3">
+                <div class="flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                      {{articulo.nombre}}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {{articulo.descripcion}}
+                    </p>
+                    <div class="flex items-center gap-2">
+                      <ion-icon name="pricetag" class="text-green-600 dark:text-green-400"></ion-icon>
+                      <span class="text-xl font-bold text-green-600 dark:text-green-400">
+                        ${{articulo.precio}}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            
-              <div class="flex self-end items-center gap-3">
-                <ion-button 
-                  fill="clear" 
-                  color="danger"
-                  (click)="removeItem(articulo.id_articulo)">
-                  <ion-icon slot="icon-only" name="trash"></ion-icon>
-                </ion-button>
+              
+                <div class="flex self-end items-center gap-3">
+                  <ion-button 
+                    fill="clear" 
+                    color="danger"
+                    (click)="removeItem(articulo.id_articulo)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       }
       @empty {
       <!-- Carrito vacío -->

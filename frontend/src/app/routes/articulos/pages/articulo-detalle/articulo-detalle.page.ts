@@ -7,6 +7,7 @@ import { ChatsService } from '../../../../shared/services/chats.service';
 import { addIcons } from 'ionicons';
 import { bicycle, home, location, documentText, cube, ribbon, chatbubbles, person, cart, flash, shieldCheckmark } from 'ionicons/icons';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-articulo-detalle',
@@ -30,8 +31,11 @@ export class ArticuloDetallePage {
 
   user = this.mainStore.user
 
+  private params = toSignal(this.route.paramMap);
+  id_articulo = computed(() => this.params()?.get('id_articulo') ?? null);
+
   articulo = resource({
-    params: () => ({ id: this.route.snapshot.paramMap.get('id_articulo') }),
+    params: () => ({ id: this.id_articulo() }),
     loader: ({ params }) => {
       return this.articulosService.getArticuloId(String(params.id));
     },
@@ -70,7 +74,7 @@ export class ArticuloDetallePage {
   }
 
   navComprar() {
-    this.router.navigate(['comprar'])
+    this.router.navigate(['articulos',this.id_articulo(),'comprar'])
   }
 
   constructor(){
