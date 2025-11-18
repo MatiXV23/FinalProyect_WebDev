@@ -35,7 +35,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-articulo-detalle',
-  imports: [IonButton, IonRouterLinkWithHref, RouterLink, IonIcon, IonCardContent],
+  imports: [IonButton, IonRouterLinkWithHref, RouterLink, IonIcon],
   templateUrl: './articulo-detalle.page.html',
   styleUrl: './articulo-detalle.page.css',
 })
