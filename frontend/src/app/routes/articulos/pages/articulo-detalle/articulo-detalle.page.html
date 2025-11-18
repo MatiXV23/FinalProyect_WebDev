@@ -1,5 +1,4 @@
-@if (this.articulo.hasValue()) { 
-  @let articulo = this.articulo.value();
+@if (this.articulo.hasValue()) { @let articulo = this.articulo.value();
 
 <ion-card class="flex flex-col w-full h-full lg:flex-row">
   <img
@@ -39,9 +38,7 @@
     }
     <ion-button (click)="this.handleCarrito()">Al carrito</ion-button>
     <br />
-    <a routerLink="comprar">
-      <ion-button>Comprar</ion-button>
-    </a>
+    <ion-button (click)="this.handleCompra(this.articulo.value())">Comprar</ion-button>
   </div>
 </ion-card>
 }
