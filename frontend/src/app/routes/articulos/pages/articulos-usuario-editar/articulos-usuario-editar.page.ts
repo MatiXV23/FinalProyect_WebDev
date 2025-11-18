@@ -3,10 +3,11 @@ import { ArticuloFormComponent } from '../../components/articulo-form/articulo-f
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { ArticuloPost, MonedaEnum } from '../../../../shared/types/articulos';
+import { IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-articulos-usuario-editar',
-  imports: [ArticuloFormComponent],
+  imports: [ArticuloFormComponent, IonIcon],
   templateUrl: './articulos-usuario-editar.page.html',
   styleUrl: './articulos-usuario-editar.page.css',
 })
