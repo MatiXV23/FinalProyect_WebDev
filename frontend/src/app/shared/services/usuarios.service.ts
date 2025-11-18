@@ -56,7 +56,7 @@ export class UsuariosService {
       throw new Error(e.error.message);
     }
   }
-
+  
   public async updateUserPwd(id_usuario:number, password: string): Promise<void> {
     try {
       await firstValueFrom(this.httpClient.put(`${environment.apiUrl}/usuarios/${id_usuario}/pwd`, {password: password}))
@@ -68,9 +68,22 @@ export class UsuariosService {
     }
   }
 
+
+  // RESENIAS
   public async getUserResenias(id_usuario:string): Promise<Resenia[]>{
     try {
       return await firstValueFrom(this.httpClient.get<Resenia[]>(`${environment.apiUrl}/usuarios/${id_usuario}/resenias`,))
+    } catch (e: any) {
+      console.log('Error: ' + e.error.message);
+      if (e.status === 0) throw new Error(e.message);
+      throw new Error(e.error.message);
+    }
+  }
+
+  // CARRITO
+  public async updateCarrito(id_usuario: number, articulos_carrito: number[]): Promise<void> {
+    try {
+      await firstValueFrom(this.httpClient.patch(`${environment.apiUrl}/usuarios/${id_usuario}`,{articulos_carrito}))
     } catch (e: any) {
       console.log('Error: ' + e.error.message);
       if (e.status === 0) throw new Error(e.message);

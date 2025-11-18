@@ -14,7 +14,7 @@ export type Usuario = {
 
 export type UsuarioSinId = Omit<Usuario,"id_usuario">     
 
-export type UsuarioConPwd= {
+export type UsuarioConPwd = {
   email: string;
   nombres: string;
   apellidos: string;

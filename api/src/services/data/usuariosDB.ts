@@ -3,6 +3,7 @@ import type { JWTUsuario, Usuario, UsuarioPost, UsuarioQuery } from "../../model
 import type { Credenciales } from "../../models/market/credencialesModel.ts";
 import { PC_NotFound, PC_BadRequest, PC_InternalServerError } from "../../errors/errors.ts";
 import type { Pool } from "pg";
+import fastify from "fastify";
 
 
 // TODO: ARREGLAR ESTO ! ! !
@@ -156,15 +157,17 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
         query += `  WHERE id_usuario = $1;`
         
         try {
-            const res = await this.pool.query(query, vars)
+            if (cont > 2) {
+                const res = await this.pool.query(query, vars)
 
-            if (res.rowCount === 0) {
-                throw new PC_NotFound(`Usuario con id (${id}) no encontrado`);
+                if (res.rowCount === 0) {
+                    throw new PC_NotFound(`Usuario con id (${id}) no encontrado`);
+                }
             }
-
+            
             if (carrito_modified) {
                 // Elimina los articulos que no esten en el array
-                await this.pool.query(/*sql*/`
+                const res2 = await this.pool.query(/*sql*/`
                 DELETE FROM articulos_carritos
                 WHERE id_usuario = $1
                 AND id_articulo NOT IN (SELECT UNNEST($2::int[]));
@@ -172,7 +175,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
                 
 
                 // Inserta los articulos que faltan
-                await this.pool.query(/*sql*/`
+                const res3 = await this.pool.query(/*sql*/`
                 INSERT INTO articulos_carritos (id_usuario, id_articulo)
                 SELECT $1, UNNEST($2::int[])
                 ON CONFLICT DO NOTHING;
@@ -182,7 +185,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
 
             return await this.getById(id);
         }catch(err: any){
-            if (err.code !== "23505") throw new PC_InternalServerError()
+            if (err.code !== "23505") throw new PC_InternalServerError('aca')
 
             switch (err.constraint) {
                 case "usuarios_nro_documento_key":
