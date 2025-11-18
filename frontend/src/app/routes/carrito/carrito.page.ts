@@ -50,10 +50,6 @@ export class CarritoPage  {
     }
   })
 
-  procederAlPago() {
-    throw new Error('Method not implemented.');
-  }
-
 
   articulos_carrito = resource({
     loader: () => this.getAllCartArticulos()

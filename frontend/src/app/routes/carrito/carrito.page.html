@@ -94,12 +94,12 @@
           <!-- Subtotal -->
           <div class="flex justify-between text-gray-700 dark:text-gray-300">
             <span>Subtotal ({{cartItems.length}} articulo)</span>
-            <span class="font-semibold">$ / USD</span>
+            <span class="font-semibold">$ / U$S</span>
           </div>
           @for (art of articulos_carrito.value(); track $index) {
             <div class="flex justify-between text-gray-700 dark:text-gray-300">
               <span>{{art.nombre}}</span>
-              <span class="font-semibold">{{art.moneda === 'UYU' ? '$' : 'USD'}} {{art.precio}}</span>
+              <span class="font-semibold">{{art.moneda === 'UYU' ? '$' : 'U$S'}} {{art.precio}}</span>
             </div>
           }
 
@@ -111,7 +111,7 @@
             </div>
             @if (totalUSD() > 0) {
               <div class="flex justify-end text-xl font-bold text-gray-900 dark:text-white">
-                <span>USD {{totalUSD()}}</span>
+                <span>U$S {{totalUSD()}}</span>
               </div>
             }
           </div>
