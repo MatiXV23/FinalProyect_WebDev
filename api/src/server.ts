@@ -4,8 +4,6 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { PC_Error, PC_InternalServerError } from "./errors/errors.js";
-import fastifyStatic from "@fastify/static";
-import path from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(dirname(__filename));
