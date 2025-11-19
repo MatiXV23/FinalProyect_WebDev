@@ -1,1 +1,50 @@
-<p>compras-review works!</p>
+<form #miForm="ngForm" (ngSubmit)="handleClick($event)" class="p-8">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div class="form-field md:col-span-2">
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="document-text" class="align-middle mr-1"></ion-icon>
+        Comentario
+      </label>
+      <ion-input
+        [(ngModel)]="this.reseniaForm().comentario"
+        name="comentario"
+        fill="outline"
+        placeholder="Haz un comentario sobre el producto..."
+        rows="4"
+        required
+      >
+      </ion-input>
+    </div>
+
+    <div class="form-field md:col-span-2">
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="document-text" class="align-middle mr-1"></ion-icon>
+        reputacion
+      </label>
+      <ion-input
+        [(ngModel)]="this.reseniaForm().reputacion"
+        name="reputacion"
+        fill="outline"
+        type="number"
+        placeholder="Que puntuación le das al vendedor"
+        rows="4"
+        required
+      >
+      </ion-input>
+    </div>
+
+    <div
+      class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex gap-4 justify-end flex-col lg:flex-row"
+    >
+      <ion-button fill="outline" size="large" type="button" routerLink="/cuenta/compras">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Cancelar
+      </ion-button>
+
+      <ion-button type="submit" size="large" class="font-bold">
+        <ion-icon type="submit" slot="start" name="checkmark-circle"></ion-icon>
+        Publicar Reseña
+      </ion-button>
+    </div>
+  </div>
+</form>

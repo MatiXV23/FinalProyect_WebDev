@@ -3,77 +3,74 @@
     <div class="bg-linear-to-r from-blue-500 to-indigo-500 rounded-lg p-3 shadow-lg">
       <ion-icon name="cart" class="text-white text-2xl"></ion-icon>
     </div>
-    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
-      Mis Compras
-    </h2>
+    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Mis Compras</h2>
     <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold ml-auto">
-      {{listadoArticulos() ? listadoArticulos().length : 0}} compras
+      {{ listadoArticulos() ? listadoArticulos().length : 0 }} compras
     </span>
   </div>
 
-  
-  @for (compra of listadoArticulos(); track $index) {
-    <div class="bg-white dark:bg-gray-800 rounded-xl mb-2 shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
-      <div class="flex gap-4 p-5">
-        <div class="relative shrink-0">
-          <img 
-            [src]="compra.foto_url" 
-            [alt]="compra.nombre"
-            class="w-28 h-28 object-cover rounded-lg"
-          />
-        </div>
+  @for (item of listadoArticulos(); track $index) {
+  <div
+    class="bg-white dark:bg-gray-800 rounded-xl mb-2 shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
+  >
+    <div class="flex gap-4 p-5">
+      <div class="relative shrink-0">
+        <img
+          [src]="item.articulo.foto_url"
+          [alt]="item.articulo.nombre"
+          class="w-28 h-28 object-cover rounded-lg"
+        />
+      </div>
 
-        <div class="flex items-center w-full justify-end mt-3">
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                {{compra.nombre}}
-              </h3>
-              <div class="flex items-center gap-2 mb-2">
-                <ion-icon name="pricetag" class="text-green-600 dark:text-green-400"></ion-icon>
-                <span class="text-xl font-bold text-green-600 dark:text-green-400">
-                  {{compra.moneda}} {{compra.precio}}
-                </span>
-              </div>
+      <div class="flex items-center w-full justify-end mt-3">
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+              {{ item.articulo.nombre }}
+            </h3>
+            <div class="flex items-center gap-2 mb-2">
+              <ion-icon name="pricetag" class="text-green-600 dark:text-green-400"></ion-icon>
+              <span class="text-xl font-bold text-green-600 dark:text-green-400">
+                {{ item.articulo.moneda }} {{ item.articulo.precio }}
+              </span>
             </div>
           </div>
-        
-          <div class="flex self-end items-center gap-3">
-            <ion-button 
-              fill="outline"
-              color="primary"
-              (click)="handleVendedor(compra.id_vendedor)">
-              <ion-icon slot="start" name="person"></ion-icon>
-              Perfil Vendedor
-            </ion-button>
-            <ion-button 
-              fill="outline" 
-              color="secondary"
-              (click)="handleReview(compra.id_articulo)">
-              <ion-icon slot="start" name="star"></ion-icon>
-              Hacer reseña
-            </ion-button>
-          </div>
+        </div>
+
+        <div class="flex self-end items-center gap-3">
+          <ion-button
+            fill="outline"
+            color="primary"
+            (click)="handleVendedor(item.articulo.id_vendedor)"
+          >
+            <ion-icon slot="start" name="person"></ion-icon>
+            Perfil Vendedor
+          </ion-button>
+          <ion-button
+            fill="outline"
+            color="secondary"
+            (click)="handleReview(item.articulo.id_articulo, item.compra.id_compra)"
+          >
+            <ion-icon slot="start" name="star"></ion-icon>
+            Hacer reseña
+          </ion-button>
         </div>
       </div>
     </div>
-  }
-  
-  @empty {
-    <div class="p-12 text-center">
-      <div class="bg-gray-100 dark:bg-gray-700 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-        <ion-icon name="cart-outline" class="text-gray-400 text-5xl"></ion-icon>
-      </div>
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-        No hay compras registradas
-      </h3>
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
-        Usted no realizó compras aún
-      </p>
-      <ion-button routerLink="/articulos">
-        <ion-icon slot="start" name="search"></ion-icon>
-        Explorar artículos
-      </ion-button>
+  </div>
+  } @empty {
+  <div class="p-12 text-center">
+    <div
+      class="bg-gray-100 dark:bg-gray-700 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center"
+    >
+      <ion-icon name="cart-outline" class="text-gray-400 text-5xl"></ion-icon>
     </div>
+    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No hay compras registradas</h3>
+    <p class="text-gray-600 dark:text-gray-400 mb-6">Usted no realizó compras aún</p>
+    <ion-button routerLink="/articulos">
+      <ion-icon slot="start" name="search"></ion-icon>
+      Explorar artículos
+    </ion-button>
+  </div>
   }
 </div>
