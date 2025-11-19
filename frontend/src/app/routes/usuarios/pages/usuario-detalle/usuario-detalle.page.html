@@ -51,16 +51,19 @@
                         </div>
                     </div>
                     
-                    
-                    <a routerLink="edit" class="md:absolute md:top-6 md:right-6">
-                    <ion-button 
-                        class="shadow-lg hover:shadow-xl transition-all duration-300" 
-                        color="light"
-                        size="default">
-                        <ion-icon slot="start" name="create-outline"></ion-icon>
-                        Editar Perfil
-                    </ion-button>
-                    </a>
+                    @if (loggedUser()) {
+                        @if (loggedUser()?.is_admin || loggedUser()?.id_usuario === user.id_usuario){
+                            <a routerLink="edit" class="md:absolute md:top-6 md:right-6">
+                                <ion-button 
+                                    class="shadow-lg hover:shadow-xl transition-all duration-300" 
+                                    color="light"
+                                    size="default">
+                                    <ion-icon slot="start" name="create-outline"></ion-icon>
+                                    Editar Perfil
+                                </ion-button>
+                            </a>
+                        }
+                    }
                 </div>
                 
                 <div class="absolute bottom-0 left-0 right-0">

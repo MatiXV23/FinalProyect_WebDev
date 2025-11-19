@@ -1,18 +1,19 @@
-import { Component, inject, input, OnInit, resource } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, resource, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
-import { IonCard, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
+import { IonInput, IonIcon, IonInputPasswordToggle, IonButton } from '@ionic/angular/standalone';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { UsuarioConPwd, Usuario } from '../../../../shared/types/usuario';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios-edit',
-  imports: [UsuariosFormComponent, IonCard, IonCardHeader, IonCardTitle],
+  imports: [UsuariosFormComponent, IonIcon, FormsModule, IonInputPasswordToggle, IonInput, IonButton],
   templateUrl: './usuarios-edit.page.html',
   styleUrl: './usuarios-edit.page.css',
 })
-export class UsuariosEditPage implements OnInit {
+export class UsuariosEditPage {
   private mainStore = inject(MainStore);
   private usuariosService = inject(UsuariosService);
   private router = inject(Router);
@@ -27,15 +28,7 @@ export class UsuariosEditPage implements OnInit {
     },
   });
 
-  async ngOnInit() {
-    const id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-
-    console.log(id_usuario, this.user);
-  }
-
   async updateUser(modUser: UsuarioConPwd) {
-    console.log(modUser);
-
     const data: Partial<Usuario> = {
       id_usuario: this.user.value()?.id_usuario,
       email: modUser.email,
@@ -48,10 +41,24 @@ export class UsuariosEditPage implements OnInit {
     };
     try {
       await this.usuariosService.updateUsuario(data);
-      await this.usuariosService.updateUserPwd(this.user.value()!.id_usuario, modUser.password);
       this.router.navigate(['/cuenta']);
     } catch (e) {
       console.log(e);
     }
   }
+
+  pass = signal<string>('')
+  passRepeat = signal<string>('')
+
+  passwordsDontCheck = computed(()=> {
+    return this.pass() !== this.passRepeat()
+  })
+
+  async updatePassword() {
+    await this.usuariosService.updateUserPwd(this.user.value()!.id_usuario, this.pass())
+    this.pass.set('')
+    this.passRepeat.set('')
+  }
+
+  
 }
