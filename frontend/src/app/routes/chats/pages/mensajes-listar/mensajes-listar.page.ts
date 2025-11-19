@@ -4,8 +4,7 @@ import { RouterOutlet, RouterLink } from "@angular/router";
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { ChatNombres } from '../../../../shared/types/chats';
 import { MainStore } from '../../../../shared/stores/main.store';
-import { addIcons } from 'ionicons'
-import { chatbubble, chatbubbleOutline } from 'ionicons/icons';
+
  
 @Component({
   selector: 'app-mensajes-listar',
@@ -23,7 +22,6 @@ export class MensajesListarPage {
 
   constructor(private menuCtrl: MenuController) {
     this.openMenu()
-    addIcons({chatbubble, chatbubbleOutline})
   }
   
   openMenu() {

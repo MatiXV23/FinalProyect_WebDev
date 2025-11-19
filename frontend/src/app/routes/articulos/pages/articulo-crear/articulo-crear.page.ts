@@ -5,8 +5,6 @@ import { ArticuloPost } from '../../../../shared/types/articulos';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { addIcons } from 'ionicons'
-import { addCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-articulo-crear',
@@ -28,7 +26,4 @@ export class ArticuloCrearPage {
     }
   }
 
-  constructor() {
-    addIcons({addCircle})
-  }
 }

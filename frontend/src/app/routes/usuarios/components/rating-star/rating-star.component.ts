@@ -1,7 +1,5 @@
 import { Component, input, OnInit } from '@angular/core';
-import { addIcons } from 'ionicons';
 import { IonIcon } from "@ionic/angular/standalone";
-import { star, starOutline, starHalf } from 'ionicons/icons';
 
 @Component({
   selector: 'app-rating-star',
@@ -17,10 +15,6 @@ export class RatingStarComponent  implements OnInit {
   showHalf: boolean = true; // mostrar medias estrellas
 
   stars: string[] = [];
-
-  constructor() {
-    addIcons({ star, starOutline, starHalf });
-  }
 
   ngOnInit() {
     this.updateStars();

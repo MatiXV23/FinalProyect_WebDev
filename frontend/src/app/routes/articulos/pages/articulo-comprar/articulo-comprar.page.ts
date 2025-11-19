@@ -5,21 +5,7 @@ import { IonInput, IonIcon, IonButton, IonAlert } from '@ionic/angular/standalon
 import { FormsModule } from '@angular/forms';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
-import { addIcons } from 'ionicons';
-import {
-  card,
-  cart,
-  lockClosed,
-  cardOutline,
-  calendarOutline,
-  shieldCheckmarkOutline,
-  shieldCheckmark,
-  checkmarkCircle,
-  informationCircle,
-  returnDownBack,
-} from 'ionicons/icons';
 import { Articulo } from '../../../../shared/types/articulos';
-import { IonInputCustomEvent, InputInputEventDetail } from '@ionic/core';
 import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
@@ -63,7 +49,7 @@ export class ArticuloComprarPage {
 
   async procesarPago() {
     if (!this.tarjeta || !this.expira || !this.cvv) {
-      alert('Por favor, completa todos los campos.');
+      console.log(this.tarjeta, this.expira, this.cvv)
       return;
     }
 
@@ -98,19 +84,6 @@ export class ArticuloComprarPage {
   }
 
   constructor() {
-    addIcons({
-      card,
-      cart,
-      lockClosed,
-      cardOutline,
-      calendarOutline,
-      shieldCheckmarkOutline,
-      shieldCheckmark,
-      checkmarkCircle,
-      informationCircle,
-      returnDownBack,
-    });
-
     this.route.queryParams.subscribe((params: any) => {
       this.ids_articulos = params['ids_articulos']
         ? String(params['ids_articulos']).split(',').map(Number)

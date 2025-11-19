@@ -16,20 +16,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { ChatsService } from '../../../../shared/services/chats.service';
 import { Articulo } from '../../../../shared/types/articulos';
-import { addIcons } from 'ionicons';
-import {
-  bicycle,
-  home,
-  location,
-  documentText,
-  cube,
-  ribbon,
-  chatbubbles,
-  person,
-  cart,
-  flash,
-  shieldCheckmark,
-} from 'ionicons/icons';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -108,19 +94,4 @@ export class ArticuloDetallePage {
     });
   }
 
-  constructor() {
-    addIcons({
-      bicycle,
-      home,
-      location,
-      documentText,
-      cube,
-      ribbon,
-      chatbubbles,
-      person,
-      cart,
-      flash,
-      shieldCheckmark,
-    });
-  }
 }

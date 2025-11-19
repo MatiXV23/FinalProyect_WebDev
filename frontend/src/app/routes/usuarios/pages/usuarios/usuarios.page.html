@@ -1,36 +1,229 @@
-<main class="flex justify-center mt-12">
-  <ion-card class="p-3 w-2/3">
-    <ion-card-title>
-      <h2>Listado de Usuarios</h2>
-    </ion-card-title>
-    
-    <ion-grid class="border rounded-sm">
-      <ion-row class="bg-gray-800 p-3">
-        <ion-col size="1" class="text-center">ID</ion-col>
-        <ion-col>Nombre</ion-col>
-        <ion-col>Email</ion-col>
-        <ion-col size="4" class="text-center">Opciones</ion-col>
-      </ion-row>   
+<div class="w-full p-6 flex flex-col lg:flex-row-reverse">
+  <!-- SECCION CATEGORIAS -->
+  
+  <section class="lg:w-1/4 lg:ml-10">
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg p-3 shadow-lg">
+          <ion-icon name="pricetags" class="text-white text-2xl"></ion-icon>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+          Categorías
+        </h2>
+        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+          {{categorias.value()?.length || 0}}
+        </span>
+        <ion-button 
+          size="small" 
+          class="ml-auto"
+          (click)="openCreateModal()">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Nueva Categoría
+        </ion-button>
+      </div>
 
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <ion-accordion-group>
+          <ion-accordion value="categorias">
+            <ion-item slot="header" class="bg-white dark:bg-gray-800">
+              <div class="flex items-center gap-3 w-full py-2">
+                <ion-icon name="list" class="text-blue-500"></ion-icon>
+                <span class="font-semibold text-gray-900 dark:text-white">
+                  Ver Categorías
+                </span>
+                <span class="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+                  {{categorias.value()?.length || 0}} categorías
+                </span>
+              </div>
+            </ion-item>
+            
+            <div slot="content" class="bg-white dark:bg-gray-800">
+              @for (categoria of categorias.value(); track categoria.id_categoria) {
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <ion-icon name="pricetag" class="text-blue-500"></ion-icon>
+                      <span class="font-medium text-gray-900 dark:text-white">
+                        {{categoria.nombre}}
+                      </span>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                      <ion-button 
+                        fill="clear"
+                        size="small"
+                        (click)="openEditModal(categoria)">
+                        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+                      </ion-button>
+                      <ion-button 
+                        fill="clear"
+                        color="danger"
+                        size="small"
+                        (click)="deleteCategoria(categoria.id_categoria)">
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              @empty {
+                <div class="p-8 text-center">
+                  <ion-icon name="pricetags-outline" class="text-gray-400 text-5xl mb-3"></ion-icon>
+                  <p class="text-gray-600 dark:text-gray-400">
+                    No hay categorías registradas
+                  </p>
+                </div>
+              }
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+    </div>
+
+    
+    <ion-modal 
+      [isOpen]="isModalOpen" 
+      (didDismiss)="closeModal()"
+      >
+      <ng-template>
+        <div class="h-full flex items-center w-full justify-center">
+          <div class="bg-white dark:bg-gray-800 shadow-2xl h-full w-full p-6 flex flex-col items-center justify-center">
+            <div class="flex flex-col items-center justify-center gap-3 mb-6">
+              <div class="bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg p-2">
+                <ion-icon 
+                  [name]="isEditMode ? 'pencil' : 'add'" 
+                  class="text-white text-xl">
+                </ion-icon>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                {{isEditMode ? 'Editar Categoría' : 'Nueva Categoría'}}
+              </h3>
+            </div>
+
+            <form (ngSubmit)="submitForm()" class="w-4/5">
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Nombre de la categoría
+                </label>
+                <input 
+                  [(ngModel)]="categoriaForm.nombre"
+                  type="text" 
+                  name="nombre"
+                  required
+                  placeholder="Ej: Electrónica, Ropa, etc."
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              <div class="flex gap-3 justify-end">
+                <ion-button 
+                  fill="outline" 
+                  type="button"
+                  (click)="closeModal()">
+                  Cancelar
+                </ion-button>
+                <ion-button 
+                  type="submit"
+                  [disabled]="!categoriaForm.nombre">
+                  <ion-icon 
+                    slot="start" 
+                    [name]="isEditMode ? 'checkmark' : 'add'">
+                  </ion-icon>
+                  {{isEditMode ? 'Guardar' : 'Crear'}}
+                </ion-button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
+
+  </section>
+
+  <!-- SECCION USUARIOS -->
+  <section class="w-full">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="bg-linear-to-r from-red-500/90 to-pink-500/90 rounded-lg p-3 shadow-lg">
+        <ion-icon name="stats-chart" class="text-white text-2xl"></ion-icon>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
+        Dashboard
+      </h2>
+      <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold ml-auto">
+        {{usuarios.value() ? usuarios.value()?.length : 0}} usuarios
+      </span>
+    </div>
+
+    <div class="divide-y divide-gray-200 dark:divide-gray-700">
       @for (usuario of usuarios.value(); track usuario.id_usuario) {
-      <ion-row class="p-3 cursor-pointer hover:bg-(--ion-color-light)" (click)="viewProfile(usuario.id_usuario)">
-        <ion-col size="1" class="text-center">{{ usuario.id_usuario }}</ion-col>
-        <ion-col>{{ usuario.nombres }} {{ usuario.apellidos }}</ion-col>
-        <ion-col>{{ usuario.email }}</ion-col>
-        <ion-col size="4" class="flex justify-around">
-          <ion-button (click)="handleEdit($event, usuario.id_usuario)" fill="outline" class="w-2/5" color="primary">
-            Modificar
-          </ion-button>
-          <ion-button (click)="handleDelete($event, usuario.id_usuario)" fill="outline" class="w-2/5" color="danger">
-            Eliminar
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      } @empty {
-      <ion-row>
-        <ion-col size="12">No hay usuarios registrados.</ion-col>
-      </ion-row>
+        <div class="bg-white dark:bg-gray-800 mb-3 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700">
+          <div class="flex gap-4 p-5">
+            <div class="relative shrink-0 cursor-pointer" (click)="viewProfile(usuario.id_usuario)">
+              <div class="w-28 h-28 bg-linear-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <ion-icon name="person" class="text-white text-5xl"></ion-icon>
+              </div>
+            </div>
+
+            <div class="flex items-center w-full justify-end mt-3">
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                    {{usuario.nombres}} {{usuario.apellidos}}
+                  </h3>
+                  <div class="flex items-center gap-2 mb-2">
+                    <ion-icon name="mail" class="text-gray-600 dark:text-gray-400"></ion-icon>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                      {{usuario.email}}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <ion-icon name="finger-print" class="text-purple-600 dark:text-purple-400"></ion-icon>
+                    <span class="text-sm font-medium text-purple-600 dark:text-purple-400">
+                      ID: {{usuario.id_usuario}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="flex self-end items-center gap-3 flex-col sm:flex-row">
+                <ion-button 
+                  fill="clear"
+                  (click)="handleEdit($event, usuario.id_usuario)">
+                  <ion-icon slot="icon-only" name="pencil"></ion-icon>
+                </ion-button>
+                <ion-button 
+                  fill="clear" 
+                  color="danger"
+                  (click)="handleDelete($event, usuario.id_usuario)">
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </div>
       }
-    </ion-grid>
-  </ion-card>
-</main>
+      
+      @empty {
+        <div class="p-12 text-center">
+          <div class="bg-gray-100 dark:bg-gray-700 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+            <ion-icon name="people-outline" class="text-gray-400 text-5xl"></ion-icon>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            No hay usuarios registrados
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
+            Comienza agregando tu primer usuario
+          </p>
+          <ion-button routerLink="/usuarios/nuevo">
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+            Agregar usuario
+          </ion-button>
+        </div>
+      }
+    </div>
+  </section>
+  
+
+  
+</div>
