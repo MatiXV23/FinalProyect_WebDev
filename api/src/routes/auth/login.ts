@@ -1,9 +1,15 @@
 import { type FastifyPluginAsync } from "fastify";
-import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../errors/errors.ts";
-import { credencialesModel } from "../../models/market/credencialesModel.ts";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
+import { PC_NotImplemented } from "../../errors/errors.js";
+import { credencialesModel } from "../../models/market/credencialesModel.js";
 import type { SignOptions } from "@fastify/jwt";
-import { type JWTUsuario, usuarioModel } from "../../models/market/usuarioModel.ts";
+import {
+  type JWTUsuario,
+  usuarioModel,
+} from "../../models/market/usuarioModel.js";
 
 const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
   fastify.post(
@@ -20,23 +26,21 @@ const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
       },
     },
     async (request, reply) => {
-
-      const user = await fastify.UsuariosDB.getUserByCredentials(request.body)
+      const user = await fastify.UsuariosDB.getUserByCredentials(request.body);
       const userPayload: JWTUsuario = {
         email: user.email,
         id_usuario: user.id_usuario,
         id_departamento: user.id_departamento,
         is_admin: user.is_admin,
-        nombres: user.nombres
-      }
+        nombres: user.nombres,
+      };
 
       const signOptions: SignOptions = {
         expiresIn: "8h",
         notBefore: 0,
       };
-      const token = fastify.jwt.sign(userPayload, signOptions)
-      return { token:  token };
-      
+      const token = fastify.jwt.sign(userPayload, signOptions);
+      return { token: token };
     }
   );
 
@@ -55,9 +59,9 @@ const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
       onRequest: [fastify.authenticate],
     },
     async (request, reply) => {
-      return await fastify.UsuariosDB.getById(request.user.id_usuario)
+      return await fastify.UsuariosDB.getById(request.user.id_usuario);
     }
-  )
+  );
 };
 
 export default loginRoute;

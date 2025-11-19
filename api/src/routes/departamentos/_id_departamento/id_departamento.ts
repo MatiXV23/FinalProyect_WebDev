@@ -2,7 +2,7 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { departamentoModel } from "../../../models/market/departamentoModel.ts";
+import { departamentoModel } from "../../../models/market/departamentoModel.js";
 
 const departamentosRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

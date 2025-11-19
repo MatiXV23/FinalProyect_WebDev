@@ -1,7 +1,11 @@
 import { type FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
-import { usuarioModel, usuarioPostModel, UsuarioQueryModel } from "../../models/market/usuarioModel.ts";
+import {
+  usuarioModel,
+  usuarioPostModel,
+  UsuarioQueryModel,
+} from "../../models/market/usuarioModel.js";
 import { Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../errors/errors.ts";
+import { PC_NotImplemented } from "../../errors/errors.js";
 
 const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -19,7 +23,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      if (req.query)  return await fastify.UsuariosDB.findAll(req.query);
+      if (req.query) return await fastify.UsuariosDB.findAll(req.query);
       return await fastify.UsuariosDB.getAll();
     }
   );
@@ -38,7 +42,7 @@ const usersRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      rep.code(201).send(await fastify.UsuariosDB.create(req.body))
+      rep.code(201).send(await fastify.UsuariosDB.create(req.body));
     }
   );
 };

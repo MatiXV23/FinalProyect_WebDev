@@ -1,11 +1,11 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_InternalServerError,
   PC_NotFound,
   PC_NotImplemented,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
-import type { Departamento } from "../../models/market/departamentoModel.ts";
+import type { Departamento } from "../../models/market/departamentoModel.js";
 
 // TODO: REALIZAR ESTO ! ! !
 export class DepartamentosDB extends BasePgRepository<Departamento> {
@@ -31,7 +31,7 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
 
     if (res.rowCount === 0)
       throw new PC_NotFound(`Departamento con id (${id}) no encontrado`);
-    return res.rows[0];
+    return res.rows[0]!;
   }
 
   async create(data: Partial<Departamento>): Promise<Departamento> {

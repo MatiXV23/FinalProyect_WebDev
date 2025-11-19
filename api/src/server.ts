@@ -3,10 +3,12 @@ import autoLoad from "@fastify/autoload";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import { PC_Error, PC_InternalServerError } from "./src/errors/errors.ts";
+import { PC_Error, PC_InternalServerError } from "./errors/errors.js";
+import fastifyStatic from "@fastify/static";
+import path from "path";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = join(dirname(__filename), "src");
+const __dirname = join(dirname(__filename));
 
 const fastify = Fastify({
   logger: true,
@@ -26,21 +28,19 @@ fastify.register(autoLoad, {
   routeParams: true,
 });
 
-
 fastify.setErrorHandler((err: PC_Error, request, reply) => {
-    if (!(err instanceof PC_Error)) err = new PC_InternalServerError()
-    fastify.log.error({place:'server.ts', err});
+  if (!(err instanceof PC_Error)) err = new PC_InternalServerError();
+  fastify.log.error({ place: "server.js", err });
 
-    reply.status(err.statusCode).send({
-        statusCode: err.statusCode,
-        error: err.error,
-        message: err.message
-    });
+  reply.status(err.statusCode).send({
+    statusCode: err.statusCode,
+    error: err.error,
+    message: err.message,
+  });
 });
 
-
 try {
-  await fastify.listen({ port: PORT, host: '::' });
+  await fastify.listen({ port: PORT, host: "::" });
 } catch (err) {
   fastify.log.error(err);
   process.exit(1);

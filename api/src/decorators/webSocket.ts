@@ -1,5 +1,5 @@
 import fastifyPlugin from "fastify-plugin";
-import { clientConnections } from "../plugins/ws.ts";
+import { clientConnections } from "../plugins/ws.js";
 
 export default fastifyPlugin(async function (fastify) {
   fastify.decorate(

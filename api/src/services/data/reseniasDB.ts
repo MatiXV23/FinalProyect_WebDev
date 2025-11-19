@@ -1,11 +1,11 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_InternalServerError,
   PC_NotImplemented,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
-import { type Resenia } from "../../models/market/reseniaModel.ts";
-import { type ReseniaPost } from "../../models/market/reseniaModel.ts";
+import { type Resenia } from "../../models/market/reseniaModel.js";
+import { type ReseniaPost } from "../../models/market/reseniaModel.js";
 
 // TODO: REALIZAR ESTO ! ! !
 export class ReseniaDB extends BasePgRepository<Resenia> {
@@ -28,11 +28,10 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
       const reseniasTotales = await this.pool.query<Resenia>(this.getQuery());
 
       return reseniasTotales.rows;
-    } catch (e){ 
-      console.log(e)
-      throw new PC_InternalServerError()
+    } catch (e) {
+      console.log(e);
+      throw new PC_InternalServerError();
     }
-    
   }
 
   async getById(id: number): Promise<Resenia> {
@@ -54,9 +53,9 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
         id_vendedor,
         comentario,
         reputacion,
-        id_articulo
+        id_articulo,
       ]);
-      return res.rows[0];
+      return res.rows[0]!;
     } catch (e: any) {
       throw new PC_InternalServerError(
         "Error en la creacion de una reseña: " + e
@@ -74,13 +73,15 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
 
   async getAllUserRes(id_usuario: number): Promise<Resenia[]> {
     try {
-      const reseniasTotales = await this.pool.query<Resenia>(this.getQuery(`WHERE r.id_vendedor = $1`), [id_usuario]);
+      const reseniasTotales = await this.pool.query<Resenia>(
+        this.getQuery(`WHERE r.id_vendedor = $1`),
+        [id_usuario]
+      );
 
       return reseniasTotales.rows;
-    } catch (e){ 
-      console.log(e)
-      throw new PC_InternalServerError()
+    } catch (e) {
+      console.log(e);
+      throw new PC_InternalServerError();
     }
-    
   }
 }

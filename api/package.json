@@ -2,13 +2,14 @@
   "name": "api",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.ts",
+  "main": "server.js",
   "scripts": {
-    "dev": "npm install && node --watch --env-file=../env/.env server.ts | pino-pretty"
+    "start": "node --env-file=../env/.env dist/server.js | pino-pretty",
+    "dev": "npm install && node --watch --env-file=../env/.env src/server.ts | pino-pretty",
+    "build": "tsc"
   },
   "dependencies": {
     "@fastify/autoload": "^6.3.1",
-    "@fastify/cors": "^11.1.0",
     "@fastify/jwt": "^10.0.0",
     "@fastify/swagger": "^9.5.2",
     "@fastify/swagger-ui": "^5.2.3",
@@ -17,7 +18,8 @@
     "@types/pg": "^8.15.5",
     "fastify": "^5.6.1",
     "pg": "^8.16.3",
-    "typebox": "^1.0.41"
+    "typebox": "^1.0.41",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

@@ -1,14 +1,14 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_NotFound,
   PC_BadRequest,
   PC_InternalServerError,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
 import type {
   Articulo,
   ArticuloQuery,
-} from "../../models/market/articuloModel.ts";
+} from "../../models/market/articuloModel.js";
 
 // // TODO: ARREGLAR ESTO ! ! !
 export class ArticulosDB extends BasePgRepository<Articulo> {
@@ -86,7 +86,7 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
 
     if (res.rowCount === 0)
       throw new PC_NotFound(`Articulo con id (${id}) no encontrado`);
-    return res.rows[0];
+    return res.rows[0]!;
   }
 
   async create(data: Partial<Articulo>): Promise<Articulo> {
