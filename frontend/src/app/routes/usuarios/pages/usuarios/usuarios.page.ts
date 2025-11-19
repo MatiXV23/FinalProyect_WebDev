@@ -39,7 +39,7 @@ export class UsuariosPage {
   categorias = resource({
     loader: () => this.categoriasService.getCategorias(),
   });
-  isModalOpen: boolean = false;
+  isModalOpen = signal<boolean>(false);
   categoriaForm: Categoria = { id_categoria: 0, nombre: '' };
   isEditMode: any;
 
@@ -56,17 +56,17 @@ export class UsuariosPage {
   openCreateModal() {
     this.isEditMode = false;
     this.categoriaForm = { id_categoria: 0, nombre: '' };
-    this.isModalOpen = true;
+    this.isModalOpen.set(true);
   }
 
   openEditModal(categoria: Categoria) {
     this.isEditMode = true;
     this.categoriaForm = { id_categoria: categoria.id_categoria, nombre: categoria.nombre };
-    this.isModalOpen = true;
+    this.isModalOpen.set(true);
   }
 
   closeModal() {
-    this.isModalOpen = false;
+    this.isModalOpen.set(false);
     this.categoriaForm = { id_categoria: 0, nombre: '' };
   }
 
