@@ -1,23 +1,14 @@
 import { Component, effect, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { MainStore } from '../../../../shared/stores/main.store';
-import {
-  IonSelect,
-  IonCard,
-  IonCardTitle,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonButton,
-  IonRouterLinkWithHref,
-} from '@ionic/angular/standalone';
+import { IonSelect, IonCard, IonCardTitle, IonGrid, IonRow, IonCol, IonButton, IonRouterLinkWithHref, IonIcon } from '@ionic/angular/standalone';
 import { ComprasService } from '../../../../shared/services/compras.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compras-usuario-listar',
-  imports: [IonCard, IonCardTitle, IonGrid, IonRow, IonCol, IonButton],
+  imports: [ IonButton, IonIcon],
   templateUrl: './compras-usuario-listar.page.html',
   styleUrl: './compras-usuario-listar.page.css',
 })

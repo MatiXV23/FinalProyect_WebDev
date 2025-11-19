@@ -23,7 +23,9 @@ import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
 import { WebsocketService } from './shared/services/websocket.service';
 import { addIcons } from 'ionicons'
-import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, } from 'ionicons/icons';
+import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, list, trash, pricetag, pencil, add, card, cartOutline, logoPaypal, receipt, remove, search, ticket, wallet, star, fingerPrint, mail, people, peopleOutline, pricetags, pricetagsOutline, cubeOutline, checkmark, apps, cash, image, checkmarkCircle, calendarOutline, cardOutline, informationCircle, lockClosed, returnDownBack, shieldCheckmarkOutline, arrowForward, imageOutline, refresh, searchOutline, chatbubble, chatbubbleOutline, starHalf, starOutline, chatboxEllipses, createOutline, ellipsisHorizontal, map, personCircle } from 'ionicons/icons';
+
+
 @Component({
   selector: 'app-root',
   imports: [
@@ -86,10 +88,26 @@ export class App implements OnInit {
     this.router.navigate(['/login']);
   }
   constructor(private menuCtrl: MenuController) {
-    addIcons({bicycle, home, location, documentText, cube, ribbon, chatbubbles, logOut, person, cart, flash, shieldCheckmark, logIn, statsChart, addCircle, close, storefront
-        , chatbubblesOutline, menu,
-      arrowForwardCircle,
-      notifications, arrowBack, chevronForward, send
-     })
+    addIcons({
+      bicycle, home, location, documentText, cube, ribbon,
+      chatbubbles, chatbubblesOutline, menu,
+
+      logOut, logIn, person, storefront, cart, cartOutline,
+      flash, shieldCheckmark, statsChart, addCircle, close,
+
+      arrowForwardCircle, arrowBack, chevronForward, send,
+      list, trash, pricetag, pencil, cubeOutline, checkmark,
+
+      remove, add, receipt, ticket, card, notifications,
+
+      search, logoPaypal, wallet, star,
+      people, mail, fingerPrint, peopleOutline, pricetags, pricetagsOutline,
+
+      apps, cash, image, checkmarkCircle, shieldCheckmarkOutline,
+      lockClosed, cardOutline, calendarOutline, informationCircle, returnDownBack,
+
+      searchOutline, refresh, imageOutline, arrowForward, chatbubble, chatbubbleOutline,
+      starOutline, starHalf, chatboxEllipses, ellipsisHorizontal, createOutline, personCircle, map,
+    });
   }
 }

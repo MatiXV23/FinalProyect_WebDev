@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { RouterLink } from '@angular/router';
-import { addIcons } from 'ionicons';
-import { searchOutline, refresh, imageOutline, bicycle, arrowForward } from 'ionicons/icons';
 
 @Component({
   selector: 'app-articulo-listar',
@@ -56,7 +54,4 @@ export class ArticuloListarPage {
     return range; 
   }
 
-  constructor(){
-    addIcons({searchOutline, refresh, imageOutline, bicycle, arrowForward})
-  }
 }

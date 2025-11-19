@@ -4,8 +4,6 @@ import { ArticuloPost, MonedaEnum } from '../../../../shared/types/articulos';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { CategoriasService } from '../../../../shared/services/categorias.service';
 import { FormsModule } from '@angular/forms';
-import { addIcons } from 'ionicons'
-import { addCircle, apps, pricetag, cash, card, documentText, image, cube, bicycle, arrowBack, checkmarkCircle } from 'ionicons/icons';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -57,10 +55,5 @@ export class ArticuloFormComponent {
     };
 
     this.saved.emit(articuloExport);
-  }
-
-
-  constructor(){
-    addIcons({     addCircle, apps, pricetag, cash, card,    documentText, image, cube, bicycle,    arrowBack, checkmarkCircle  });
   }
 }

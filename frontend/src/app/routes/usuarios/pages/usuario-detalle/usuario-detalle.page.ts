@@ -7,8 +7,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { RatingStarComponent } from '../../components/rating-star/rating-star.component';
-import { addIcons } from 'ionicons';
-import { cubeOutline, star, chatboxEllipses, calendarOutline, ellipsisHorizontal, ribbon, createOutline, personCircle, person, mail, location, map, card, informationCircle, checkmarkCircle, shieldCheckmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-usuario-detalle',
@@ -77,26 +75,5 @@ export class UsuarioDetallePage {
   })
   async getArticuloName(id_articulo: number): Promise<string> {
     return (await this.articuloService.getArticuloId(String(id_articulo))).nombre
-  }
-
-  constructor() {
-    addIcons({ 
-      cubeOutline, 
-      star, 
-      chatboxEllipses, 
-      calendarOutline, 
-      ellipsisHorizontal,
-      ribbon,
-      createOutline,
-      personCircle,
-      person,
-      mail,
-      location,
-      map,
-      card,
-      informationCircle,
-      checkmarkCircle,
-      shieldCheckmarkOutline
-    });
   }
 }

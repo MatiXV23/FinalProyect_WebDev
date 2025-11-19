@@ -3,8 +3,6 @@ import { IonIcon, IonButton } from "@ionic/angular/standalone";
 import { Articulo } from '../../shared/types/articulos';
 import { MainStore } from '../../shared/stores/main.store';
 import { ArticulosService } from '../../shared/services/articulos.service';
-import { add, arrowBack, bicycle, card, cart, cartOutline, logoPaypal, pricetag, receipt, remove, search, ticket, trash, wallet } from  'ionicons/icons'
-import { addIcons } from 'ionicons';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { WebsocketService } from '../../shared/services/websocket.service';
@@ -68,22 +66,4 @@ export class CarritoPage  {
 
   
 
-  constructor() {
-    addIcons({
-      cart, 
-      cartOutline, 
-      pricetag, 
-      remove, 
-      add, 
-      trash,
-      receipt, 
-      bicycle, 
-      ticket, 
-      card, 
-      arrowBack, 
-      search,
-      logoPaypal, 
-      wallet
-    })
-  }
 }
