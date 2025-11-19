@@ -13,34 +13,18 @@ export class UsuariosService {
   private httpClient = inject(HttpClient);
 
   public async getUserById(id_usuario: string): Promise<Usuario> {
-    try {
-      return await firstValueFrom(
-        this.httpClient.get<Usuario>(`${environment.apiUrl}/usuarios/${id_usuario}`)
-      );
-    } catch (e: any) {
-      console.log('Este es el error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    return await firstValueFrom(
+      this.httpClient.get<Usuario>(`${environment.apiUrl}/usuarios/${id_usuario}`)
+    );
   }
 
   public async postUsuario(datos: Partial<Usuario>): Promise<Usuario[]> {
-    try {
-      console.log('postUsuarios try: \n');
-      return await firstValueFrom(
-        this.httpClient.post<Usuario[]>(environment.apiUrl + '/usuarios', datos)
-      );
-    } catch (e: any) {
-      console.log('Este es el error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    return await firstValueFrom(
+      this.httpClient.post<Usuario[]>(environment.apiUrl + '/usuarios', datos)
+    );
   }
   public async getUsuarios() {
-    const users = await firstValueFrom(
-      this.httpClient.get<Usuario[]>(environment.apiUrl + '/usuarios')
-    );
-    return users;
+    return await firstValueFrom(this.httpClient.get<Usuario[]>(environment.apiUrl + '/usuarios'));
   }
 
   public async eliminarUsuario(id: number) {
@@ -48,78 +32,39 @@ export class UsuariosService {
   }
 
   public async updateUsuario(datos: Partial<Usuario>): Promise<void> {
-    try {
-      await firstValueFrom(
-        this.httpClient.put(`${environment.apiUrl}/usuarios/${datos.id_usuario}`, datos)
-      );
-    } catch (e: any) {
-      console.log('Este es el error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    await firstValueFrom(
+      this.httpClient.put(`${environment.apiUrl}/usuarios/${datos.id_usuario}`, datos)
+    );
   }
 
   public async updateUserPwd(id_usuario: number, password: string): Promise<void> {
-    try {
-      await firstValueFrom(
-        this.httpClient.put(`${environment.apiUrl}/usuarios/${id_usuario}/pwd`, {
-          password: password,
-        })
-      );
-    } catch (e: any) {
-      console.log('Error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    await firstValueFrom(
+      this.httpClient.put(`${environment.apiUrl}/usuarios/${id_usuario}/pwd`, {
+        password: password,
+      })
+    );
   }
 
   // RESENIAS
   public async getUserResenias(id_usuario: string): Promise<Resenia[]> {
-    try {
-      return await firstValueFrom(
-        this.httpClient.get<Resenia[]>(`${environment.apiUrl}/usuarios/${id_usuario}/resenias`)
-      );
-    } catch (e: any) {
-      console.log('Error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    return await firstValueFrom(
+      this.httpClient.get<Resenia[]>(`${environment.apiUrl}/usuarios/${id_usuario}/resenias`)
+    );
   }
 
   // CARRITO
   public async updateCarrito(id_usuario: number, articulos_carrito: number[]): Promise<void> {
-    try {
-      await firstValueFrom(
-        this.httpClient.patch(`${environment.apiUrl}/usuarios/${id_usuario}`, { articulos_carrito })
-      );
-    } catch (e: any) {
-      console.log('Error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
-  }
-
-  public async postCompraUsuario(id: number, datos: any) {
-    try {
-      return await firstValueFrom(
-        this.httpClient.post<Compras>(`${environment.apiUrl}/${id}/compras`, datos)
-      );
-    } catch (e) {
-      throw e;
-    }
+    await firstValueFrom(
+      this.httpClient.patch(`${environment.apiUrl}/usuarios/${id_usuario}`, { articulos_carrito })
+    );
   }
 
   public async comprarArticulo(id_usuario: number, id_articulo: number) {
-    try {
-      await firstValueFrom(
-        this.httpClient.post(`${environment.apiUrl}/usuarios/${id_usuario}/compras`, {
-          id_articulo,
-        })
-      );
-    } catch (e: any) {
-      console.log('Error: ' + e.error.message);
-      if (e.status === 0) throw new Error(e.message);
-      throw new Error(e.error.message);
-    }
+    console.log({ compra: { id_usuario, id_articulo } });
+    await firstValueFrom(
+      this.httpClient.post(`${environment.apiUrl}/usuarios/${id_usuario}/compras`, {
+        id_articulo,
+      })
+    );
   }
 }

@@ -15,33 +15,21 @@ export class ArticulosService {
   private mainStore = inject(MainStore);
 
   public async postArticulo(datos: Partial<Articulo>): Promise<Articulo[]> {
-    try {
-      return await firstValueFrom(
-        this.httpClient.post<Articulo[]>(environment.apiUrl + '/articulos', datos)
-      );
-    } catch (e: any) {
-      throw new Error(e.error.message);
-    }
+    return await firstValueFrom(
+      this.httpClient.post<Articulo[]>(environment.apiUrl + '/articulos', datos)
+    );
   }
 
   public async putArticulo(datos: Articulo): Promise<void> {
-    try {
-      await firstValueFrom(
-        this.httpClient.put(`${environment.apiUrl}/articulos/${datos.id_articulo}`, datos)
-      );
-    } catch (e: any) {
-      throw new Error(e.error.message);
-    }
+    await firstValueFrom(
+      this.httpClient.put(`${environment.apiUrl}/articulos/${datos.id_articulo}`, datos)
+    );
   }
 
   public async getArticuloId(id: string) {
-    try {
-      return await firstValueFrom(
-        this.httpClient.get<Articulo>(`${environment.apiUrl}/articulos/${id}`)
-      );
-    } catch (e) {
-      throw e;
-    }
+    return await firstValueFrom(
+      this.httpClient.get<Articulo>(`${environment.apiUrl}/articulos/${id}`)
+    );
   }
 
   async getAll(queryParams: Record<string, any> = {}) {
@@ -53,41 +41,22 @@ export class ArticulosService {
       }
     });
 
-    try {
-      const articulos = await firstValueFrom(
-        this.httpClient.get<Articulo[]>(environment.apiUrl + '/articulos', { params })
-      );
+    const articulos = await firstValueFrom(
+      this.httpClient.get<Articulo[]>(environment.apiUrl + '/articulos', { params })
+    );
 
-      return articulos;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    return articulos;
   }
 
   async getCategorias() {
-    try {
-      const categorias = await firstValueFrom(
-        this.httpClient.get<Categoria[]>(environment.apiUrl + '/categorias')
-      );
+    const categorias = await firstValueFrom(
+      this.httpClient.get<Categoria[]>(environment.apiUrl + '/categorias')
+    );
 
-      return categorias;
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    return categorias;
   }
 
   async deleteArticulo(id: number) {
-    try {
-      await firstValueFrom(
-        this.httpClient.delete<Articulo>(environment.apiUrl + `/articulos/${id}`)
-      );
-    } catch (e) {
-      console.error(e);
-      throw e;
-    }
+    await firstValueFrom(this.httpClient.delete<Articulo>(environment.apiUrl + `/articulos/${id}`));
   }
-
-  
 }

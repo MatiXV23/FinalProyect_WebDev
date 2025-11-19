@@ -1,90 +1,96 @@
-
-@if (this.user.hasValue()) {
-  @let user = this.user.value(); 
-  <main class="min-h-screen flex justify-center p-6">
-    <div class="w-full max-w-4xl">
-      
-      <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-xl">
-          <ion-icon name="person" class="text-white text-3xl"></ion-icon>
-        </div>
-        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-          ¡Edita tu cuenta!
-        </h1>
+@if (this.user.hasValue()) { @let user = this.user.value();
+<main class="min-h-screen flex justify-center p-6">
+  <div class="w-full max-w-4xl">
+    <div class="text-center mb-8">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-xl"
+      >
+        <ion-icon name="person" class="text-white text-3xl"></ion-icon>
       </div>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">¡Edita tu cuenta!</h1>
+    </div>
 
-      <div class="bg-white mb-10 dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-        <app-usuarios-form (saved)="this.updateUser($event)" [user]="user" buttonMSG="Guardar Usuario"></app-usuarios-form>
-      </div>
+    <div
+      class="bg-white mb-10 dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700"
+    >
+      <app-usuarios-form
+        (saved)="this.updateUser($event)"
+        [user]="user"
+        buttonMSG="Guardar Usuario"
+      ></app-usuarios-form>
+    </div>
 
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-        <form (ngSubmit)="updatePassword()" class="p-8">
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-    
-            <div class="md:col-span-2 mb-2">
-              <div class="flex items-center gap-3">
-                <div class="bg-green-100 dark:bg-green-900/30 rounded-lg p-2">
-                  <ion-icon name="lock-closed" class="text-green-600 dark:text-green-400 text-xl"></ion-icon>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
-                  Seguridad
-                </h3>
+    @if (isUserLogged()) {
+    <div
+      class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700"
+    >
+      <form (ngSubmit)="updatePassword()" class="p-8">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div class="md:col-span-2 mb-2">
+            <div class="flex items-center gap-3">
+              <div class="bg-green-100 dark:bg-green-900/30 rounded-lg p-2">
+                <ion-icon
+                  name="lock-closed"
+                  class="text-green-600 dark:text-green-400 text-xl"
+                ></ion-icon>
               </div>
-            </div>
-            
-            <div>
-              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                <ion-icon name="key" class="align-middle mr-1"></ion-icon>
-                Contraseña
-              </label>
-              <ion-input
-                [(ngModel)]="pass"
-                name="pass"
-                fill="outline"
-                type="password"
-                placeholder="Contraseña"
-                minlength="2">
-                <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-              </ion-input>
-            </div>
-
-            <div>
-              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                <ion-icon name="key" class="align-middle mr-1"></ion-icon>
-                Confirmar contraseña
-              </label>
-              <ion-input
-                [(ngModel)]="passRepeat"
-                name="passRepeat"
-                fill="outline"
-                type="password"
-                placeholder="Repite la contraseña">
-                <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-              </ion-input>
-            </div>
-
-            @if (passwordsDontCheck()) {
-              <p 
-                class="text-sm text-red-500 mt-2">
-                Las contraseñas no coinciden
-              </p>
-            }
-            <div class="mt-8 md:col-span-2">
-              <ion-button 
-                type="submit" 
-                expand="block"
-                size="large"
-                [disabled]="passwordsDontCheck()"
-                [color]="passwordsDontCheck() ? 'medium' : 'primary'"
-                class="font-bold">
-                <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-                Cambiar Contraseña
-              </ion-button>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Seguridad</h3>
             </div>
           </div>
-        </form>
-      </div>
-     
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <ion-icon name="key" class="align-middle mr-1"></ion-icon>
+              Contraseña
+            </label>
+            <ion-input
+              [(ngModel)]="pass"
+              name="pass"
+              fill="outline"
+              type="password"
+              placeholder="Contraseña"
+              minlength="2"
+            >
+              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <ion-icon name="key" class="align-middle mr-1"></ion-icon>
+              Confirmar contraseña
+            </label>
+            <ion-input
+              [(ngModel)]="passRepeat"
+              name="passRepeat"
+              fill="outline"
+              type="password"
+              placeholder="Repite la contraseña"
+            >
+              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+            </ion-input>
+          </div>
+
+          @if (passwordsDontCheck()) {
+          <p class="text-sm text-red-500 mt-2">Las contraseñas no coinciden</p>
+          }
+          <div class="mt-8 md:col-span-2">
+            <ion-button
+              type="submit"
+              expand="block"
+              size="large"
+              [disabled]="passwordsDontCheck()"
+              [color]="passwordsDontCheck() ? 'medium' : 'primary'"
+              class="font-bold"
+            >
+              <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+              Cambiar Contraseña
+            </ion-button>
+          </div>
+        </div>
+      </form>
     </div>
-  </main>
+    }
+  </div>
+</main>
 }

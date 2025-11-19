@@ -2,43 +2,57 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { Router, RouterLink } from '@angular/router';
 import { Usuario } from '../../../../shared/types/usuario';
-import { IonGrid, IonRow, IonCol, IonButton, IonCard, IonCardTitle, IonIcon, IonAccordionGroup, IonAccordion, IonItem, IonModal } from '@ionic/angular/standalone';
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonButton,
+  IonCard,
+  IonCardTitle,
+  IonIcon,
+  IonAccordionGroup,
+  IonAccordion,
+  IonItem,
+  IonModal,
+} from '@ionic/angular/standalone';
 import { CategoriasService } from '../../../../shared/services/categorias.service';
 import { Categoria } from '../../../../shared/types/categoria';
 import { FormsModule } from '@angular/forms';
+import { MainStore } from '../../../../shared/stores/main.store';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [ IonButton, IonIcon, IonAccordionGroup, IonAccordion, IonItem, IonModal, FormsModule],
+  imports: [IonButton, IonIcon, IonAccordionGroup, IonAccordion, IonItem, IonModal, FormsModule],
   templateUrl: './usuarios.page.html',
   styleUrl: './usuarios.page.css',
 })
 export class UsuariosPage {
-  
   private router = inject(Router);
-  private categoriasService = inject(CategoriasService)
+  private categoriasService = inject(CategoriasService);
   private usuariosService = inject(UsuariosService);
+  private mainStore = inject(MainStore);
 
   public usuarios = resource({
     loader: () => this.usuariosService.getUsuarios(),
   });
-  
+
   categorias = resource({
-    loader: () => this.categoriasService.getCategorias()
-  })
-  isModalOpen: boolean = false
-  categoriaForm: Categoria = { id_categoria: 0, nombre: ''};
+    loader: () => this.categoriasService.getCategorias(),
+  });
+  isModalOpen: boolean = false;
+  categoriaForm: Categoria = { id_categoria: 0, nombre: '' };
   isEditMode: any;
 
   async submitForm() {
-    if (this.isEditMode) await this.categoriasService.editCategoria(this.categoriaForm)
-    else if (this.categoriaForm.nombre) await this.categoriasService.createCategoria(this.categoriaForm.nombre)
+    if (this.isEditMode) await this.categoriasService.editCategoria(this.categoriaForm);
+    else if (this.categoriaForm.nombre)
+      await this.categoriasService.createCategoria(this.categoriaForm.nombre);
 
-    this.closeModal()
-    this.categorias.reload()
-    return
+    this.closeModal();
+    this.categorias.reload();
+    return;
   }
-  
+
   openCreateModal() {
     this.isEditMode = false;
     this.categoriaForm = { id_categoria: 0, nombre: '' };
@@ -57,15 +71,14 @@ export class UsuariosPage {
   }
 
   async deleteCategoria(id_categoria: number) {
-    await this.categoriasService.deleteCategoria(id_categoria)
-    this.categorias.reload()
+    await this.categoriasService.deleteCategoria(id_categoria);
+    this.categorias.reload();
   }
 
   public async handleDelete(event: any, id_usuario: number) {
     event.stopPropagation();
     await this.usuariosService.eliminarUsuario(id_usuario);
-    console.log('Eliminado');
-    this.router.navigate(['home']);
+    this.usuarios.reload();
   }
 
   public handleEdit(event: any, id_usuario: number) {
@@ -75,5 +88,9 @@ export class UsuariosPage {
 
   public viewProfile(id_usuario: number) {
     this.router.navigate([`usuarios/${id_usuario}`]);
+  }
+
+  public isUserLogged(id_usuario: number) {
+    return this.mainStore.isUserLogged(id_usuario);
   }
 }

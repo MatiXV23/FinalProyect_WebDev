@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, input, OnInit, resource, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnInit,
+  resource,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
 import { IonInput, IonIcon, IonInputPasswordToggle, IonButton } from '@ionic/angular/standalone';
@@ -9,7 +18,14 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios-edit',
-  imports: [UsuariosFormComponent, IonIcon, FormsModule, IonInputPasswordToggle, IonInput, IonButton],
+  imports: [
+    UsuariosFormComponent,
+    IonIcon,
+    FormsModule,
+    IonInputPasswordToggle,
+    IonInput,
+    IonButton,
+  ],
   templateUrl: './usuarios-edit.page.html',
   styleUrl: './usuarios-edit.page.css',
 })
@@ -47,18 +63,22 @@ export class UsuariosEditPage {
     }
   }
 
-  pass = signal<string>('')
-  passRepeat = signal<string>('')
+  isUserLogged = computed(() => {
+    const user = this.user.value();
+    if (!user) return false;
+    return this.mainStore.isUserLogged(user.id_usuario);
+  });
 
-  passwordsDontCheck = computed(()=> {
-    return this.pass() !== this.passRepeat()
-  })
+  pass = signal<string>('');
+  passRepeat = signal<string>('');
+
+  passwordsDontCheck = computed(() => {
+    return this.pass() !== this.passRepeat();
+  });
 
   async updatePassword() {
-    await this.usuariosService.updateUserPwd(this.user.value()!.id_usuario, this.pass())
-    this.pass.set('')
-    this.passRepeat.set('')
+    await this.usuariosService.updateUserPwd(this.user.value()!.id_usuario, this.pass());
+    this.pass.set('');
+    this.passRepeat.set('');
   }
-
-  
 }
