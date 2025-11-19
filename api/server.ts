@@ -29,7 +29,7 @@ fastify.register(autoLoad, {
 
 fastify.setErrorHandler((err: PC_Error, request, reply) => {
     if (!(err instanceof PC_Error)) err = new PC_InternalServerError()
-    fastify.log.error(err);
+    fastify.log.error({place:'server.ts', err});
 
     reply.status(err.statusCode).send({
         statusCode: err.statusCode,

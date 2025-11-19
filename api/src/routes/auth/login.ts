@@ -20,8 +20,8 @@ const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
       },
     },
     async (request, reply) => {
-      const user = await fastify.UsuariosDB.getUserByCredentials(request.body)
 
+      const user = await fastify.UsuariosDB.getUserByCredentials(request.body)
       const userPayload: JWTUsuario = {
         email: user.email,
         id_usuario: user.id_usuario,
@@ -36,6 +36,7 @@ const loginRoute: FastifyPluginAsyncTypebox = async (fastify, opts) => {
       };
       const token = fastify.jwt.sign(userPayload, signOptions)
       return { token:  token };
+      
     }
   );
 
