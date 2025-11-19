@@ -3,14 +3,14 @@ import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { ReseniaPost } from '../../../../shared/types/resenia';
 import { FormsModule } from '@angular/forms';
 import { IonIcon, IonButton, IonInput } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { MainStore } from '../../../../shared/stores/main.store';
 
 @Component({
   selector: 'app-compras-review',
-  imports: [FormsModule, IonIcon, IonButton, IonInput],
+  imports: [FormsModule, IonIcon, IonButton, IonInput, RouterLink],
   templateUrl: './compras-review.page.html',
   styleUrl: './compras-review.page.css',
 })
