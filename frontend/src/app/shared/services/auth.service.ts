@@ -5,18 +5,18 @@ import { Credenciales } from '../types/credenciales';
 import { firstValueFrom } from 'rxjs';
 import { Usuario } from '../types/usuario';
 import { environment } from '../../../environments/environment';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
-
+  private notificationService = inject(NotificationService)
   private mainStore = inject(MainStore);
 
   async logIn(credenciales: Credenciales) {
-    try {
-      const { token } = await firstValueFrom(
+    const { token } = await firstValueFrom(
         this.httpClient.post<{ token: string }>(environment.apiUrl + '/auth', credenciales)
       );
 
@@ -24,9 +24,6 @@ export class AuthService {
 
       this.mainStore.token.set(token);
       this.mainStore.user.set(await this.getUser());
-    } catch (e) {
-      throw e;
-    }
   }
 
   async logOut() {

@@ -45,11 +45,19 @@ export class ArticuloComprarPage {
   tarjeta = '';
   expira = '';
   cvv = '';
-  alertButtons = ['Action'];
+  alertButtons = [
+    {
+      text: 'Volver',
+      handler: () => this.router.navigate(['/home']),
+    },
+  ];
+
+  isDisable() {
+    return !this.tarjeta || !this.expira || !this.cvv;
+  }
 
   async procesarPago() {
-    if (!this.tarjeta || !this.expira || !this.cvv) {
-      console.log(this.tarjeta, this.expira, this.cvv)
+    if (this.isDisable()) {
       return;
     }
 
@@ -61,16 +69,7 @@ export class ArticuloComprarPage {
       )
     );
 
-    setTimeout(() => {
-      // alert('Pago simulado completado correctamente 🎉');
-      this.usuarioService.postCompraUsuario(
-        Number(this.mainStore.user()?.id_usuario),
-        this.articulos
-      );
-      this.mainStore.articuloCompraActual = undefined;
-      this.authService.getUser();
-      this.router.navigate(['/home']);
-    }, 500);
+    this.authService.getUser();
   }
 
   formatExpiry(event: any) {
@@ -88,8 +87,6 @@ export class ArticuloComprarPage {
       this.ids_articulos = params['ids_articulos']
         ? String(params['ids_articulos']).split(',').map(Number)
         : [];
-
-      console.log(this.ids_articulos);
     });
   }
 }

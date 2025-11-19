@@ -1,52 +1,47 @@
-<div class="min-h-screen flex justify-center p-6 ">
+<div class="min-h-screen flex justify-center p-6">
   <div class="w-full max-w-2xl">
-    
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-green-500 to-emerald-600 rounded-2xl mb-4 shadow-xl">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-green-500 to-emerald-600 rounded-2xl mb-4 shadow-xl"
+      >
         <ion-icon name="card" class="text-white text-3xl"></ion-icon>
       </div>
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-        Finalizar compra
-      </h1>
-      <p class="text-gray-600 dark:text-gray-400">
-        Completa los datos de pago de forma segura
-      </p>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Finalizar compra</h1>
+      <p class="text-gray-600 dark:text-gray-400">Completa los datos de pago de forma segura</p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-      
+    <div
+      class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700"
+    >
       <div class="bg-linear-to-br from-indigo-500 to-purple-600 p-6">
         <div class="flex items-center gap-3 mb-3">
           <ion-icon name="cart" class="text-white text-2xl"></ion-icon>
           <h2 class="text-xl font-bold text-white">Resumen de compra</h2>
         </div>
-        
+
         <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5">
           <div class="flex justify-between items-start mb-4">
             <div class="flex-1">
               <p class="text-white/80 text-sm mb-1">Articulo</p>
               @for (articulo of articulos.value(); track $index) {
-                <div class="w-full flex justify-between">
-                  <p class="text-white font-semibold text-lg">{{ articulo.nombre }}</p>
-                  <p class="text-white font-semibold text-lg">
-                    {{articulo.moneda === 'UYU' ? '$' : 'U$S'}} {{articulo.precio}}
-                  </p>
-                </div>
+              <div class="w-full flex justify-between">
+                <p class="text-white font-semibold text-lg">{{ articulo.nombre }}</p>
+                <p class="text-white font-semibold text-lg">
+                  {{ articulo.moneda === 'UYU' ? '$' : 'U$S' }} {{ articulo.precio }}
+                </p>
+              </div>
               }
             </div>
           </div>
-          
+
           <div class="border-t border-white/20 pt-4 mt-4">
             <div class="flex justify-between items-center">
               <span class="text-white text-lg">Total a pagar</span>
               <span class="text-white font-bold text-3xl">
-                @if (totalUYU() > 0) {
-                  $ {{totalUYU()}}
-                  @if (totalUSD() > 0) {
-                    + U$S{{totalUSD()}}
-                  }
-                } @else if (totalUSD() > 0){
-                  U$S {{totalUSD()}}
+                @if (totalUYU() > 0) { $ {{ totalUYU() }} @if (totalUSD() > 0) { + U$S{{
+                  totalUSD()
+                }}
+                } } @else if (totalUSD() > 0){ U$S {{ totalUSD() }}
                 }
               </span>
             </div>
@@ -56,14 +51,17 @@
 
       <div class="p-8">
         <div class="flex items-center gap-3 mb-6">
-          <ion-icon name="lock-closed" class="text-green-600 dark:text-green-400 text-xl"></ion-icon>
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-            Información de pago
-          </h3>
+          <ion-icon
+            name="lock-closed"
+            class="text-green-600 dark:text-green-400 text-xl"
+          ></ion-icon>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Información de pago</h3>
         </div>
 
         <div class="mb-6">
-          <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          <label
+            class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3"
+          >
             <ion-icon name="card-outline" class="text-lg"></ion-icon>
             Número de tarjeta
           </label>
@@ -72,18 +70,25 @@
             type="number"
             maxlength="16"
             fill="outline"
-            placeholder="1111 2222 3333 4444">
+            placeholder="1111 2222 3333 4444"
+          >
             <ion-icon slot="end" name="card" class="text-gray-400"></ion-icon>
           </ion-input>
-          
+
           <div class="flex gap-2 mt-3">
-            <div class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400">
+            <div
+              class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400"
+            >
               VISA
             </div>
-            <div class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400">
+            <div
+              class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400"
+            >
               Mastercard
             </div>
-            <div class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400">
+            <div
+              class="bg-gray-100 dark:bg-gray-700 rounded px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400"
+            >
               PayPal
             </div>
           </div>
@@ -91,7 +96,9 @@
 
         <div class="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+            <label
+              class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3"
+            >
               <ion-icon name="calendar-outline" class="text-lg"></ion-icon>
               Fecha de expiración
             </label>
@@ -102,12 +109,15 @@
               fill="outline"
               autocomplete="off"
               (ionInput)="formatExpiry($event)"
-              placeholder="MM/AA">
+              placeholder="MM/AA"
+            >
             </ion-input>
           </div>
 
           <div>
-            <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+            <label
+              class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3"
+            >
               <ion-icon name="shield-checkmark-outline" class="text-lg"></ion-icon>
               CVV
             </label>
@@ -117,7 +127,8 @@
               maxlength="3"
               fill="outline"
               autocomplete="off"
-              placeholder="123">
+              placeholder="123"
+            >
             </ion-input>
           </div>
         </div>
@@ -128,15 +139,14 @@
           expand="block"
           size="large"
           class="font-bold mb-4"
-          color="success">
+          color="success"
+          [disabled]="isDisable()"
+        >
           <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-          @if (totalUYU() > 0) {
-            Confirmar pago de ${{totalUYU()}}
-            @if (totalUSD() > 0) {
-              + U$S{{totalUSD()}}
-            }
-          } @else if (totalUSD() > 0){
-            Confirmar pago de U$S{{totalUSD()}}
+          @if (totalUYU() > 0) { Confirmar pago de ${{ totalUYU() }} @if (totalUSD() > 0) { + U$S{{
+            totalUSD()
+          }}
+          } } @else if (totalUSD() > 0){ Confirmar pago de U$S{{ totalUSD() }}
           }
         </ion-button>
         <ion-alert
@@ -146,12 +156,17 @@
           [buttons]="alertButtons"
         ></ion-alert>
 
-        <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <div
+          class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+        >
           <div class="flex gap-2">
-            <ion-icon name="information-circle" class="text-gray-400 text-lg shrink-0 mt-0.5"></ion-icon>
+            <ion-icon
+              name="information-circle"
+              class="text-gray-400 text-lg shrink-0 mt-0.5"
+            ></ion-icon>
             <p class="text-xs text-gray-600 dark:text-gray-400">
-              Este es un formulario de pago simulado para fines demostrativos. 
-              No se realiza ninguna transacción real ni se almacenan datos de tarjetas.
+              Este es un formulario de pago simulado para fines demostrativos. No se realiza ninguna
+              transacción real ni se almacenan datos de tarjetas.
             </p>
           </div>
         </div>
@@ -159,16 +174,31 @@
     </div>
 
     <div class="mt-6 grid grid-cols-3 gap-4 text-center">
-      <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-        <ion-icon name="lock-closed" class="text-green-600 dark:text-green-400 text-2xl mb-2"></ion-icon>
+      <div
+        class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <ion-icon
+          name="lock-closed"
+          class="text-green-600 dark:text-green-400 text-2xl mb-2"
+        ></ion-icon>
         <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">Pago seguro</p>
       </div>
-      <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-        <ion-icon name="shield-checkmark" class="text-blue-600 dark:text-blue-400 text-2xl mb-2"></ion-icon>
+      <div
+        class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <ion-icon
+          name="shield-checkmark"
+          class="text-blue-600 dark:text-blue-400 text-2xl mb-2"
+        ></ion-icon>
         <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">Protegido</p>
       </div>
-      <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-        <ion-icon name="return-down-back" class="text-purple-600 dark:text-purple-400 text-2xl mb-2"></ion-icon>
+      <div
+        class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <ion-icon
+          name="return-down-back"
+          class="text-purple-600 dark:text-purple-400 text-2xl mb-2"
+        ></ion-icon>
         <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">Devolución</p>
       </div>
     </div>

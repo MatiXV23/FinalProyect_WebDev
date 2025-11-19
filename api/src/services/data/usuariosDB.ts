@@ -185,6 +185,8 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
 
             return await this.getById(id);
         }catch(err: any){
+            if ((err instanceof PC_NotFound)) throw err
+            
             if (err.code !== "23505") throw new PC_InternalServerError()
 
             switch (err.constraint) {
@@ -208,7 +210,8 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
 
             if (res.rowCount === 0) throw new PC_NotFound(`Usuario de id ${id}, no existe. Ignorando`)
             console.log(res)
-        } catch (e) {
+        } catch (err) {
+            if ((err instanceof PC_NotFound)) throw err
             throw new PC_InternalServerError()
         }
     }
@@ -224,7 +227,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
 
             return res.rows[0]
         } catch (err) {
-            console.error(err)
+            if ((err instanceof PC_NotFound)) throw err
             throw new PC_InternalServerError()
         }
 

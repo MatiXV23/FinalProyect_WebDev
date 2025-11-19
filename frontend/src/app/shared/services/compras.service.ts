@@ -11,12 +11,8 @@ export class ComprasService {
   private httpClient = inject(HttpClient);
 
   async getComprasByUserId(id: number) {
-    try {
-      return await firstValueFrom(
-        this.httpClient.get<Compras[]>(`${environment.apiUrl}/usuarios/${id}/compras`)
-      );
-    } catch (e) {
-      throw e;
-    }
+    return await firstValueFrom(
+      this.httpClient.get<Compras[]>(`${environment.apiUrl}/usuarios/${id}/compras`)
+    );
   }
 }

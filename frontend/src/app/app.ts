@@ -23,7 +23,8 @@ import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
 import { WebsocketService } from './shared/services/websocket.service';
 import { addIcons } from 'ionicons'
-import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, list, trash, pricetag, pencil, add, card, cartOutline, logoPaypal, receipt, remove, search, ticket, wallet, star, fingerPrint, mail, people, peopleOutline, pricetags, pricetagsOutline, cubeOutline, checkmark, apps, cash, image, checkmarkCircle, calendarOutline, cardOutline, informationCircle, lockClosed, returnDownBack, shieldCheckmarkOutline, arrowForward, imageOutline, refresh, searchOutline, chatbubble, chatbubbleOutline, starHalf, starOutline, chatboxEllipses, createOutline, ellipsisHorizontal, map, personCircle, personAdd, key, personOutline, logoFacebook, logoGoogle, lockClosedOutline, mailOutline } from 'ionicons/icons';
+import { bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, list, trash, pricetag, pencil, add, card, cartOutline, logoPaypal, receipt, remove, search, ticket, wallet, star, fingerPrint, mail, people, peopleOutline, pricetags, pricetagsOutline, cubeOutline, checkmark, apps, cash, image, checkmarkCircle, calendarOutline, cardOutline, informationCircle, lockClosed, returnDownBack, shieldCheckmarkOutline, arrowForward, imageOutline, refresh, searchOutline, chatbubble, chatbubbleOutline, starHalf, starOutline, chatboxEllipses, createOutline, ellipsisHorizontal, map, personCircle, personAdd, key, personOutline, logoFacebook, logoGoogle, lockClosedOutline, mailOutline, alertCircle } from 'ionicons/icons';
+import { NotificationComponent } from './core/components/notification/notification.component';
 
 
 @Component({
@@ -37,6 +38,7 @@ import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubble
     IonToolbar,
     IonMenu,
     IonSplitPane,
+    NotificationComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.html',
@@ -100,7 +102,7 @@ export class App implements OnInit {
 
       remove, add, receipt, ticket, card, notifications,
 
-      search, logoPaypal, wallet, star,
+      search, logoPaypal, wallet, star, alertCircle,
       people, mail, fingerPrint, peopleOutline, pricetags, pricetagsOutline,
 
       apps, cash, image, checkmarkCircle, shieldCheckmarkOutline,
