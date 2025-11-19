@@ -23,7 +23,7 @@ import { AuthService } from './shared/services/auth.service';
 import { MainStore } from './shared/stores/main.store';
 import { WebsocketService } from './shared/services/websocket.service';
 import { addIcons } from 'ionicons'
-import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, list, trash, pricetag, pencil, add, card, cartOutline, logoPaypal, receipt, remove, search, ticket, wallet, star, fingerPrint, mail, people, peopleOutline, pricetags, pricetagsOutline, cubeOutline, checkmark, apps, cash, image, checkmarkCircle, calendarOutline, cardOutline, informationCircle, lockClosed, returnDownBack, shieldCheckmarkOutline, arrowForward, imageOutline, refresh, searchOutline, chatbubble, chatbubbleOutline, starHalf, starOutline, chatboxEllipses, createOutline, ellipsisHorizontal, map, personCircle } from 'ionicons/icons';
+import {   bicycle,  home,  location,  documentText,  cube,  ribbon,  chatbubbles,  person,  cart,  flash,  shieldCheckmark, logIn, statsChart, addCircle, logOut, close, storefront, arrowBack, arrowForwardCircle, chatbubblesOutline, chevronForward, menu, notifications, send, list, trash, pricetag, pencil, add, card, cartOutline, logoPaypal, receipt, remove, search, ticket, wallet, star, fingerPrint, mail, people, peopleOutline, pricetags, pricetagsOutline, cubeOutline, checkmark, apps, cash, image, checkmarkCircle, calendarOutline, cardOutline, informationCircle, lockClosed, returnDownBack, shieldCheckmarkOutline, arrowForward, imageOutline, refresh, searchOutline, chatbubble, chatbubbleOutline, starHalf, starOutline, chatboxEllipses, createOutline, ellipsisHorizontal, map, personCircle, personAdd, key, personOutline, logoFacebook, logoGoogle, lockClosedOutline, mailOutline } from 'ionicons/icons';
 
 
 @Component({
@@ -90,7 +90,7 @@ export class App implements OnInit {
   constructor(private menuCtrl: MenuController) {
     addIcons({
       bicycle, home, location, documentText, cube, ribbon,
-      chatbubbles, chatbubblesOutline, menu,
+      chatbubbles, chatbubblesOutline, menu, personOutline,
 
       logOut, logIn, person, storefront, cart, cartOutline,
       flash, shieldCheckmark, statsChart, addCircle, close,
@@ -107,7 +107,10 @@ export class App implements OnInit {
       lockClosed, cardOutline, calendarOutline, informationCircle, returnDownBack,
 
       searchOutline, refresh, imageOutline, arrowForward, chatbubble, chatbubbleOutline,
-      starOutline, starHalf, chatboxEllipses, ellipsisHorizontal, createOutline, personCircle, map,
+      starOutline, starHalf, chatboxEllipses, ellipsisHorizontal, createOutline, personCircle, 
+      map, personAdd, key, lockClosedOutline, mailOutline,
+
+      logoFacebook, logoGoogle
     });
   }
 }

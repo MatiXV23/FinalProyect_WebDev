@@ -1,103 +1,199 @@
-
-<form #miForm="ngForm" (ngSubmit)="handleClick($event)" class="grid grid-cols-1 gap-6 md:grid-cols-2">
-  <ion-input
-    [(ngModel)]="user().nombres"
-    name="nombres"
-    class="mt-10"
-    label="Nombres"
-    label-placement="stacked"
-    fill="outline"
-    type="text"
-    placeholder="Enter text"
-    required
-  ></ion-input>
+<form 
+  #miForm="ngForm" 
+  (ngSubmit)="handleClick($event)" 
+  class="p-8">
+  
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     
-  <ion-input
-    [(ngModel)]="user().apellidos"
-    name="apellidos"
-    class="md:mt-10"
-    label="Apellidos"
-    label-placement="stacked"
-    fill="outline"
-    type="text"
-    placeholder="Enter text"
-    required
-  ></ion-input>
+    <div class="md:col-span-2 mb-2">
+      <div class="flex items-center gap-3">
+        <div class="bg-indigo-100 dark:bg-indigo-900/30 rounded-lg p-2">
+          <ion-icon name="person" class="text-indigo-600 dark:text-indigo-400 text-xl"></ion-icon>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+          Información personal
+        </h3>
+      </div>
+    </div>
 
-  <ion-input
-    [(ngModel)]="user().email"
-    name="email"
-    label="Correo electronico"
-    label-placement="stacked"
-    fill="outline"
-    type="email"
-    placeholder="Enter text"
-    required
-  ></ion-input>
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="person-outline" class="align-middle mr-1"></ion-icon>
+        Nombres
+      </label>
+      <ion-input
+        [(ngModel)]="user().nombres"
+        name="nombres"
+        fill="outline"
+        type="text"
+        placeholder="Tu nombre"
+        required>
+      </ion-input>
+    </div>
 
-  <ion-input
-    [(ngModel)]="user().direccion"
-    name="direccion"
-    label="Direccion"
-    label-placement="stacked"
-    fill="outline"
-    type="text"
-    placeholder="Enter text"
-    required
-  ></ion-input>
-  
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="person-outline" class="align-middle mr-1"></ion-icon>
+        Apellidos
+      </label>
+      <ion-input
+        [(ngModel)]="user().apellidos"
+        name="apellidos"
+        fill="outline"
+        type="text"
+        placeholder="Tus apellidos"
+        required>
+      </ion-input>
+    </div>
 
-  @if (departamentos.hasValue()) {
-  <ion-select
-  [(ngModel)]="user().id_departamento"
-  name="id_departamento"
-  label="Departamento"
-  label-placement="stacked"
-  fill="outline"
-  type="select"
-  required
-  >@for (item of departamentos.value(); track $index) {
-  <ion-select-option [value]="item.id_departamento">{{ item.nombre }}</ion-select-option>
-  }</ion-select>
-  }
-  
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="mail" class="align-middle mr-1"></ion-icon>
+        Correo electrónico
+      </label>
+      <ion-input
+        [(ngModel)]="user().email"
+        name="email"
+        fill="outline"
+        type="email"
+        placeholder="correo@ejemplo.com"
+        required>
+      </ion-input>
+    </div>
 
-  <ion-input
-    [(ngModel)]="user().nro_documento"
-    name="nro_documento"
-    label="Documento"
-    label-placement="stacked"
-    fill="outline"
-    type="number"
-    required
-  ></ion-input>
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="card" class="align-middle mr-1"></ion-icon>
+        Documento de identidad
+      </label>
+      <ion-input
+        [(ngModel)]="user().nro_documento"
+        name="nro_documento"
+        fill="outline"
+        type="number"
+        placeholder="12345678"
+        required>
+      </ion-input>
+    </div>
 
-  <ion-input
-    [(ngModel)]="password"
-    name="password"
-    label="Contraseña"
-    label-placement="stacked"
-    fill="outline"
-    placeholder="Enter text"
-    required
-  ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
-  </ion-input>
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="home" class="align-middle mr-1"></ion-icon>
+        Dirección
+      </label>
+      <ion-input
+        [(ngModel)]="user().direccion"
+        name="direccion"
+        fill="outline"
+        type="text"
+        placeholder="Calle, número, barrio"
+        required>
+      </ion-input>
+    </div>
 
-  <ion-input
-    name="password_repeat"
-    label="Repita la Contraseña"
-    label-placement="stacked"
-    fill="outline"
-    placeholder="Enter text"
-    required
-  ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
-  </ion-input>
+    @if (departamentos.hasValue()) {
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          <ion-icon name="map" class="align-middle mr-1"></ion-icon>
+          Departamento
+        </label>
+        <ion-select
+          [(ngModel)]="user().id_departamento"
+          name="id_departamento"
+          interface="popover"
+          placeholder="Selecciona departamento"
+          class="w-full border border-gray-300 p-1.5 dark:border-gray-600 rounded-lg"
+          required>
+          @for (item of departamentos.value(); track $index) {
+            <ion-select-option [value]="item.id_departamento">
+              {{ item.nombre }}
+            </ion-select-option>
+          }
+        </ion-select>
+      </div>
+    }
 
-    @if (isAdmin()) {
-    <ion-checkbox
-    [(ngModel)]="user().is_admin"
-    name="is_admin"  labelPlacement="end"
-    >Administrador</ion-checkbox>
-  }
-  <ion-button type="submit" [disabled]="miForm.invalid" [color]="miForm.invalid ? 'danger' : '' " class="self-center mt-6 md:col-span-2">{{buttonMSG()}}</ion-button>
+    @if (passReq()) {
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          <ion-icon name="key" class="align-middle mr-1"></ion-icon>
+          Contraseña
+        </label>
+        <ion-input
+          [(ngModel)]="password"
+          name="password"
+          fill="outline"
+          type="password"
+          placeholder="Contraseña"
+          minlength="2"
+          required>
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          <ion-icon name="key" class="align-middle mr-1"></ion-icon>
+          Confirmar contraseña
+        </label>
+        <ion-input
+          [(ngModel)]="passwordRepeat"
+          name="password_repeat"
+          fill="outline"
+          type="password"
+          placeholder="Repite la contraseña"
+          required>
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      </div>
+
+      @if (passwordsDontCheck()) {
+        <p 
+          class="text-sm text-red-500 mt-2">
+          Las contraseñas no coinciden
+        </p>
+      }
+    }
+    
+    @if (isAdmin() && !isLoggedUser()) {
+      <div class="md:col-span-2">
+        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <ion-checkbox
+              [(ngModel)]="user().is_admin"
+              name="is_admin">
+            </ion-checkbox>
+            <div>
+              <div class="flex items-center gap-2">
+                <ion-icon name="shield-checkmark" class="text-amber-600 dark:text-amber-400 text-lg"></ion-icon>
+                <span class="font-semibold text-gray-900 dark:text-white">Cuenta de administrador</span>
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Esta cuenta tendrá permisos administrativos completos
+              </p>
+            </div>
+          </label>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="mt-8">
+    <ion-button 
+      type="submit" 
+      expand="block"
+      size="large"
+      [disabled]="miForm.invalid || passwordsDontCheck()"
+      [color]="(miForm.invalid || passwordsDontCheck()) ? 'medium' : 'primary'"
+      class="font-bold">
+      <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+      {{buttonMSG()}}
+    </ion-button>
+    
+    @if (miForm.invalid) {
+      <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">
+        Por favor completa todos los campos requeridos
+      </p>
+    }
+  </div>
 </form>

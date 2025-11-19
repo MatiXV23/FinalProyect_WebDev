@@ -1,12 +1,5 @@
-import { Component, inject, input, OnInit, output, resource } from '@angular/core';
-import {
-  IonInput,
-  IonInputPasswordToggle,
-  IonButton,
-  IonSelect,
-  IonSelectOption,
-  IonCheckbox,
-} from '@ionic/angular/standalone';
+import { Component, computed, effect, inject, input, OnInit, output, resource, signal } from '@angular/core';
+import { IonInput, IonInputPasswordToggle, IonButton, IonSelect, IonSelectOption, IonCheckbox, IonIcon } from '@ionic/angular/standalone';
 import { UsuarioConPwd, Usuario } from '../../../../shared/types/usuario';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { Departamento } from '../../../../shared/types/departamentos';
@@ -25,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     IonSelectOption,
     IonCheckbox,
     FormsModule,
-  ],
+    IonIcon
+],
 })
 export class UsuariosFormComponent {
   private mainStore = inject(MainStore);
@@ -37,7 +31,7 @@ export class UsuariosFormComponent {
 
   buttonMSG = input<string>('Crear cuenta');
   isAdmin = this.mainStore.isAdmin;
-
+  
   public user = input<Usuario>({
     email: '',
     nombres: '',
@@ -52,8 +46,16 @@ export class UsuariosFormComponent {
     articulos_carrito: [],
   });
 
-  password: string = ''
+  isLoggedUser = computed(() => this.user().id_usuario !== 0 ? this.mainStore.isUserLogged(this.user().id_usuario) : true)
+  passReq = computed(() => this.user().id_usuario === 0)
 
+
+  password = signal<string>('')
+  passwordRepeat = signal<string>('')
+
+  passwordsDontCheck = computed(()=> {
+    return this.password() !== this.passwordRepeat()
+  })
 
   public saved = output<UsuarioConPwd>();
 
@@ -66,7 +68,7 @@ export class UsuariosFormComponent {
       is_admin: this.user().is_admin,
       id_departamento: this.user().id_departamento,
       nro_documento: this.user().nro_documento,
-      password: this.password,
+      password: this.password(),
     }
 
     this.saved.emit(userExp);

@@ -15,9 +15,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
   selector: 'app-usuarios-login',
   imports: [
     IonInput,
-    IonCard,
     IonInputPasswordToggle,
-    IonCardSubtitle,
     IonRouterLinkWithHref,
     RouterLink,
     FormsModule,
@@ -44,5 +42,9 @@ export class UsuariosLoginPage {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async extraConnection(connector_name: 'Facebook' | 'Google'){
+    throw new Error(`Funcionalidad para iniciar sesion via ${connector_name} no implementada aun`)
   }
 }
