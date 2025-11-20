@@ -8,7 +8,7 @@ import { Articulo } from '../types/articulos';
 export class MainStore {
   token = signal<string | undefined>(undefined);
   user = signal<Usuario | undefined>(undefined);
-
+  idCompraReview = signal<number | undefined>(undefined);
   isLogged = computed(() => !!this.user());
   isAdmin = computed(() => {
     const user = this.user();

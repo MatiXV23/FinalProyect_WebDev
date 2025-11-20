@@ -69,6 +69,7 @@ export class DepartamentosDB extends BasePgRepository<Departamento> {
       }
       return res.rows[0];
     } catch (err: any) {
+      if (err instanceof PC_NotFound) throw err;
       throw new PC_InternalServerError(
         "Error al modificar un departamento \n" + err
       );

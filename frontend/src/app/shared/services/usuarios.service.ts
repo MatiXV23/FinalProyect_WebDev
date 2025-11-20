@@ -67,4 +67,17 @@ export class UsuariosService {
       })
     );
   }
+
+  public async postResenia(id_user_logeado: number, id_compra: number, datos: any) {
+    try {
+      return await firstValueFrom(
+        this.httpClient.post<Resenia>(
+          `${environment.apiUrl}/usuarios/${id_user_logeado}/compras/${id_compra}/resenia`,
+          datos
+        )
+      );
+    } catch (e) {
+      throw e;
+    }
+  }
 }

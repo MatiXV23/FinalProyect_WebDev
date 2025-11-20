@@ -6,8 +6,8 @@ import {
   PC_NotImplemented,
 } from "../../errors/errors.js";
 import type { Pool } from "pg";
-import type { Chat } from "../../models/market/chatModel.js";
-import type { Mensaje } from "../../models/market/mensajeModel.js";
+import type { Chat } from "../../models/market/chatModel.ts";
+import type { Mensaje } from "../../models/market/mensajeModel.ts";
 
 export class ChatsDB {
   protected pool: Pool;
@@ -46,8 +46,9 @@ export class ChatsDB {
 
       if (chats.rowCount === 0)
         throw new PC_NotFound(`Chat con id (${id_chat}) no encontrado`);
-      return chats.rows[0]!;
+      return chats.rows[0];
     } catch (e) {
+      if (e instanceof PC_NotFound) throw e;
       throw new PC_InternalServerError();
     }
   }
@@ -67,7 +68,7 @@ export class ChatsDB {
         id_comprador,
         id_vendedor,
       ]);
-      return res.rows[0]!;
+      return res.rows[0];
     } catch (err: any) {
       throw new PC_InternalServerError();
     }
@@ -87,6 +88,7 @@ export class ChatsDB {
         throw new PC_NotFound(`Usuario de id ${id_chat}, no existe. Ignorando`);
       console.log(res);
     } catch (e) {
+      if (e instanceof PC_NotFound) throw e;
       throw new PC_InternalServerError();
     }
   }
@@ -129,7 +131,7 @@ export class ChatsDB {
         id_enviador,
         contenido,
       ]);
-      return res.rows[0]!;
+      return res.rows[0];
     } catch (err: any) {
       throw new PC_InternalServerError();
     }
