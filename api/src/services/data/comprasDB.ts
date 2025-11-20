@@ -1,12 +1,12 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_BadRequest,
   PC_InternalServerError,
   PC_NotFound,
   PC_NotImplemented,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
-import { type Compra } from "../../models/market/compraModel.ts";
+import { type Compra } from "../../models/market/compraModel.js";
 
 // TODO: REALIZAR ESTO ! ! !
 export class ComprasDB extends BasePgRepository<Compra> {
@@ -27,7 +27,7 @@ export class ComprasDB extends BasePgRepository<Compra> {
 
   async getAll(): Promise<Compra[]> {
     const compras = await this.pool.query<Compra>(this.getQuery());
-    
+
     return compras.rows;
   }
 
@@ -55,17 +55,18 @@ export class ComprasDB extends BasePgRepository<Compra> {
       const res = await this.pool.query(query, [id_articulo, id_comprador]);
       return res.rows[0];
     } catch (e: any) {
-      console.log({Error: e})
-      if (e.code !== "23505") throw new PC_InternalServerError(
-        "Error en la creacion de una compra!"
-      );
+      console.log({ Error: e });
+      if (e.code !== "23505")
+        throw new PC_InternalServerError("Error en la creacion de una compra!");
 
       switch (e.constraint) {
         case "compras_id_articulo_key":
-            throw new PC_BadRequest("El articulo que intentas comprar ya ha sido comprado")
+          throw new PC_BadRequest(
+            "El articulo que intentas comprar ya ha sido comprado"
+          );
 
         default:
-            throw new PC_BadRequest("Alguna key esta duplicada")
+          throw new PC_BadRequest("Alguna key esta duplicada");
       }
     }
   }

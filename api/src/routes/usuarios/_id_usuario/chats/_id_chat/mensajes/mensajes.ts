@@ -1,12 +1,18 @@
-import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
-import { chatModel } from "../../../../../../models/market/chatModel.ts";
-import { type Mensaje, mensajeModel } from "../../../../../../models/market/mensajeModel.ts";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
+import { PC_NotImplemented } from "../../../../../../errors/errors.js";
+import { usuarioModel } from "../../../../../../models/market/usuarioModel.js";
+import { chatModel } from "../../../../../../models/market/chatModel.js";
+import {
+  type Mensaje,
+  mensajeModel,
+} from "../../../../../../models/market/mensajeModel.js";
 
 const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
-  fastify.addHook("onRequest", fastify.authenticate)
-  fastify.addHook("preHandler", fastify.isOwner)
+  fastify.addHook("onRequest", fastify.authenticate);
+  fastify.addHook("preHandler", fastify.isOwner);
 
   fastify.get(
     "",
@@ -27,7 +33,7 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return await fastify.ChatsDB.getMensajesFromChat(req.params.id_chat)
+      return await fastify.ChatsDB.getMensajesFromChat(req.params.id_chat);
     }
   );
 
@@ -54,18 +60,21 @@ const mensajesRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       const msg: Partial<Mensaje> = {
         id_chat: req.params.id_chat,
         id_enviador: req.params.id_usuario,
-        contenido: req.body.contenido
-      }
-      const mensaje = await fastify.ChatsDB.createMensajeForChat(msg)
+        contenido: req.body.contenido,
+      };
+      const mensaje = await fastify.ChatsDB.createMensajeForChat(msg);
 
-      const chat = await fastify.ChatsDB.getById(req.params.id_chat)
+      const chat = await fastify.ChatsDB.getById(req.params.id_chat);
 
-      const id_reciever = chat.id_comprador === req.params.id_usuario ? chat.id_vendedor : chat.id_comprador
+      const id_reciever =
+        chat.id_comprador === req.params.id_usuario
+          ? chat.id_vendedor
+          : chat.id_comprador;
       fastify.notifyClient(id_reciever, {
         type: "nuevo_mensaje",
         id_chat: chat.id_chat,
-      })
-      rep.code(201).send(mensaje)
+      });
+      rep.code(201).send(mensaje);
     }
   );
 };

@@ -2,13 +2,13 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { usuarioModel } from "../../../../../../models/market/usuarioModel.ts";
-import { compraModel } from "../../../../../../models/market/compraModel.ts";
+import { usuarioModel } from "../../../../../../models/market/usuarioModel.js";
+import { compraModel } from "../../../../../../models/market/compraModel.js";
 import {
   reseniaModel,
   type ReseniaPost,
   reseniaPostModel,
-} from "../../../../../../models/market/reseniaModel.ts";
+} from "../../../../../../models/market/reseniaModel.js";
 
 const compraUserByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.post(
@@ -32,15 +32,15 @@ const compraUserByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate, fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      const compra = await fastify.ComprasDB.getById(req.params.id_compra)
+      const compra = await fastify.ComprasDB.getById(req.params.id_compra);
 
       const res: ReseniaPost = {
         comentario: req.body.comentario,
         reputacion: req.body.reputacion,
         id_vendedor: compra.id_vendedor,
-        id_articulo: compra.id_articulo
-      }
-      
+        id_articulo: compra.id_articulo,
+      };
+
       rep.code(201).send(await fastify.ReseniaDB.create(res));
     }
   );

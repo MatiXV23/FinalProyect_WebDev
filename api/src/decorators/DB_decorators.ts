@@ -1,12 +1,12 @@
 import fastifyPlugin from "fastify-plugin";
-import { UsuariosDB } from "../services/data/usuariosDB.ts";
-import { CategoriasDB } from "../services/data/categoriesDB.ts";
-import { ArticulosDB } from "../services/data/artiticulosDB.ts";
-import { myPool } from "../services/db_service.ts";
-import { ChatsDB } from "../services/data/chatsDB.ts";
-import { DepartamentosDB } from "../services/data/departamentosDB.ts";
-import { ComprasDB } from "../services/data/comprasDB.ts";
-import { ReseniaDB } from "../services/data/reseniasDB.ts";
+import { UsuariosDB } from "../services/data/usuariosDB.js";
+import { CategoriasDB } from "../services/data/categoriesDB.js";
+import { ArticulosDB } from "../services/data/artiticulosDB.js";
+import { myPool } from "../services/db_service.js";
+import { ChatsDB } from "../services/data/chatsDB.js";
+import { DepartamentosDB } from "../services/data/departamentosDB.js";
+import { ComprasDB } from "../services/data/comprasDB.js";
+import { ReseniaDB } from "../services/data/reseniasDB.js";
 
 export default fastifyPlugin(async function (fastify) {
   fastify.decorate("UsuariosDB", new UsuariosDB(myPool));

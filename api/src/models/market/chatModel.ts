@@ -1,5 +1,5 @@
 import { type Static, Type } from "@fastify/type-provider-typebox";
-import { mensajeModel } from "./mensajeModel.ts";
+import { mensajeModel } from "./mensajeModel.js";
 
 export const chatModel = Type.Object({
   id_chat: Type.Integer(),

@@ -1,8 +1,8 @@
 import { type FastifyPluginAsync } from "fastify";
 import { Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
-import { compraModel } from "../../../../models/market/compraModel.ts";
+import { PC_NotImplemented } from "../../../../errors/errors.js";
+import { usuarioModel } from "../../../../models/market/usuarioModel.js";
+import { compraModel } from "../../../../models/market/compraModel.js";
 
 const ventasUserRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get(

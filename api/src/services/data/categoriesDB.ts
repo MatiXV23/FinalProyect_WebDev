@@ -1,12 +1,12 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_NotFound,
   PC_BadRequest,
   PC_InternalServerError,
   PC_NotImplemented,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
-import type { Categoria } from "../../models/market/categoriaModel.ts";
+import type { Categoria } from "../../models/market/categoriaModel.js";
 
 // TODO: REALIZAR ESTO ! ! !
 export class CategoriasDB extends BasePgRepository<Categoria> {
@@ -36,7 +36,7 @@ export class CategoriasDB extends BasePgRepository<Categoria> {
 
     if (resultado.rowCount === 0)
       throw new PC_NotFound(`Categoria con id (${id}) no encontrado`);
-    return resultado.rows[0];
+    return resultado.rows[0]!;
   }
 
   async create(data: Partial<Categoria>): Promise<Categoria> {

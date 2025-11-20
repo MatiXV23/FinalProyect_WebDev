@@ -1,7 +1,10 @@
-import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
-import { reseniaModel } from "../../../../models/market/reseniaModel.ts";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
+import { PC_NotImplemented } from "../../../../errors/errors.js";
+import { usuarioModel } from "../../../../models/market/usuarioModel.js";
+import { reseniaModel } from "../../../../models/market/reseniaModel.js";
 
 const reseniasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(
@@ -39,7 +42,7 @@ const reseniasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate, fastify.isAdmin],
     },
     async (req, rep) => {
-      return new PC_NotImplemented();
+      throw new PC_NotImplemented();
     }
   );
 };

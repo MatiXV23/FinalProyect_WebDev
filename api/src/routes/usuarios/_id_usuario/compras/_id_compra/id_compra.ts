@@ -3,9 +3,9 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../../models/market/usuarioModel.ts";
-import { compraModel } from "../../../../../models/market/compraModel.ts";
+import { PC_NotImplemented } from "../../../../../errors/errors.js";
+import { usuarioModel } from "../../../../../models/market/usuarioModel.js";
+import { compraModel } from "../../../../../models/market/compraModel.js";
 
 const compraUserByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

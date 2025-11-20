@@ -3,14 +3,17 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NoAuthorized, PC_NotImplemented } from "../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
+import {
+  PC_NoAuthorized,
+  PC_NotImplemented,
+} from "../../../../errors/errors.js";
+import { usuarioModel } from "../../../../models/market/usuarioModel.js";
 import {
   type Compra,
   compraModel,
   compraPostModel,
-} from "../../../../models/market/compraModel.ts";
-import { ErrorSchema } from "../../../../models/common/errorModel.ts";
+} from "../../../../models/market/compraModel.js";
+import { ErrorSchema } from "../../../../models/common/errorModel.js";
 
 const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.addHook("onRequest", fastify.authenticate);
@@ -48,23 +51,26 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         response: {
           204: Type.Null(),
           404: ErrorSchema,
-          403: ErrorSchema
+          403: ErrorSchema,
         },
         security: [{ bearerAuth: [] }],
       },
       preHandler: async (req, rep) => {
-        const {id_articulo} = req.body
-        const articulo = await fastify.ArticulosDB.getById(id_articulo)
-        console.log('llego1')
-        if (articulo.id_vendedor === req.params.id_usuario) throw new PC_NoAuthorized("No puedes comprar un articulo que tu publicaste");
-      }
+        const { id_articulo } = req.body;
+        const articulo = await fastify.ArticulosDB.getById(id_articulo);
+        console.log("llego1");
+        if (articulo.id_vendedor === req.params.id_usuario)
+          throw new PC_NoAuthorized(
+            "No puedes comprar un articulo que tu publicaste"
+          );
+      },
     },
     async (req, rep) => {
-      console.log('llego')
+      console.log("llego");
       await fastify.ComprasDB.create({
-          id_comprador: req.params.id_usuario,
-          id_articulo: req.body.id_articulo
-        });
+        id_comprador: req.params.id_usuario,
+        id_articulo: req.body.id_articulo,
+      });
       rep.code(204).send();
     }
   );
