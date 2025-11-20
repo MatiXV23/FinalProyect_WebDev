@@ -11,14 +11,20 @@ import {
   IonButton,
   IonRouterLinkWithHref,
   IonIcon,
+  IonModal,
+  IonInput,
 } from '@ionic/angular/standalone';
 import { ComprasService } from '../../../../shared/services/compras.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { Router } from '@angular/router';
+import { Articulo } from '../../../../shared/types/articulos';
+import { Compras } from '../../../../shared/types/compras';
+import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-compras-usuario-listar',
-  imports: [IonButton, IonIcon],
+  imports: [IonButton, IonIcon, IonModal, FormsModule],
   templateUrl: './compras-usuario-listar.page.html',
   styleUrl: './compras-usuario-listar.page.css',
 })
@@ -27,10 +33,12 @@ export class ComprasUsuarioListarPage {
   private mainStore = inject(MainStore);
   private comprasService = inject(ComprasService);
   private articulosService = inject(ArticulosService);
+  private usuarioService = inject(UsuariosService);
+  private notificationService = inject(NotificationService);
 
   public id_UsuarioLog = this.mainStore.user()?.id_usuario;
 
-  public listadoArticulos = signal<any[]>([]);
+  public listadoArticulos = signal<{ compra: Compras; articulo: Articulo }[]>([]);
 
   public articulosComprados = resource({
     loader: () => this.comprasService.getComprasByUserId(Number(this.mainStore.user()?.id_usuario)),
@@ -53,13 +61,51 @@ export class ComprasUsuarioListarPage {
     this.listadoArticulos.set(mixArtComp);
   });
 
+  handleVendedor(id: number) {
+    this.router.navigate([`usuarios/${id}`]);
+  }
+
+  reseniaForm = {
+    contenido: '',
+    reputacion: 0,
+    id_compra: 0,
+  };
+
   handleReview(idArticulo: number, idCompra: number) {
     this.router.navigate([`cuenta/compras/${idArticulo}/review`], {
       queryParams: { id_compra: idCompra },
     });
   }
 
-  handleVendedor(id: number) {
-    this.router.navigate([`usuarios/${id}`]);
+  isModalOpen = signal<boolean>(false);
+
+  openModal(id_compra: number) {
+    this.isModalOpen.set(true);
+    this.reseniaForm.id_compra = id_compra;
+  }
+
+  closeModal() {
+    this.isModalOpen.set(false);
+    this.reseniaForm = {
+      contenido: '',
+      reputacion: 0,
+      id_compra: 0,
+    };
+  }
+  setRating(rating: number) {
+    this.reseniaForm.reputacion = rating;
+  }
+
+  async submitForm() {
+    const { contenido, reputacion, id_compra } = this.reseniaForm;
+    console.log({ res: this.reseniaForm });
+    this.notificationService.showSuccess('Resenia publicada con exito!');
+    return;
+    await this.usuarioService.postResenia(this.mainStore.user()!.id_usuario, id_compra, {
+      contenido,
+      reputacion,
+    });
+
+    this.closeModal();
   }
 }

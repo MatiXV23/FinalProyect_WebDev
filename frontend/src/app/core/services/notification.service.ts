@@ -32,6 +32,22 @@ export class NotificationService {
     }
   }
 
+  showSuccess(message: string, duration: number = 5000) {
+    const notification: Notification = {
+      id: this.generateId(),
+      message,
+      type: 'success'
+    };
+
+    this.notificationSubject.next(notification);
+
+    if (duration > 0) {
+      setTimeout(() => {
+        this.remove(notification.id);
+      }, duration);
+    }
+  }
+
   remove(id: string) {
     this.notificationSubject.next({ id, message: '', type: 'error' });
   }

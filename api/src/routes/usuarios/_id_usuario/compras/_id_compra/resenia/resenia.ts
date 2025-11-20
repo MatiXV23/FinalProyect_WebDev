@@ -5,6 +5,7 @@ import {
 import { usuarioModel } from "../../../../../../models/market/usuarioModel.js";
 import { compraModel } from "../../../../../../models/market/compraModel.js";
 import {
+  Resenia,
   reseniaModel,
   type ReseniaPost,
   reseniaPostModel,
@@ -17,7 +18,7 @@ const compraUserByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       schema: {
         summary: "Realizar una resenia sobre una compra que realizo un usuario",
         tags: ["Usuario"],
-        body: Type.Omit(reseniaPostModel, ["id_vendedor"]),
+        body: Type.Omit(reseniaPostModel, ["id_vendedor", "id_articulo"]),
         description:
           "Ruta para realizar una resenia sobre una compra de un usuario. Se requiere ser el usuario dueño.",
         params: Type.Intersect([
@@ -39,9 +40,11 @@ const compraUserByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         reputacion: req.body.reputacion,
         id_vendedor: compra.id_vendedor,
         id_articulo: compra.id_articulo,
-      };
+      };  
 
-      rep.code(201).send(await fastify.ReseniaDB.create(res));
+      const resenia = await fastify.ReseniaDB.create(res)
+      await fastify.ComprasDB.postResenia(req.params.id_compra, resenia.id_resenia)
+      rep.code(201).send();
     }
   );
 };

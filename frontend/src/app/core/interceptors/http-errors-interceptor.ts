@@ -12,6 +12,9 @@ export const httpErrorsInterceptor: HttpInterceptorFn = (req, next) => {
 
       errorMessage = error.status === 0 ? errorMessage : error.error.message;
       console.log({ errorMessage, req });
+
+      if (error.error && error.error.error === 'PC_NotFound') throw error;
+
       notificationService.showError(errorMessage, 5000);
 
       throw error;

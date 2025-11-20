@@ -68,7 +68,11 @@ export class UsuariosService {
     );
   }
 
-  public async postResenia(id_user_logeado: number, id_compra: number, datos: any) {
+  public async postResenia(
+    id_user_logeado: number,
+    id_compra: number,
+    datos: { contenido: string; reputacion: number }
+  ) {
     try {
       return await firstValueFrom(
         this.httpClient.post<Resenia>(

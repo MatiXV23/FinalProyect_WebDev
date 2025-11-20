@@ -80,7 +80,6 @@ export class ReseniaDB extends BasePgRepository<Resenia> {
 
       return reseniasTotales.rows;
     } catch (e) {
-      console.log(e);
       throw new PC_InternalServerError();
     }
   }

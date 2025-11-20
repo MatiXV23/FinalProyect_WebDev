@@ -38,6 +38,12 @@
         </div>
 
         <div class="flex self-end items-center gap-3">
+          @if (item.compra.id_resenia === 0) {
+          <ion-button fill="outline" color="secondary" (click)="openModal(item.compra.id_compra)">
+            <ion-icon slot="start" name="star"></ion-icon>
+            Hacer reseña
+          </ion-button>
+          }
           <ion-button
             fill="outline"
             color="primary"
@@ -46,18 +52,81 @@
             <ion-icon slot="start" name="person"></ion-icon>
             Perfil Vendedor
           </ion-button>
-          <ion-button
-            fill="outline"
-            color="secondary"
-            (click)="handleReview(item.articulo.id_articulo, item.compra.id_compra)"
-          >
-            <ion-icon slot="start" name="star"></ion-icon>
-            Hacer reseña
-          </ion-button>
         </div>
       </div>
     </div>
   </div>
+
+  <ion-modal [isOpen]="isModalOpen()" (didDismiss)="closeModal()">
+    <ng-template>
+      <div class="h-full flex items-center w-full justify-center">
+        <div
+          class="bg-white dark:bg-gray-800 shadow-2xl h-full w-full p-6 flex flex-col items-center justify-center"
+        >
+          <div class="flex flex-col items-center justify-center gap-3 mb-6">
+            <div class="bg-linear-to-r from-amber-500 to-orange-500 rounded-lg p-2">
+              <ion-icon name="star" class="text-white text-xl"> </ion-icon>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Califica la compra</h3>
+          </div>
+
+          <form (ngSubmit)="submitForm()" class="w-4/5">
+            <div class="mb-6">
+              <label
+                class="block text-sm text-center font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                Calificación
+              </label>
+              <div class="flex items-center justify-center gap-2">
+                <div class="flex gap-1 cursor-pointer">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                  <ion-icon
+                    [name]="star <= reseniaForm.reputacion ? 'star' : 'star-outline'"
+                    class="text-3xl transition-all hover:scale-110"
+                    [style.color]="star <= reseniaForm.reputacion ? '#ffd700' : '#d1d5db'"
+                    (click)="setRating(star)"
+                  >
+                  </ion-icon>
+                  }
+                </div>
+                <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">
+                  {{ reseniaForm.reputacion }}/5
+                </span>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Cuéntanos sobre el producto
+              </label>
+              <textarea
+                [(ngModel)]="reseniaForm.contenido"
+                name="contenido"
+                required
+                rows="4"
+                placeholder="Describe tu experiencia..."
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition resize-none"
+              ></textarea>
+            </div>
+
+            <div class="flex gap-3 justify-end">
+              <ion-button fill="outline" type="button" (click)="closeModal()">
+                Cancelar
+              </ion-button>
+              <ion-button
+                type="submit"
+                [disabled]="!reseniaForm.contenido || !reseniaForm.reputacion"
+              >
+                <ion-icon slot="start" name="star"> </ion-icon>
+                Publicar reseña
+              </ion-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
   } @empty {
   <div class="p-12 text-center">
     <div

@@ -90,4 +90,20 @@ export class ComprasDB extends BasePgRepository<Compra> {
   async delete(id: number): Promise<void> {
     throw new PC_NotImplemented();
   }
+
+  async postResenia(id_compra: number, id_resenia: number) {
+    try {
+      const query = /*sql*/ `
+        UPDATE compras 
+        SET 
+        id_resenia = $2
+        WHERE id_compra = $1;
+      `;
+
+      await this.pool.query(query, [id_compra, id_resenia]);
+    } catch (e) {
+      console.log(e);
+      throw new PC_InternalServerError();
+    }
+  }
 }

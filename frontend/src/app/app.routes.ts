@@ -80,13 +80,6 @@ export const routes: Routes = [
               ).ComprasUsuarioListarPage,
             title: 'Listar compras usuario',
           },
-          {
-            path: ':id_articulo/review',
-            loadComponent: async () =>
-              (await import('./routes/articulos/pages/compras-review/compras-review.page'))
-                .ComprasReviewPage,
-            title: 'Review Articulo',
-          },
         ],
       },
     ],
@@ -116,9 +109,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: async () =>
-      (await import('./routes/carrito/carrito.page'))
-        .CarritoPage,
+        loadComponent: async () => (await import('./routes/carrito/carrito.page')).CarritoPage,
         title: 'Ver Carrito',
       },
       {
@@ -128,7 +119,7 @@ export const routes: Routes = [
             .ArticuloComprarPage,
         title: 'Compar Carrito entero',
       },
-    ]
+    ],
   },
 
   {
@@ -211,7 +202,6 @@ export const routes: Routes = [
       },
     ],
   },
-
 
   {
     path: '**',
