@@ -4,8 +4,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node --env-file=../env/.env dist/server.js | pino-pretty",
-    "dev": "npm install && tsx --watch --env-file=../env/.env src/server.ts | pino-pretty",
+    "start": "node --env-file=../.env dist/server.js | pino-pretty",
+    "dev": "npm install && tsx --watch --env-file=../.env src/server.ts | pino-pretty",
     "build": "tsc -p ./tsconfig.build.json"
   },
   "dependencies": {

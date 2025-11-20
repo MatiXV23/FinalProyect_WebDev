@@ -1,6 +1,6 @@
 services:
-  db:
-    image: postgres:17-alpine
+  postgres:
+    image: postgres:16-alpine
     container_name: cnp_postgres
     restart: unless-stopped
     environment:
@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${PGPASSWORD}
       POSTGRES_DB: ${PGDATABASE}
     volumes:
-      - ./database/postgres-data:/var/lib/postgresql/data
+      - cnp_postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - cnp_net
@@ -20,8 +20,8 @@ services:
     environment:
       NODE_ENV: production
       FRONT_PORT: ${FRONT_PORT}
-      API_PORT: ${FASTIFY_PORT}
-      PGHOST: ${PGHOST}
+      API_PORT: ${API_PORT}
+      PGHOST: postgres
       PGPORT: ${PGPORT}
       PGUSER: ${PGUSER}
       PGPASSWORD: ${PGPASSWORD}
@@ -61,12 +61,8 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: cnp_certbot
-    command: >
-      certbot certonly --webroot
-      -w /var/www/certbot
-      --agree-tos
-      --register-unsafely-without-email
-      -d grupo01.brazilsouth.cloudapp.azure.com
+    tty: true
+    command: "certonly --webroot -w /var/www/certbot --agree-tos --register-unsafely-without-email -d grupo01.brazilsouth.cloudapp.azure.com"
     volumes:
       - /var/www/certbot:/var/www/certbot
       - /etc/letsencrypt:/etc/letsencrypt
