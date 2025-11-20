@@ -175,7 +175,8 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
 
       return res.rows[0];
     } catch (err: any) {
-      throw new PC_InternalServerError("Error al modificar articulo");
+      if (err instanceof PC_NotFound) throw err;
+      throw new PC_InternalServerError();
     }
   }
 
