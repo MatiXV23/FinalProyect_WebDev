@@ -3,9 +3,9 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../errors/errors.ts";
-import { usuarioModel } from "../../../models/market/usuarioModel.ts";
-import { credencialesModel } from "../../../models/market/credencialesModel.ts";
+import { PC_NotImplemented } from "../../../errors/errors.js";
+import { usuarioModel } from "../../../models/market/usuarioModel.js";
+import { credencialesModel } from "../../../models/market/credencialesModel.js";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
 const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -48,7 +48,10 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
       fastify.notifyClient(req.params.id_usuario, { type: "usuario_editado" });
-      if (req.body.articulos_carrito) fastify.notifyClient(req.params.id_usuario, { type: "carrito_editado" });
+      if (req.body.articulos_carrito)
+        fastify.notifyClient(req.params.id_usuario, {
+          type: "carrito_editado",
+        });
       rep.code(204).send();
     }
   );
@@ -74,7 +77,10 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     async (req, rep) => {
       await fastify.UsuariosDB.update(req.params.id_usuario, req.body);
       fastify.notifyClient(req.params.id_usuario, { type: "usuario_editado" });
-      if (req.body.articulos_carrito) fastify.notifyClient(req.params.id_usuario, { type: "carrito_editado" });      
+      if (req.body.articulos_carrito)
+        fastify.notifyClient(req.params.id_usuario, {
+          type: "carrito_editado",
+        });
       rep.code(204).send();
     }
   );

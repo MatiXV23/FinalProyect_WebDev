@@ -1,12 +1,12 @@
-import { BasePgRepository } from "../../models/common/baseRepository.ts";
+import { BasePgRepository } from "../../models/common/baseRepository.js";
 import {
   PC_BadRequest,
   PC_InternalServerError,
   PC_NotFound,
   PC_NotImplemented,
-} from "../../errors/errors.ts";
+} from "../../errors/errors.js";
 import type { Pool } from "pg";
-import { type Compra } from "../../models/market/compraModel.ts";
+import { type Compra } from "../../models/market/compraModel.js";
 
 // TODO: REALIZAR ESTO ! ! !
 export class ComprasDB extends BasePgRepository<Compra> {

@@ -2,7 +2,7 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { articuloModel } from "../../../models/market/articuloModel.ts";
+import { articuloModel } from "../../../models/market/articuloModel.js";
 
 //necesito autorizacion, solo el admin puede moficar el artículo
 const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {

@@ -8,9 +8,7 @@
       "options": {
         "cwd": "${workspaceFolder}/api"
       },
-      "dependsOn": [
-        "Levantar Postgres"
-      ],
+      "dependsOn": ["Levantar Postgres"],
       "presentation": {
         "panel": "dedicated"
       },
@@ -30,17 +28,14 @@
     },
     {
       "label": "Run Both",
-      "dependsOn": [
-        "Run Api",
-        "Run Front"
-      ],
+      "dependsOn": ["Run Api", "Run Front"],
       "dependsOrder": "parallel",
       "problemMatcher": []
     },
     {
       "label": "Levantar Postgres",
       "type": "shell",
-      "command": "docker compose -f '${workspaceFolder}/database/docker-compose.yaml' --env-file ${workspaceFolder}/env/.env up -d --build",
+      "command": "docker compose -f '${workspaceFolder}/database/docker-compose.yml' --env-file ${workspaceFolder}/.env up -d --build",
       "problemMatcher": []
     }
   ]

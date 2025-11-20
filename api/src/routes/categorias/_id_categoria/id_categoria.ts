@@ -2,7 +2,7 @@ import {
   type FastifyPluginAsyncTypebox,
   Type,
 } from "@fastify/type-provider-typebox";
-import { categoriaModel } from "../../../models/market/categoriaModel.ts";
+import { categoriaModel } from "../../../models/market/categoriaModel.js";
 
 const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.put(
@@ -14,6 +14,7 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         description:
           "Ruta para eliminar una categoria. Se requiere ser un administrador",
         body: categoriaModel,
+        params: Type.Pick(categoriaModel, ["id_categoria"]),
         response: {
           204: Type.Null(),
         },
@@ -35,6 +36,7 @@ const categoriaRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         tags: ["Categoria"],
         description:
           "Ruta para eliminar una categoria. Se requiere ser un administrador",
+        params: Type.Pick(categoriaModel, ["id_categoria"]),
         response: {
           204: Type.Null(),
         },

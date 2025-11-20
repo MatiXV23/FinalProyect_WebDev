@@ -5,8 +5,8 @@ import {
 import {
   articuloModel,
   articuloQueryModel,
-} from "../../models/market/articuloModel.ts";
-import { usuarioModel } from "../../models/market/usuarioModel.ts";
+} from "../../models/market/articuloModel.js";
+import { usuarioModel } from "../../models/market/usuarioModel.js";
 
 const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

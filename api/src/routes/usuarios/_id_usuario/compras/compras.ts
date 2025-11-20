@@ -6,14 +6,14 @@ import {
 import {
   PC_NoAuthorized,
   PC_NotImplemented,
-} from "../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
+} from "../../../../errors/errors.js";
+import { usuarioModel } from "../../../../models/market/usuarioModel.js";
 import {
   type Compra,
   compraModel,
   compraPostModel,
-} from "../../../../models/market/compraModel.ts";
-import { ErrorSchema } from "../../../../models/common/errorModel.ts";
+} from "../../../../models/market/compraModel.js";
+import { ErrorSchema } from "../../../../models/common/errorModel.js";
 
 const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.addHook("onRequest", fastify.authenticate);

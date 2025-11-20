@@ -5,7 +5,7 @@ import {
 import {
   type Categoria,
   categoriaModel,
-} from "../../models/market/categoriaModel.ts";
+} from "../../models/market/categoriaModel.js";
 
 const categoriasRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
   fastify.get(

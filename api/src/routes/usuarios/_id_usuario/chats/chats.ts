@@ -1,12 +1,15 @@
 import { type FastifyPluginAsync } from "fastify";
-import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { PC_NotImplemented } from "../../../../errors/errors.ts";
-import { usuarioModel } from "../../../../models/market/usuarioModel.ts";
-import { chatModel } from "../../../../models/market/chatModel.ts";
+import {
+  type FastifyPluginAsyncTypebox,
+  Type,
+} from "@fastify/type-provider-typebox";
+import { PC_NotImplemented } from "../../../../errors/errors.js";
+import { usuarioModel } from "../../../../models/market/usuarioModel.js";
+import { chatModel } from "../../../../models/market/chatModel.js";
 
 const chatsByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
-  fastify.addHook("onRequest", fastify.authenticate)
-  fastify.addHook("preHandler", fastify.isOwner)
+  fastify.addHook("onRequest", fastify.authenticate);
+  fastify.addHook("preHandler", fastify.isOwner);
 
   fastify.get(
     "",
@@ -24,7 +27,7 @@ const chatsByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      return await fastify.ChatsDB.getAll(req.params.id_usuario)
+      return await fastify.ChatsDB.getAll(req.params.id_usuario);
     }
   );
   fastify.post(
@@ -44,7 +47,7 @@ const chatsByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      rep.code(201).send(await fastify.ChatsDB.create(req.body))
+      rep.code(201).send(await fastify.ChatsDB.create(req.body));
     }
   );
 };
