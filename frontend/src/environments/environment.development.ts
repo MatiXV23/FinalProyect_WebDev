@@ -1,4 +1,5 @@
 export const environment = {
-    apiUrl : "/api",
-    wsUrl : "/ws"
+  production: false,
+  apiUrl: 'http://localhost:3000',
+  wsUrl: 'ws://localhost:3000/ws?id_usuario=',
 };

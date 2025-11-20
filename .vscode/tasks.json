@@ -35,7 +35,7 @@
     {
       "label": "Levantar Postgres",
       "type": "shell",
-      "command": "docker compose -f '${workspaceFolder}/database/docker-compose.yaml' --env-file ${workspaceFolder}/.env up -d --build",
+      "command": "docker compose -f '${workspaceFolder}/database/docker-compose.yml' --env-file ${workspaceFolder}/.env up -d --build",
       "problemMatcher": []
     }
   ]
