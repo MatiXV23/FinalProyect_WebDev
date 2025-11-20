@@ -41,6 +41,18 @@ export class ComprasDB extends BasePgRepository<Compra> {
     return res.rows[0];
   }
 
+  async getByIdUser(id_comprador: number): Promise<Compra[]> {
+    const query = this.getQuery("WHERE c.id_comprador = $1");
+    const vars = [id_comprador];
+    const res = await this.pool.query(query, vars);
+    // console.log("res: " + res);
+    if (res.rowCount === 0)
+      throw new PC_NotFound(
+        `Compras del usuario con id: (${id_comprador}) no encontradas.`
+      );
+    return res.rows;
+  }
+
   async create(data: Partial<Compra>): Promise<Compra> {
     const { id_articulo, id_comprador } = data;
     let query = `

@@ -28,6 +28,8 @@ export class ComprasUsuarioListarPage {
   private comprasService = inject(ComprasService);
   private articulosService = inject(ArticulosService);
 
+  public id_UsuarioLog = this.mainStore.user()?.id_usuario;
+
   public listadoArticulos = signal<any[]>([]);
 
   public articulosComprados = resource({

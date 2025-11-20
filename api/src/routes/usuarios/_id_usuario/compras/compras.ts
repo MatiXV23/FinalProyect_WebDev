@@ -34,7 +34,7 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
-      return await fastify.ComprasDB.getAll();
+      return await fastify.ComprasDB.getByIdUser(req.params.id_usuario);
     }
   );
 
