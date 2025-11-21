@@ -87,7 +87,7 @@ ___
 ![navegacion](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/wireframeNavegacionFrontend.jpg?raw=true)
 
 ___
-## 📦 Octava entrega [FINAL] 📦 
+## 📦🎉 Octava entrega [FINAL] 🎉📦 
 #### En esta entrega dejaremos un listado de pasos a seguir luego de clonar este repositorio, para que el proyecto funcione de forma correcta en su maquina local.
 | PASO | ACCION |
 |------|--------|
@@ -97,8 +97,9 @@ ___
 |  4  | Ejecutar en la terminal del frontend **npm run dev** |
 
 Siguiendo dichos pasos podra levantar el proyecto de manera local.
-#### Adicionalmente si hace click en la siguiente imagen podra acceder al APK del proyecto
-[![Azure](https://i.ytimg.com/vi/6-bwkMAxZ9A/mqdefault.jpg)](https://grupo01.brazilsouth.cloudapp.azure.com/home)
+___
+## Haciendo click en la siguiente imagen podra acceder al APK del proyecto.
+[![Azure](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ORYOSPBQqezx8V0VUAbuIj2vCgp1gQpkLw&s)](https://grupo01.brazilsouth.cloudapp.azure.com/home)
 ___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
