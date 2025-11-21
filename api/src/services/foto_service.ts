@@ -6,9 +6,9 @@ import fs from "fs/promises";
 const PORT = Number(process.env.PORT) || 3000;
 const ENVIRONMENT = process.env.NODE_ENV || "develpment";
 const conection_type = ENVIRONMENT === "production" ? "https" : "http";
-const API_URL = `${conection_type}://[::]:${PORT}${
-  ENVIRONMENT === "production" ? "/api" : ""
-}`;
+const API_URL = `${conection_type}://[::]:${PORT}`;
+
+const API_URL_PROD = `https://grupo01.brazilsouth.cloudapp.azure.com/api`;
 
 export async function saveFoto(
   id: number,
@@ -26,7 +26,8 @@ export async function saveFoto(
 
   const fotoPath = path.join(dir, fileName);
 
-  const foto_url = `${API_URL}/fotos/${type}/${fileName}`;
+  const url = ENVIRONMENT === "production" ? API_URL_PROD : API_URL;
+  const foto_url = `${url}/fotos/${type}/${fileName}`;
 
   await fs.mkdir(dir, { recursive: true });
 
