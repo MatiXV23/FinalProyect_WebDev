@@ -92,14 +92,12 @@ ___
 | PASO | ACCION |
 |------|--------|
 |  1  | Crear el .env en la raiz del proyecto con los datos del .env.example |
-|  2  | Levantar el docker compose de la db |
-|  3  | Ejecutar en la terminal de la api **npm run dev** |
-|  4  | Ejecutar en la terminal del frontend **npm run dev** |
+|  2  | Correr docker.compose.local.yml |
 
 Siguiendo dichos pasos podra levantar el proyecto de manera local.
 ___
 ## Haciendo click en la siguiente imagen podra acceder al APK del proyecto.
-[![Azure](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ORYOSPBQqezx8V0VUAbuIj2vCgp1gQpkLw&s)](https://grupo01.brazilsouth.cloudapp.azure.com/home)
+[![Azure](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ORYOSPBQqezx8V0VUAbuIj2vCgp1gQpkLw&s)]()
 ___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
