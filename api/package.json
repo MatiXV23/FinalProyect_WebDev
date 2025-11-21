@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --env-file=../.env dist/server.js",
     "dev": "npm install && tsx --watch --env-file=../.env src/server.ts | pino-pretty",
-    "local": "npm install && tsx src/server.ts | pino-pretty",
+    "local": "npm install && tsx --watch src/server.ts | pino-pretty",
     "build": "tsc -p ./tsconfig.build.json"
   },
   "dependencies": {

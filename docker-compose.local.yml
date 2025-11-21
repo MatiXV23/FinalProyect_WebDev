@@ -45,8 +45,6 @@ services:
     restart: unless-stopped
     working_dir: /app
     command: sh -c "npm install && npm run dev"
-    environment:
-      - NODE_ENV=development
     depends_on:
       - backend
     ports:
