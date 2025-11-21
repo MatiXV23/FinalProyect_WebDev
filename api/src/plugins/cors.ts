@@ -6,6 +6,7 @@ export default fastifyPlugin(async function (fastify) {
 
   fastify.register(fastifyCors, {
     origin: [
+      "https://localhost",
       "http://localhost:4200",
       `http://localhost:${FRONT_PORT}`,
       "http://192.168.1.38:4200",

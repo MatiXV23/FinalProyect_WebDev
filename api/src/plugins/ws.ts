@@ -1,5 +1,4 @@
 import fp from "fastify-plugin";
-import { PC_NotFound } from "../errors/errors.js";
 import type { FastifyPluginAsync } from "fastify";
 import websocket from "@fastify/websocket";
 
