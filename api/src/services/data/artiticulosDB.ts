@@ -189,4 +189,18 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
       throw new PC_NotFound(`Articulo de id ${id}, no existe. Ignorando`);
     console.log(res);
   }
+
+  async updateFoto(id: number, foto_url: string) {
+    const query = `UPDATE articulos
+                SET
+                  foto_url = $2
+                WHERE id_articulo = $1
+                `;
+    try {
+      await this.pool.query(query, [id, foto_url]);
+    } catch (err: any) {
+      if (err instanceof PC_NotFound) throw err;
+      throw new PC_InternalServerError("Error actualizando foto del articulo");
+    }
+  }
 }

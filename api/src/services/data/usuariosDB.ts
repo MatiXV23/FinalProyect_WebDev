@@ -215,7 +215,7 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
     } catch (err: any) {
       if (err instanceof PC_NotFound) throw err;
 
-      if (err.code !== "23505") throw new PC_InternalServerError();
+      if (err.code !== "23505") throw new PC_InternalServerError(err.message);
 
       switch (err.constraint) {
         case "usuarios_nro_documento_key":

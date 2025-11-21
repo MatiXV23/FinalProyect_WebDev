@@ -6,6 +6,7 @@ import {
 import { PC_NotImplemented } from "../../../errors/errors.js";
 import { usuarioModel } from "../../../models/market/usuarioModel.js";
 import { credencialesModel } from "../../../models/market/credencialesModel.js";
+import { saveFoto } from "../../../services/foto_service.js";
 
 //necesito autorizacion, solo el admin y el usuario puede moficarse a si mismo
 const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -131,6 +132,36 @@ const usersByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
         req.body.password
       );
       fastify.notifyClient(req.params.id_usuario, { type: "Usuario_editado" });
+      rep.code(204).send();
+    }
+  );
+
+  fastify.put(
+    "/foto",
+    {
+      schema: {
+        summary: "Modificar foto de usuario",
+        tags: ["Usuario"],
+        description:
+          "Ruta para modificar la foto un usuario. Se requiere ser el usuario dueño o administrador",
+        params: Type.Pick(usuarioModel, ["id_usuario"]),
+        consumes: ["multipart/form-data"],
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner],
+    },
+    async (req, rep) => {
+      const { id_usuario } = req.params;
+      const foto = await req.file();
+
+      const { foto_url } = await saveFoto(id_usuario, "usuario", foto);
+      await fastify.UsuariosDB.update(id_usuario, { foto_url });
+
+      fastify.notifyClient(id_usuario, { type: "Usuario_editado" });
       rep.code(204).send();
     }
   );

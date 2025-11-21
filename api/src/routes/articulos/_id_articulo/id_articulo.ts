@@ -3,6 +3,7 @@ import {
   Type,
 } from "@fastify/type-provider-typebox";
 import { articuloModel } from "../../../models/market/articuloModel.js";
+import { saveFoto } from "../../../services/foto_service.js";
 
 //necesito autorizacion, solo el admin puede moficar el artículo
 const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -66,6 +67,35 @@ const articuloByIdRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async (req, rep) => {
       await fastify.ArticulosDB.delete(req.params.id_articulo);
+      rep.code(204).send();
+    }
+  );
+
+  fastify.put(
+    "/foto",
+    {
+      schema: {
+        summary: "Modificar foto de articulo",
+        tags: ["Articulo"],
+        description:
+          "Ruta para modificar la foto un articulo. Se requiere ser el usuario dueño (vendedor) o administrador",
+        params: Type.Pick(articuloModel, ["id_articulo"]),
+        consumes: ["multipart/form-data"],
+        response: {
+          204: Type.Null(),
+        },
+        security: [{ bearerAuth: [] }],
+      },
+      onRequest: [fastify.authenticate],
+      preHandler: [fastify.isAdminOrOwner],
+    },
+    async (req, rep) => {
+      const { id_articulo } = req.params;
+      const foto = await req.file();
+
+      const { foto_url } = await saveFoto(id_articulo, "articulo", foto);
+      await fastify.ArticulosDB.updateFoto(id_articulo, foto_url);
+
       rep.code(204).send();
     }
   );
