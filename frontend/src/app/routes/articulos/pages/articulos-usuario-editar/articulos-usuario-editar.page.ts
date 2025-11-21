@@ -2,8 +2,9 @@ import { Component, computed, inject, resource } from '@angular/core';
 import { ArticuloFormComponent } from '../../components/articulo-form/articulo-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
-import { ArticuloPost, MonedaEnum } from '../../../../shared/types/articulos';
-import { IonIcon } from "@ionic/angular/standalone";
+import { ArticuloPost, ArticuloPostFoto, MonedaEnum } from '../../../../shared/types/articulos';
+import { IonIcon } from '@ionic/angular/standalone';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-articulos-usuario-editar',
@@ -15,6 +16,7 @@ export class ArticulosUsuarioEditarPage {
   private articulosService = inject(ArticulosService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private notificationService = inject(NotificationService);
 
   articulo = resource({
     params: () => ({ id: this.route.snapshot.paramMap.get('id_articulo') }),
@@ -23,12 +25,22 @@ export class ArticulosUsuarioEditarPage {
     },
   });
 
-  async handleEdit(articuloEditClick: ArticuloPost) {
-    console.log('PUT EDITAR ARTICULO');
+  async handleEdit(articuloPostFoto: ArticuloPostFoto) {
+    const { foto, articulo } = articuloPostFoto;
 
     try {
-      if (this.articulo.hasValue()) await this.articulosService.putArticulo(this.articulo.value());
-      this.router.navigate(['/home']);
+      if (this.articulo.hasValue()) {
+        const id = this.articulo.value().id_articulo;
+
+        if (foto) await this.articulosService.updateArticuloFoto(id, foto);
+        await this.articulosService.putArticulo(id, {
+          ...articulo,
+          id_articulo: id,
+        });
+
+        this.notificationService.showSuccess('Articulo editado correctamente', 1000);
+        this.router.navigate(['/home']);
+      }
     } catch (e: any) {
       throw e.message;
     }

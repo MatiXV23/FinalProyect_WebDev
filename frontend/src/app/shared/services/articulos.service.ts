@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Articulo } from '../types/articulos';
+import { Articulo, ArticuloPost } from '../types/articulos';
 import { firstValueFrom } from 'rxjs';
 import { Categoria } from '../types/categoria';
 import { MainStore } from '../stores/main.store';
@@ -14,15 +14,15 @@ export class ArticulosService {
 
   private mainStore = inject(MainStore);
 
-  public async postArticulo(datos: Partial<Articulo>): Promise<Articulo[]> {
+  public async postArticulo(datos: ArticuloPost): Promise<Articulo> {
     return await firstValueFrom(
-      this.httpClient.post<Articulo[]>(environment.apiUrl + '/articulos', datos)
+      this.httpClient.post<Articulo>(environment.apiUrl + '/articulos', datos)
     );
   }
 
-  public async putArticulo(datos: Articulo): Promise<void> {
+  public async putArticulo(id_articulo: number, datos: Articulo): Promise<void> {
     await firstValueFrom(
-      this.httpClient.put(`${environment.apiUrl}/articulos/${datos.id_articulo}`, datos)
+      this.httpClient.put(`${environment.apiUrl}/articulos/${id_articulo}`, datos)
     );
   }
 
@@ -58,5 +58,13 @@ export class ArticulosService {
 
   async deleteArticulo(id: number) {
     await firstValueFrom(this.httpClient.delete<Articulo>(environment.apiUrl + `/articulos/${id}`));
+  }
+
+  public async updateArticuloFoto(id_articulo: number, foto: File): Promise<void> {
+    const formData = new FormData();
+    formData.append('foto', foto);
+    await firstValueFrom(
+      this.httpClient.put(`${environment.apiUrl}/articulos/${id_articulo}/foto`, formData)
+    );
   }
 }

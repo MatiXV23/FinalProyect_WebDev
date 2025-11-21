@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Usuario } from '../types/usuario';
+import { Usuario, UsuarioConPwd, UsuarioSinId } from '../types/usuario';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Resenia } from '../types/resenia';
@@ -18,9 +18,9 @@ export class UsuariosService {
     );
   }
 
-  public async postUsuario(datos: Partial<Usuario>): Promise<Usuario[]> {
+  public async postUsuario(datos: UsuarioConPwd): Promise<Usuario> {
     return await firstValueFrom(
-      this.httpClient.post<Usuario[]>(environment.apiUrl + '/usuarios', datos)
+      this.httpClient.post<Usuario>(environment.apiUrl + '/usuarios', datos)
     );
   }
   public async getUsuarios() {
@@ -34,6 +34,14 @@ export class UsuariosService {
   public async updateUsuario(datos: Partial<Usuario>): Promise<void> {
     await firstValueFrom(
       this.httpClient.put(`${environment.apiUrl}/usuarios/${datos.id_usuario}`, datos)
+    );
+  }
+
+  public async updateUserFoto(id_usuario: number, foto: File): Promise<void> {
+    const formData = new FormData();
+    formData.append('foto', foto);
+    await firstValueFrom(
+      this.httpClient.put(`${environment.apiUrl}/usuarios/${id_usuario}/foto`, formData)
     );
   }
 

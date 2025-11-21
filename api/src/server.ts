@@ -27,7 +27,7 @@ fastify.register(autoLoad, {
 });
 
 fastify.setErrorHandler((err: PC_Error, request, reply) => {
-  if (!(err instanceof PC_Error)) err = new PC_InternalServerError();
+  if (!(err instanceof PC_Error)) err = new PC_InternalServerError(JSON.stringify(err));
   fastify.log.error({ place: "server.js", err });
 
   reply.status(err.statusCode).send({

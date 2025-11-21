@@ -3,15 +3,19 @@
 
   <section class="lg:w-1/4 lg:ml-10">
     <div class="mb-8">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg p-3 shadow-lg">
-          <ion-icon name="pricetags" class="text-white text-2xl"></ion-icon>
+      <div
+        class="flex items-center gap-3 mb-4 flex-col sm:flex-row sm:justify-between lg:flex-col 2xl:flex-row lg:justify-center 2xl:justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div class="bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg p-3 shadow-lg">
+            <ion-icon name="pricetags" class="text-white text-2xl"></ion-icon>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Categorías</h2>
+          <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+            {{ categorias.value()?.length || 0 }}
+          </span>
         </div>
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Categorías</h2>
-        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-          {{ categorias.value()?.length || 0 }}
-        </span>
-        <ion-button size="small" class="ml-auto" (click)="openCreateModal()">
+        <ion-button class="text-wrap" size="small" (click)="openCreateModal()">
           <ion-icon slot="start" name="add"></ion-icon>
           Nueva Categoría
         </ion-button>
@@ -26,7 +30,9 @@
               <div class="flex items-center gap-3 w-full py-2">
                 <ion-icon name="list" class="text-blue-500"></ion-icon>
                 <span class="font-semibold text-gray-900 dark:text-white"> Ver Categorías </span>
-                <span class="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+                <span
+                  class="text-sm text-gray-500 dark:text-gray-400 ml-auto hidden sm:block lg:hidden 2xl:block"
+                >
                   {{ categorias.value()?.length || 0 }} categorías
                 </span>
               </div>
@@ -156,7 +162,9 @@
           <div class="flex items-center w-full justify-end mt-3 flex-col sm:flex-row">
             <div class="flex-1 flex flex-col justify-between">
               <div>
-                <h3 class="text-lg font-bold text-center sm:text-start text-gray-900 dark:text-white mb-1">
+                <h3
+                  class="text-lg font-bold text-center sm:text-start text-gray-900 dark:text-white mb-1"
+                >
                   {{ usuario.nombres }} {{ usuario.apellidos }}
                 </h3>
                 <div class="flex items-center gap-2 mb-2">
@@ -165,7 +173,7 @@
                     {{ usuario.email }}
                   </span>
                 </div>
-                <div class="flex items-center gap-2 justify-center sm:justify-start ">
+                <div class="flex items-center gap-2 justify-center sm:justify-start">
                   <ion-icon
                     name="finger-print"
                     class="text-purple-600 dark:text-purple-400"
@@ -177,7 +185,9 @@
               </div>
             </div>
 
-            <div class="flex self-end items-center gap-3 w-full sm:w-fit justify-between sm:justify-start">
+            <div
+              class="flex self-end items-center gap-3 w-full sm:w-fit justify-between sm:justify-start"
+            >
               <ion-button fill="clear" (click)="handleEdit($event, usuario.id_usuario)">
                 <ion-icon slot="icon-only" name="pencil"></ion-icon>
               </ion-button>

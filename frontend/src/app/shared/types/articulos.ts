@@ -17,3 +17,9 @@ export enum MonedaEnum {
   UYU = 'UYU',
   USD = 'USD',
 }
+
+
+export type ArticuloPostFoto = {
+  articulo: ArticuloPost,
+  foto?: File
+}
