@@ -10,9 +10,8 @@ import { IonIcon } from "@ionic/angular/standalone";
 export class RatingStarComponent  implements OnInit {
   rating= input(0) ;
   maxStars: number = 5;
-  color: string = '#ffd700'; // color dorado por defecto
+  color: string = '#ffd700';      
   size= input(24);
-  showHalf: boolean = true; // mostrar medias estrellas
 
   stars: string[] = [];
 
@@ -30,13 +29,10 @@ export class RatingStarComponent  implements OnInit {
 
     for (let i = 1; i <= this.maxStars; i++) {
       if (i <= rating) {
-        // Estrella completa
         this.stars.push('star');
-      } else if (this.showHalf && i - 0.5 <= rating) {
-        // Media estrella
+      } else if (i - 0.5 <= rating) {
         this.stars.push('star-half');
       } else {
-        // Estrella vacía
         this.stars.push('star-outline');
       }
     }

@@ -7,10 +7,11 @@ import { ArticulosService } from '../../../../shared/services/articulos.service'
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { Articulo } from '../../../../shared/types/articulos';
 import { AuthService } from '../../../../shared/services/auth.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-articulo-comprar',
-  imports: [IonInput, FormsModule, IonIcon, IonButton, IonAlert],
+  imports: [IonInput, FormsModule, IonIcon, IonButton],
   templateUrl: './articulo-comprar.page.html',
   styleUrl: './articulo-comprar.page.css',
 })
@@ -18,7 +19,7 @@ export class ArticuloComprarPage {
   private router = inject(Router);
   private mainStore = inject(MainStore);
   private articulosService = inject(ArticulosService);
-  private usuarioService = inject(UsuariosService);
+  private notificationService = inject(NotificationService);
   private userService = inject(UsuariosService);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
@@ -45,12 +46,6 @@ export class ArticuloComprarPage {
   tarjeta = '';
   expira = '';
   cvv = '';
-  alertButtons = [
-    {
-      text: 'Volver',
-      handler: () => this.router.navigate(['/home']),
-    },
-  ];
 
   isDisable() {
     return !this.tarjeta || !this.expira || !this.cvv;
@@ -63,13 +58,18 @@ export class ArticuloComprarPage {
 
     if (!this.articulos.hasValue()) return;
 
-    await Promise.all(
-      this.ids_articulos.map((id) =>
-        this.userService.comprarArticulo(this.mainStore.user()!.id_usuario, id)
-      )
-    );
-
+    try {
+      await Promise.all(
+        this.ids_articulos.map((id) =>
+          this.userService.comprarArticulo(this.mainStore.user()!.id_usuario, id)
+        )
+      );
+    } catch (e) {
+      throw new Error('Error al procesar el pago, compra no realizada');
+    }
+    this.notificationService.showSuccess('Compra realizada con exito');
     this.authService.getUser();
+    this.router.navigate(['/home']);
   }
 
   formatExpiry(event: any) {

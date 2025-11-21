@@ -2,21 +2,13 @@ import { Component, effect, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { MainStore } from '../../../../shared/stores/main.store';
 import {
-  IonSelect,
-  IonCard,
-  IonCardTitle,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonButton,
-  IonRouterLinkWithHref,
   IonIcon,
   IonModal,
-  IonInput,
 } from '@ionic/angular/standalone';
 import { ComprasService } from '../../../../shared/services/compras.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Articulo } from '../../../../shared/types/articulos';
 import { Compras } from '../../../../shared/types/compras';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +16,7 @@ import { NotificationService } from '../../../../core/services/notification.serv
 
 @Component({
   selector: 'app-compras-usuario-listar',
-  imports: [IonButton, IonIcon, IonModal, FormsModule],
+  imports: [IonButton, IonIcon, IonModal, FormsModule, RouterLink],
   templateUrl: './compras-usuario-listar.page.html',
   styleUrl: './compras-usuario-listar.page.css',
 })
@@ -66,16 +58,10 @@ export class ComprasUsuarioListarPage {
   }
 
   reseniaForm = {
-    contenido: '',
+    comentario: '',
     reputacion: 0,
     id_compra: 0,
   };
-
-  handleReview(idArticulo: number, idCompra: number) {
-    this.router.navigate([`cuenta/compras/${idArticulo}/review`], {
-      queryParams: { id_compra: idCompra },
-    });
-  }
 
   isModalOpen = signal<boolean>(false);
 
@@ -87,7 +73,7 @@ export class ComprasUsuarioListarPage {
   closeModal() {
     this.isModalOpen.set(false);
     this.reseniaForm = {
-      contenido: '',
+      comentario: '',
       reputacion: 0,
       id_compra: 0,
     };
@@ -97,15 +83,16 @@ export class ComprasUsuarioListarPage {
   }
 
   async submitForm() {
-    const { contenido, reputacion, id_compra } = this.reseniaForm;
+    const { comentario, reputacion, id_compra } = this.reseniaForm;
     console.log({ res: this.reseniaForm });
-    this.notificationService.showSuccess('Resenia publicada con exito!');
-    return;
+
     await this.usuarioService.postResenia(this.mainStore.user()!.id_usuario, id_compra, {
-      contenido,
+      comentario,
       reputacion,
     });
 
+    this.articulosComprados.reload();
     this.closeModal();
+    this.notificationService.showSuccess('Resenia publicada con exito!');
   }
 }

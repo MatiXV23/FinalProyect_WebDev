@@ -4,7 +4,6 @@ import { Articulo } from '../../shared/types/articulos';
 import { MainStore } from '../../shared/stores/main.store';
 import { ArticulosService } from '../../shared/services/articulos.service';
 import { UsuariosService } from '../../shared/services/usuarios.service';
-import { AuthService } from '../../shared/services/auth.service';
 import { WebsocketService } from '../../shared/services/websocket.service';
 import { Router, RouterLink } from '@angular/router';
 
