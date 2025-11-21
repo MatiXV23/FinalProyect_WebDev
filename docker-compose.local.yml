@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cnp_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    volumes:
+      - cnp_postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cnp_net
+
+  backend:
+    image: node:20-alpine
+    container_name: cnp_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      FRONT_PORT: ${FRONT_PORT}
+      API_PORT: ${API_PORT}
+      PGHOST: postgres
+      PGPORT: ${PGPORT}
+      PGUSER: ${PGUSER}
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: ${PGDATABASE}
+      FASTIFY_SECRET: ${FASTIFY_SECRET}
+    working_dir: /app
+    command: sh -c "npm install && npm run local"
+    depends_on:
+      - postgres
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    networks:
+      - cnp_net
+
+  frontend:
+    image: node:20-alpine
+    container_name: cnp_frontend
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - cnp_net
+
+volumes:
+  cnp_postgres_data:
+
+networks:
+  cnp_net:
+    driver: bridge
