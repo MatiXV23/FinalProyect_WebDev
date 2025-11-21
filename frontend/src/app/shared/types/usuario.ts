@@ -12,7 +12,7 @@ export type Usuario = {
   articulos_carrito: number[];
 };
 
-export type UsuarioSinId = Omit<Usuario,"id_usuario">     
+export type UsuarioSinId = Omit<Usuario, 'id_usuario'>;
 
 export type UsuarioConPwd = {
   email: string;
@@ -23,4 +23,9 @@ export type UsuarioConPwd = {
   id_departamento: number;
   nro_documento: string;
   password: string;
+};
+
+export type UserPwd_Foto = {
+  pwdUser: UsuarioConPwd;
+  foto?: File;
 };

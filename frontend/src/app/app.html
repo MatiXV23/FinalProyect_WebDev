@@ -24,11 +24,19 @@
                     class="absolute -inset-1 bg-linear-to-r from-purple-400 to-pink-400 rounded-full blur opacity-75 group-hover:opacity-100 transition"
                   ></div>
                   <ion-avatar class="relative w-16 h-16 ring-2 ring-white/50">
+                    @if (user && user.foto_url){
                     <img
-                      [src]="avatarImgUrl()"
+                      [src]="user.foto_url"
                       alt="Avatar de usuario"
                       class="w-full h-full object-cover"
                     />
+                    } @else {
+                    <img
+                      src="/assets/imgs/avatar.png"
+                      alt="Avatar de usuario"
+                      class="w-full h-full object-cover"
+                    />
+                    }
                   </ion-avatar>
                   <div
                     class="absolute -bottom-1 -right-1 bg-green-400 w-5 h-5 rounded-full border-2 border-white dark:border-gray-900 shadow-lg"
@@ -184,7 +192,7 @@
                   <span class="font-medium text-gray-800 dark:text-white">Carrito</span>
                   @if (user) { @if (user.articulos_carrito.length > 0) {
                   <span
-                    class="ml-auto bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg"
+                    class="ml-auto bg-green-700 text-white text-sm font-bold px-2.5 py-1 rounded-full shadow-lg"
                   >
                     {{ user.articulos_carrito.length }}
                   </span>

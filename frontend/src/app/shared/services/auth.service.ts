@@ -12,18 +12,18 @@ import { NotificationService } from '../../core/services/notification.service';
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
-  private notificationService = inject(NotificationService)
+  private notificationService = inject(NotificationService);
   private mainStore = inject(MainStore);
 
   async logIn(credenciales: Credenciales) {
     const { token } = await firstValueFrom(
-        this.httpClient.post<{ token: string }>(environment.apiUrl + '/auth', credenciales)
-      );
+      this.httpClient.post<{ token: string }>(environment.apiUrl + '/auth', credenciales)
+    );
 
-      localStorage.setItem('token', token);
+    localStorage.setItem('token', token);
 
-      this.mainStore.token.set(token);
-      this.mainStore.user.set(await this.getUser());
+    this.mainStore.token.set(token);
+    this.mainStore.user.set(await this.getUser());
   }
 
   async logOut() {

@@ -1,11 +1,12 @@
-<form
-  #miForm="ngForm"
-  (ngSubmit)="handleClick($event)"
-  class="p-8"
->
+<form #miForm="ngForm" (ngSubmit)="handleClick($event)" class="p-8">
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        
-    <div class="form-field">
+    <photo-button
+      (foto)="savePhoto($event)"
+      [img]="articuloPosteado().foto_url"
+      class="md:row-span-2 lg:row-span-3 xl:row-span-4"
+    ></photo-button>
+
+    <div>
       <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
         <ion-icon name="pricetag" class="align-middle mr-1"></ion-icon>
         Nombre del producto
@@ -16,32 +17,12 @@
         fill="outline"
         type="text"
         placeholder="Ej: iPhone 14 Pro Max"
-        required>
+        required
+      >
       </ion-input>
     </div>
-    
-    @if (totalCategorias) {
-      <div class="form-field">
-        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-          <ion-icon name="apps" class="align-middle mr-1"></ion-icon>
-          Categoría
-        </label>
-        <ion-select
-          [(ngModel)]="articuloPosteado().id_categoria"
-          name="id_categoria"
-          interface="popover"
-          placeholder="Selecciona una categoría"
-          class="w-full border border-gray-300 dark:border-gray-600 rounded-sm p-1.5"
-          required>
-          @for (item of totalCategorias.value(); track $index) {
-            <ion-select-option [value]="item.id_categoria">
-              {{ item.nombre }}
-            </ion-select-option>
-          }
-        </ion-select>
-      </div>
-    }
-    <div class="form-field">
+
+    <div>
       <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
         <ion-icon name="cash" class="align-middle mr-1"></ion-icon>
         Precio
@@ -52,30 +33,53 @@
         fill="outline"
         type="number"
         placeholder="0.00"
-        required>
+        required
+      >
       </ion-input>
     </div>
 
     @if (moneda) {
-      <div class="form-field">
-        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-          <ion-icon name="card" class="align-middle mr-1"></ion-icon>
-          Moneda
-        </label>
-        <ion-select
-          [(ngModel)]="articuloPosteado().moneda"
-          name="moneda"
-          interface="popover"
-          placeholder="Selecciona moneda"
-          class="w-full border border-gray-300 dark:border-gray-600 rounded-sm p-1.5"
-          required>
-          <ion-select-option [value]="moneda.USD">{{ moneda.USD }}</ion-select-option>
-          <ion-select-option [value]="moneda.UYU">{{ moneda.UYU }}</ion-select-option>
-        </ion-select>
-      </div>
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="card" class="align-middle mr-1"></ion-icon>
+        Moneda
+      </label>
+      <ion-select
+        [(ngModel)]="articuloPosteado().moneda"
+        name="moneda"
+        interface="popover"
+        placeholder="Selecciona moneda"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-sm p-1.5"
+        required
+      >
+        <ion-select-option [value]="moneda.USD">{{ moneda.USD }}</ion-select-option>
+        <ion-select-option [value]="moneda.UYU">{{ moneda.UYU }}</ion-select-option>
+      </ion-select>
+    </div>
+    } @if (totalCategorias) {
+    <div class="lg:col-span-2 xl:col-span-1">
+      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+        <ion-icon name="apps" class="align-middle mr-1"></ion-icon>
+        Categoría
+      </label>
+      <ion-select
+        [(ngModel)]="articuloPosteado().id_categoria"
+        name="id_categoria"
+        interface="popover"
+        placeholder="Selecciona una categoría"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-sm p-1.5"
+        required
+      >
+        @for (item of totalCategorias.value(); track $index) {
+        <ion-select-option [value]="item.id_categoria">
+          {{ item.nombre }}
+        </ion-select-option>
+        }
+      </ion-select>
+    </div>
     }
 
-    <div class="form-field md:col-span-2">
+    <div class="md:col-span-2">
       <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
         <ion-icon name="document-text" class="align-middle mr-1"></ion-icon>
         Descripción
@@ -86,49 +90,24 @@
         fill="outline"
         placeholder="Describe tu producto en detalle..."
         rows="4"
-        required>
+        required
+      >
       </ion-input>
     </div>
 
-    <div class="form-field md:col-span-2">
-      <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-        <ion-icon name="image" class="align-middle mr-1"></ion-icon>
-        URL de la foto
-      </label>
-      <ion-input
-        [(ngModel)]="articuloPosteado().foto_url"
-        name="foto_url"
-        fill="outline"
-        type="url"
-        placeholder="https://ejemplo.com/imagen.jpg"
-        required>
-      </ion-input>
-      
-      @if (articuloPosteado().foto_url) {
-        <div class="mt-3 p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Vista previa:</p>
-          <img 
-            [src]="articuloPosteado().foto_url" 
-            alt="Preview"
-            class="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 dark:border-gray-700"
-            (error)="$event.target.src='assets/placeholder.jpg'"
-          />
-        </div>
-      }
-    </div>
-
-    <div class="form-field md:col-span-2">
-      <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700">
+    <div class="md:col-span-2">
+      <div
+        class="bg-gray-50 dark:bg-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-700"
+      >
         <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
           Opciones adicionales
         </p>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors group">
-            <ion-checkbox
-              [(ngModel)]="articuloPosteado().usado"
-              name="usado"
-              class="m-0">
+          <label
+            class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors group"
+          >
+            <ion-checkbox [(ngModel)]="articuloPosteado().usado" name="usado" class="m-0">
             </ion-checkbox>
             <div class="flex-1">
               <div class="flex items-center gap-2">
@@ -141,20 +120,20 @@
             </div>
           </label>
 
-          <label class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors group">
-            <ion-checkbox
-              [(ngModel)]="articuloPosteado().con_envio"
-              name="con_envio"
-              class="m-0">
+          <label
+            class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors group"
+          >
+            <ion-checkbox [(ngModel)]="articuloPosteado().con_envio" name="con_envio" class="m-0">
             </ion-checkbox>
             <div class="flex-1">
               <div class="flex items-center gap-2">
-                <ion-icon name="bicycle" class="text-blue-600 dark:text-blue-400 text-lg"></ion-icon>
+                <ion-icon
+                  name="bicycle"
+                  class="text-blue-600 dark:text-blue-400 text-lg"
+                ></ion-icon>
                 <span class="font-medium text-gray-900 dark:text-white">Con envío</span>
               </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                Ofreces envío a domicilio
-              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ofreces envío a domicilio</p>
             </div>
           </label>
         </div>
@@ -162,20 +141,15 @@
     </div>
   </div>
 
-  <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex gap-4 justify-end flex-col lg:flex-row">
-    <ion-button 
-      fill="outline" 
-      size="large"
-      type="button"
-      routerLink="/home">
+  <div
+    class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex gap-4 justify-end flex-col lg:flex-row"
+  >
+    <ion-button fill="outline" size="large" type="button" routerLink="/home">
       <ion-icon slot="start" name="arrow-back"></ion-icon>
       Cancelar
     </ion-button>
-    
-    <ion-button 
-      type="submit"
-      size="large"
-      class="font-bold">
+
+    <ion-button type="submit" size="large" class="font-bold">
       <ion-icon slot="start" name="checkmark-circle"></ion-icon>
       Publicar artículo
     </ion-button>

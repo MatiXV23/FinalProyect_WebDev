@@ -12,9 +12,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsuariosFormComponent } from '../../components/usuarios-form/usuarios-form.component';
 import { IonInput, IonIcon, IonInputPasswordToggle, IonButton } from '@ionic/angular/standalone';
 import { MainStore } from '../../../../shared/stores/main.store';
-import { UsuarioConPwd, Usuario } from '../../../../shared/types/usuario';
+import { UsuarioConPwd, Usuario, UserPwd_Foto } from '../../../../shared/types/usuario';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../../../../core/services/notification.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-usuarios-edit',
@@ -32,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 export class UsuariosEditPage {
   private mainStore = inject(MainStore);
   private usuariosService = inject(UsuariosService);
+  private notificationService = inject(NotificationService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -44,22 +47,22 @@ export class UsuariosEditPage {
     },
   });
 
-  async updateUser(modUser: UsuarioConPwd) {
+  async updateUser(userPwdFoto: UserPwd_Foto) {
+    const { foto, pwdUser } = userPwdFoto;
+    const id_usuario = this.user.value()!.id_usuario;
+
     const data: Partial<Usuario> = {
-      id_usuario: this.user.value()?.id_usuario,
-      email: modUser.email,
-      nombres: modUser.nombres,
-      direccion: modUser.direccion,
-      apellidos: modUser.apellidos,
-      is_admin: modUser.is_admin,
-      id_departamento: modUser.id_departamento,
-      nro_documento: modUser.nro_documento,
+      ...pwdUser,
+      id_usuario: id_usuario,
     };
     try {
+      if (foto) await this.usuariosService.updateUserFoto(id_usuario, foto);
       await this.usuariosService.updateUsuario(data);
+
+      this.notificationService.showSuccess('Usuario editado correctamente', 1000);
       this.router.navigate(['/cuenta']);
     } catch (e) {
-      console.log(e);
+      throw new Error('Ocurrio un error al editar el usuario');
     }
   }
 

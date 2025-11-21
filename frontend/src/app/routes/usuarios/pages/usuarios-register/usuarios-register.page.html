@@ -1,7 +1,6 @@
 <main class="min-h-screen flex justify-center p-6">
   <div class="w-full max-w-4xl">
     
-    <!-- Header -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-xl">
         <ion-icon name="person-add" class="text-white text-3xl"></ion-icon>
@@ -14,11 +13,9 @@
       </p>
     </div>
 
-    <!-- Card del formulario -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
       <app-usuarios-form (saved)="this.handleRegister($event)"></app-usuarios-form>
       
-      <!-- Footer -->
       <div class="px-8 pb-8 pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
         <p class="text-gray-600 dark:text-gray-400">
           ¿Ya tienes una cuenta?
@@ -29,7 +26,6 @@
       </div>
     </div>
 
-    <!-- Garantías -->
     <div class="mt-6 grid grid-cols-3 gap-4 text-center">
       <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-3 border border-gray-200 dark:border-gray-700">
         <ion-icon name="shield-checkmark" class="text-green-600 dark:text-green-400 text-2xl mb-1"></ion-icon>
