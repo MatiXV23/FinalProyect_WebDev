@@ -30,7 +30,7 @@
         }
       </div>
 
-      <div class="flex items-center w-full justify-end mt-3 flex-col sm:flex-row">
+      <div class="flex items-center w-full justify-end flex-col sm:flex-row">
         <div class="flex-1 flex justify-between">
           <div>
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
@@ -45,11 +45,11 @@
           </div>
         </div>
 
-        <div class="flex sm:self-end items-center justify-center w-full sm:w-fit">
-          <div class="flex sm:flex-col mb-2 gap-3 w-full sm:w-fit justify-between">
+        <div class="flex sm:self-end items-center justify-center w-full h-full sm:w-fit">
+          <div class="flex sm:flex-col mb-2 gap-3 w-full sm:w-fit items-center justify-end">
             <ion-button fill="clear" [routerLink]="['/usuarios', item.compra.id_comprador]">
               <div class="flex flex-col justify-center items-center p-1 gap-1">
-                <ion-icon slot="icon-only" name="person" class="text-xl"></ion-icon>
+                <ion-icon slot="icon-only" name="person" class="text-xl md:text-3xl"></ion-icon>
                 <span class="text-xs">Comprador</span>
               </div>
             </ion-button>

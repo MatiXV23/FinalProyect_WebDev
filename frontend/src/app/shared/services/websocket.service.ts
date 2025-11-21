@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class WebsocketService {
-  private authService = inject(AuthService)
+  private authService = inject(AuthService);
 
   private ws?: WebSocket;
 
@@ -30,10 +30,10 @@ export class WebsocketService {
             this.shouldMsgReload.set(true);
             break;
           case 'usuario_editado':
-            await this.authService.getUser()
+            await this.authService.getUser();
             break;
           case 'carrito_editado':
-            await this.authService.getUser()
+            await this.authService.getUser();
             this.shouldCarritoReload.set(true);
             break;
         }
@@ -50,7 +50,9 @@ export class WebsocketService {
   }
 
   disconnect() {
-    this.ws?.close();
-    this.connected.set(false);
+    if (this.connected()) {
+      this.ws?.close(1000, 'Cliente cerró la conexión');
+      this.connected.set(false);
+    }
   }
 }

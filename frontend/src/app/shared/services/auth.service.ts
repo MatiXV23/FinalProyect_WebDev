@@ -12,7 +12,6 @@ import { NotificationService } from '../../core/services/notification.service';
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
-  private notificationService = inject(NotificationService);
   private mainStore = inject(MainStore);
 
   async logIn(credenciales: Credenciales) {

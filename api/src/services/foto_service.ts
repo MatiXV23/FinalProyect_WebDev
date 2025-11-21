@@ -4,7 +4,9 @@ import path from "path";
 import fs from "fs/promises";
 
 const PORT = Number(process.env.PORT) || 3000;
-const API_URL = `http://[::]:${PORT}`;
+const ENVIRONMENT = process.env.NODE_ENV || "develpment";
+const conection_type = ENVIRONMENT === "production" ? "https" : "http";
+const API_URL = `${conection_type}://[::]:${PORT}`;
 
 export async function saveFoto(
   id: number,
