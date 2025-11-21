@@ -137,6 +137,25 @@
               </div>
             </a>
 
+            <a routerLink="cuenta/ventas" (click)="closeMenu()">
+              <div class="relative overflow-hidden group cursor-pointer shadow-sm">
+                <div
+                  class="absolute inset-0 bg-white/80 dark:bg-white/10 backdrop-blur-md group-hover:bg-white/90 dark:group-hover:bg-white/20 transition-all"
+                ></div>
+                <div class="relative flex items-center gap-3 px-4 py-3">
+                  <div
+                    class="bg-purple-100 dark:bg-purple-400/30 backdrop-blur-sm rounded-lg p-2 group-hover:bg-purple-200 dark:group-hover:bg-purple-400/50 transition-colors"
+                  >
+                    <ion-icon
+                      name="list"
+                      class="text-purple-600 dark:text-purple-200 text-xl"
+                    ></ion-icon>
+                  </div>
+                  <span class="font-medium text-gray-800 dark:text-white">Mis Ventas</span>
+                </div>
+              </div>
+            </a>
+
             <a routerLink="cuenta/compras" (click)="closeMenu()">
               <div class="relative overflow-hidden group cursor-pointer shadow-sm">
                 <div

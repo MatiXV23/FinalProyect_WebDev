@@ -25,6 +25,26 @@ export class ComprasDB extends BasePgRepository<Compra> {
         `;
   }
 
+  private getQueryVentas(whereCondition: string | null = null) {
+    return /*sql*/ `
+      SELECT 
+        c.id_compra,
+        c.id_articulo,
+        c.id_comprador,
+        json_build_object(
+          'id_articulo', a.id_articulo,
+          'nombre', a.nombre,
+          'precio', a.precio,
+          'descripcion', a.descripcion,
+          'id_vendedor', a.id_vendedor
+        ) AS articulo
+      FROM compras c
+      JOIN articulos a ON c.id_articulo = a.id_articulo
+      ${whereCondition ?? ""}
+      ;
+  `;
+  }
+
   async getAll(): Promise<Compra[]> {
     const compras = await this.pool.query<Compra>(this.getQuery());
 
@@ -51,6 +71,27 @@ export class ComprasDB extends BasePgRepository<Compra> {
         `Compras del usuario con id: (${id_comprador}) no encontradas.`
       );
     return res.rows;
+  }
+
+  async getVentasByVendedor(id_vendedor: number) {
+    const query = this.getQueryVentas("WHERE a.id_vendedor = $1");
+    const vars = [id_vendedor];
+
+    const res = await this.pool.query(query, vars);
+
+    if (res.rowCount === 0)
+      throw new PC_NotFound(
+        `No se encontraron ventas para el vendedor con id: (${id_vendedor}).`
+      );
+
+    return res.rows.map((r) => ({
+      compra: {
+        id_compra: r.id_compra,
+        id_articulo: r.id_articulo,
+        id_comprador: r.id_comprador,
+      },
+      articulo: r.articulo,
+    }));
   }
 
   async create(data: Partial<Compra>): Promise<Compra> {
