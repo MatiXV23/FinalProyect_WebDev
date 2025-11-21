@@ -96,9 +96,6 @@ ___
 
 Siguiendo dichos pasos podra levantar el proyecto de manera local.
 ___
-## Haciendo click en la siguiente imagen podra acceder al APK del proyecto.
-[![Azure](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2ORYOSPBQqezx8V0VUAbuIj2vCgp1gQpkLw&s)]()
-___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
 ___
