@@ -87,6 +87,19 @@ ___
 ![navegacion](https://github.com/MatiXV23/FinalProyect_WebDev/blob/main/assets/img/wireframeNavegacionFrontend.jpg?raw=true)
 
 ___
+## 📦 Octava entrega [FINAL] 📦 
+#### En esta entrega dejaremos un listado de pasos a seguir luego de clonar este repositorio, para que el proyecto funcione de forma correcta en su maquina local.
+| PASO | ACCION |
+|------|--------|
+|  1  | Crear el .env en la raiz del proyecto con los datos del .env.example |
+|  2  | Levantar el docker compose de la db |
+|  3  | Ejecutar en la terminal de la api **npm run dev** |
+|  4  | Ejecutar en la terminal del frontend **npm run dev** |
+
+Siguiendo dichos pasos podra levantar el proyecto de manera local.
+#### Adicionalmente si hace click en la siguiente imagen podra acceder al APK del proyecto
+[![Azure](https://i.ytimg.com/vi/6-bwkMAxZ9A/mqdefault.jpg)](https://grupo01.brazilsouth.cloudapp.azure.com/home)
+___
 ## 👤 Integrantes del Equipo 👤
 Agustin Cigaran - Brahian Nuñez - Matias Perez
 ___
