@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '/api',
+  apiUrl: 'https://grupo01.brazilsouth.cloudapp.azure.com/api',
   wsUrl: 'wss://grupo01.brazilsouth.cloudapp.azure.com/ws?id_usuario=',
 };
