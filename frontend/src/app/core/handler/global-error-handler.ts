@@ -8,7 +8,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: any): void {
     console.error('Error capturado por GlobalErrorHandler:', error);
 
-    
     let errorMessage = 'Ha ocurrido un error inesperado';
 
     if (error instanceof Error) {
@@ -18,7 +17,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     } else if (error?.message) {
       errorMessage = error.message;
     }
-
-    this.notificationService.showError(errorMessage, 5000);
+    console.log({ errorMessage });
+    // this.notificationService.showError(errorMessage, 5000);
   }
 }

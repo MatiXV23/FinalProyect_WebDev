@@ -136,10 +136,10 @@
       <div
         class="bg-white dark:bg-gray-800 mb-3 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
       >
-        <div class="flex gap-4 p-5">
+        <div class="flex gap-4 p-5 flex-col sm:flex-row">
           <div class="relative shrink-0 cursor-pointer" (click)="viewProfile(usuario.id_usuario)">
             <div
-              class="w-28 h-28 bg-linear-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center"
+              class="w-full aspect-square sm:w-28 bg-linear-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center"
             >
               <ion-icon name="person" class="text-white text-5xl"></ion-icon>
             </div>
@@ -153,10 +153,10 @@
             }
           </div>
 
-          <div class="flex items-center w-full justify-end mt-3">
+          <div class="flex items-center w-full justify-end mt-3 flex-col sm:flex-row">
             <div class="flex-1 flex flex-col justify-between">
               <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                <h3 class="text-lg font-bold text-center sm:text-start text-gray-900 dark:text-white mb-1">
                   {{ usuario.nombres }} {{ usuario.apellidos }}
                 </h3>
                 <div class="flex items-center gap-2 mb-2">
@@ -165,7 +165,7 @@
                     {{ usuario.email }}
                   </span>
                 </div>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 justify-center sm:justify-start ">
                   <ion-icon
                     name="finger-print"
                     class="text-purple-600 dark:text-purple-400"
@@ -177,7 +177,7 @@
               </div>
             </div>
 
-            <div class="flex self-end items-center gap-3 flex-col sm:flex-row">
+            <div class="flex self-end items-center gap-3 w-full sm:w-fit justify-between sm:justify-start">
               <ion-button fill="clear" (click)="handleEdit($event, usuario.id_usuario)">
                 <ion-icon slot="icon-only" name="pencil"></ion-icon>
               </ion-button>

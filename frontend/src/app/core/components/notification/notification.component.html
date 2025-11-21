@@ -1,26 +1,41 @@
-<div class="fixed top-4 left-4 right-4 sm:left-auto sm:right-4 z-99999 flex flex-col gap-3 max-w-md sm:ml-auto pointer-events-none">
-      @for (notification of activeNotifications(); track notification.id) {
-        <ion-card class="m-0 shadow-2xl pointer-events-auto animate-slide-in">
-          <ion-card-content class="p-0!">
-            <div class="flex items-center gap-3 p-4 bg-red-50 border-l-4 border-red-500">
-              <ion-icon 
-                name="alert-circle" 
-                class="text-red-600 text-2xl shrink-0">
-              </ion-icon>
-              
-              <div class="flex-1 text-sm text-red-800 font-medium">
-                {{ notification.message }}
-              </div>
-              
-              <ion-button 
-                fill="clear" 
-                size="small"
-                class="shrink-0 m-0! text-red-800 hover:text-red-900"
-                (click)="close(notification.id)">
-                <ion-icon slot="icon-only" name="close" class="text-xl"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      }
-    </div>
+<div
+  class="fixed top-4 left-4 right-4 sm:left-auto sm:right-4 z-99999 flex flex-col gap-3 max-w-md sm:ml-auto pointer-events-none"
+>
+  @for (notification of activeNotifications(); track notification.id) {
+  <ion-card class="m-0 shadow-2xl pointer-events-auto animate-slide-in">
+    <ion-card-content class="p-0!">
+      <div
+        class="flex items-center gap-3 p-4 border-l-4"
+        [class]="getNotificationColors(notification.type)[3]"
+      >
+        <ion-icon
+          name="alert-circle"
+          class="text-2xl shrink-0"
+          [class]="getNotificationColors(notification.type)[0]"
+        >
+        </ion-icon>
+
+        <div
+          class="flex-1 text-sm font-medium"
+          [class]="getNotificationColors(notification.type)[1]"
+        >
+          {{ notification.message }}
+        </div>
+
+        <ion-button
+          fill="clear"
+          size="small"
+          class="shrink-0 m-0!"
+          [class]="
+            getNotificationColors(notification.type)[1] +
+            getNotificationColors(notification.type)[2]
+          "
+          (click)="close(notification.id)"
+        >
+          <ion-icon slot="icon-only" name="close" class="text-xl"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  }
+</div>

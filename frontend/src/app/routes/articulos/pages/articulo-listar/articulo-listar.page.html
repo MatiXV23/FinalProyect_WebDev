@@ -1,127 +1,150 @@
 <main class="m-3 lg:m-6 xl:m-10 h-full">
-    <form class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-        <div class="flex justify-between xl:justify-start">
-            @if (this.departamentos.hasValue()) {
-                <ion-select
-                (ngModelChange)="this.articulos.reload()"
-                [(ngModel)]="this.params['id_departamento']"
-                name="id_departamento"
-                label="Departamento"
-                label-placement="stacked"
-                type="select"
-                class="mr-5 w-1/3" 
-                >
-                    <ion-select-option [value]="null">Todos</ion-select-option>
-                    @for (depto of departamentos.value(); track $index) {
-                        <ion-select-option [value]="depto.id_departamento">{{ depto.nombre }}</ion-select-option>
-                    }
-                </ion-select>
-            }
-
-            @if (this.categorias.hasValue()) {
-                <ion-select
-                (ngModelChange)="this.articulos.reload()"
-                [(ngModel)]="this.params['id_categoria']"
-                name="id_categoria"
-                label="Categorias"
-                label-placement="stacked"
-                type="select"
-                class="w-1/3" 
-                >
-                    <ion-select-option [value]="null">Todos</ion-select-option>
-                    @for (categoria of categorias.value(); track $index) {
-                        <ion-select-option [value]="categoria.id_categoria">{{ categoria.nombre }}</ion-select-option>
-                    }
-                </ion-select>
-            }
-        </div>
-        <ion-searchbar color="light" name="searchbar" animated="true" placeholder="Buscar" [(ngModel)]="params['nombre']" (ngModelChange)="this.articulos.reload()"></ion-searchbar>
-    </form>
-
-    <div class="grid max-w-full mt-10 gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    @if (articulos.hasValue()) {
-      @let arts = this.articulos.value();
-      @if (arts.length !== 0) {
-        @for (articulo of arts; track $index) {
-            <a [routerLink]="['/articulos', articulo.id_articulo]">
-                <div class="relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group cursor-pointer h-80">
-                <img 
-                    [src]="articulo.foto_url" 
-                    [alt]="articulo.nombre"
-                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                
-                <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent"></div>
-                
-                <div class="absolute inset-0 p-6 flex flex-col justify-between">
-                    <div class="flex justify-between items-start">
-                    <span [class]="articulo.usado ? 'bg-amber-500/90' : 'bg-blue-500/90'" 
-                        class="backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full">
-                        {{articulo.usado ? 'Usado' : 'Nuevo'}}
-                    </span>
-                    @if (articulo.con_envio) {
-                        <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
-                        <ion-icon name="bicycle"></ion-icon>
-                        Envío
-                        </span>
-                    }
-                    </div>
-                    
-                    <div class="text-white">
-                    <h3 class="text-2xl font-bold mb-2 line-clamp-2">
-                        {{articulo.nombre}}
-                    </h3>
-                    <div class="flex items-center justify-between">
-                        <div class="text-3xl font-bold">
-                        {{articulo.moneda}} {{articulo.precio}}
-                        </div>
-                        <div class="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:bg-white/30 transition-colors">
-                        <ion-icon name="arrow-forward" class="text-2xl"></ion-icon>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </a>
-
+  <form class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <div class="flex justify-between xl:justify-start">
+      @if (this.departamentos.hasValue()) {
+      <ion-select
+        (ngModelChange)="this.articulos.reload()"
+        [(ngModel)]="this.params['id_departamento']"
+        name="id_departamento"
+        label="Departamento"
+        label-placement="stacked"
+        type="select"
+        class="mr-5 w-1/3"
+      >
+        <ion-select-option [value]="null">Todos</ion-select-option>
+        @for (depto of departamentos.value(); track $index) {
+        <ion-select-option [value]="depto.id_departamento">{{ depto.nombre }}</ion-select-option>
         }
-      } @else {
-        <div class="col-span-full flex items-center justify-center py-20">
-          <div class="text-center max-w-md">
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-              <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
-            </div>
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-              No se encontraron artículos
-            </h2>
-            <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
-              Intenta ajustar los filtros o buscar con otros términos
-            </p>
-            <ion-button (click)="resetFilters()">
-              <ion-icon slot="start" name="refresh"></ion-icon>
-              Limpiar filtros
-            </ion-button>
-          </div>
-        </div>
+      </ion-select>
+      } @if (this.categorias.hasValue()) {
+      <ion-select
+        (ngModelChange)="this.articulos.reload()"
+        [(ngModel)]="this.params['id_categoria']"
+        name="id_categoria"
+        label="Categorias"
+        label-placement="stacked"
+        type="select"
+        class="w-1/3"
+      >
+        <ion-select-option [value]="null">Todos</ion-select-option>
+        @for (categoria of categorias.value(); track $index) {
+        <ion-select-option [value]="categoria.id_categoria">{{
+          categoria.nombre
+        }}</ion-select-option>
+        }
+      </ion-select>
       }
-    } @else {
-      <div class="col-span-full flex items-center justify-center py-20">
-        <div class="text-center max-w-md">
-          <div class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-            <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
+    </div>
+    <ion-searchbar
+      color="light"
+      name="searchbar"
+      animated="true"
+      placeholder="Buscar"
+      [(ngModel)]="params['nombre']"
+      (ngModelChange)="this.articulos.reload()"
+    ></ion-searchbar>
+  </form>
+
+  <div class="grid max-w-full mt-10 gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    @if (articulos.hasValue()) { @let arts = this.articulos.value(); @if (arts.length !== 0) { @for
+    (articulo of arts; track $index) {
+    <a [routerLink]="['/articulos', articulo.id_articulo]">
+      <div
+        class="relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group cursor-pointer h-80"
+      >
+        @if (articulo.foto_url) {
+        <img
+          [src]="articulo.foto_url"
+          [alt]="articulo.nombre"
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        }@else {
+        <div
+          class="w-full h-full bg-linear-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center"
+        >
+          <ion-icon name="shirt" class="text-white text-5xl"></ion-icon>
+        </div>
+        }
+
+        <div
+          class="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent"
+        ></div>
+
+        <div class="absolute inset-0 p-6 flex flex-col justify-between">
+          <div class="flex justify-between items-start">
+            <span
+              [class]="articulo.usado ? 'bg-amber-500/90' : 'bg-blue-500/90'"
+              class="backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full"
+            >
+              {{ articulo.usado ? 'Usado' : 'Nuevo' }}
+            </span>
+            @if (articulo.con_envio) {
+            <span
+              class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1"
+            >
+              <ion-icon name="bicycle"></ion-icon>
+              Envío
+            </span>
+            }
           </div>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-            No se encontraron artículos
-          </h2>
-          <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
-            Intenta ajustar los filtros o buscar con otros términos
-          </p>
-          <ion-button (click)="resetFilters()">
-            <ion-icon slot="start" name="refresh"></ion-icon>
-            Limpiar filtros
-          </ion-button>
+
+          <div class="text-white">
+            <h3 class="text-2xl font-bold mb-2 line-clamp-2">
+              {{ articulo.nombre }}
+            </h3>
+            <div class="flex items-center justify-between">
+              <div class="text-3xl font-bold">{{ articulo.moneda }} {{ articulo.precio }}</div>
+              <div
+                class="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:bg-white/30 transition-colors"
+              >
+                <ion-icon name="arrow-forward" class="text-2xl"></ion-icon>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </a>
+
+    } } @else {
+    <div class="col-span-full flex items-center justify-center py-20">
+      <div class="text-center max-w-md">
+        <div
+          class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+        >
+          <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          No se encontraron artículos
+        </h2>
+        <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
+          Intenta ajustar los filtros o buscar con otros términos
+        </p>
+        <ion-button (click)="resetFilters()">
+          <ion-icon slot="start" name="refresh"></ion-icon>
+          Limpiar filtros
+        </ion-button>
+      </div>
+    </div>
+    } } @else {
+    <div class="col-span-full flex items-center justify-center py-20">
+      <div class="text-center max-w-md">
+        <div
+          class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+        >
+          <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          No se encontraron artículos
+        </h2>
+        <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
+          Intenta ajustar los filtros o buscar con otros términos
+        </p>
+        <ion-button (click)="resetFilters()">
+          <ion-icon slot="start" name="refresh"></ion-icon>
+          Limpiar filtros
+        </ion-button>
+      </div>
+    </div>
     }
   </div>
 </main>
