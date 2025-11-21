@@ -52,8 +52,14 @@ export class UsuariosEditPage {
     const id_usuario = this.user.value()!.id_usuario;
 
     const data: Partial<Usuario> = {
-      ...pwdUser,
       id_usuario: id_usuario,
+      email: pwdUser.email,
+      nombres: pwdUser.nombres,
+      direccion: pwdUser.direccion,
+      apellidos: pwdUser.apellidos,
+      is_admin: pwdUser.is_admin,
+      id_departamento: pwdUser.id_departamento,
+      nro_documento: pwdUser.nro_documento,
     };
     try {
       if (foto) await this.usuariosService.updateUserFoto(id_usuario, foto);

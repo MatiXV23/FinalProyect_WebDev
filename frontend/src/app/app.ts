@@ -87,8 +87,10 @@ export class App implements OnInit {
   async handleLogOut(event: any) {
     this.closeMenu();
     this.authService.logOut();
+    this.wsService.disconnect()
     this.router.navigate(['/login']);
   }
+
   constructor(private menuCtrl: MenuController) {
     addIcons({
       bicycle, home, location, documentText, cube, ribbon,

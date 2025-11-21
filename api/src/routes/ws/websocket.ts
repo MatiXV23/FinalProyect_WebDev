@@ -27,6 +27,10 @@ const websocketRoute: FastifyPluginAsyncTypebox = async (fastify) => {
           id_usuario: id_usuario,
         })
       );
+
+      socket.on("close", () => {
+        clientConnections.delete(id_usuario);
+      });
     }
   );
 };
