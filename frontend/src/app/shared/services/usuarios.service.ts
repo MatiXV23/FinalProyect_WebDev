@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Resenia } from '../types/resenia';
 import { Compras } from '../types/compras';
+import { Articulo } from '../types/articulos';
 
 @Injectable({
   providedIn: 'root',
@@ -91,5 +92,13 @@ export class UsuariosService {
     } catch (e) {
       throw e;
     }
+  }
+
+  public async getVentasByUserId(idUser: number) {
+    return await firstValueFrom(
+      this.httpClient.get<{ compra: any; articulo: any }[]>(
+        `${environment.apiUrl}/usuarios/${idUser}/ventas`
+      )
+    );
   }
 }

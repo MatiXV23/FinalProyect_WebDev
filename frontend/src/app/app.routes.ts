@@ -82,6 +82,23 @@ export const routes: Routes = [
           },
         ],
       },
+
+      {
+        path: 'ventas',
+        canActivateChild: [isLoggedGuard],
+        children: [
+          {
+            path: '',
+            loadComponent: async () =>
+              (
+                await import(
+                  './routes/articulos/pages/ventas-usuario-listar/ventas-usuario-listar.page'
+                )
+              ).VentasUsuarioListarPage,
+            title: 'Listar ventas usuario',
+          },
+        ],
+      },
     ],
   },
 
