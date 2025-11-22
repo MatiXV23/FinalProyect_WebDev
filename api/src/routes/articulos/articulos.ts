@@ -46,8 +46,8 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       onRequest: [fastify.authenticate],
     },
     async (req, rep) => {
-      await fastify.ArticulosDB.create(req.body);
-      rep.code(201).send();
+      const articulo = await fastify.ArticulosDB.create(req.body);
+      rep.code(201).send(articulo);
     }
   );
 };

@@ -32,7 +32,6 @@ export class ArticuloCrearPage {
 
     try {
       const art = await this.articuloService.postArticulo(articulo);
-      console.log({art})
       if (foto) await this.articuloService.updateArticuloFoto(art.id_articulo, foto);
 
       this.notificationService.showSuccess('Articulo creado correctamente', 1000);
