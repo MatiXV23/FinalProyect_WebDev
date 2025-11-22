@@ -24,6 +24,8 @@ import { Departamento } from '../../../../shared/types/departamentos';
 import { MainStore } from '../../../../shared/stores/main.store';
 import { FormsModule } from '@angular/forms';
 import { FotoComponent } from '../../../../shared/components/foto/foto.component';
+import { DocumentoValidatorDirective } from '../../../../shared/validators/documento-validator.directive';
+import { EmailFormatDirective } from '../../../../shared/validators/email-validator.directive';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -39,6 +41,8 @@ import { FotoComponent } from '../../../../shared/components/foto/foto.component
     FormsModule,
     IonIcon,
     FotoComponent,
+    DocumentoValidatorDirective,
+    EmailFormatDirective,
   ],
 })
 export class UsuariosFormComponent {
