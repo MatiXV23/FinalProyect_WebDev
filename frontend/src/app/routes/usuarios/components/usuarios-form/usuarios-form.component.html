@@ -155,7 +155,7 @@
       </ion-input>
     </div>
 
-    @if (passwordsDontCheck() || documentoCtrl.errors) {
+    } @if (passwordsDontCheck() || documentoCtrl.errors) {
     <p class="text-sm text-red-500 mt-2">
       @if(documentoCtrl.errors && user().nro_documento) {
       {{
@@ -165,7 +165,7 @@
       }}
       } @else if (passwordsDontCheck()) {Las contraseñas no coinciden}
     </p>
-    } } @if (isAdmin() && !isLoggedUser()) {
+    } @if (isAdmin() && !isLoggedUser()) {
     <div class="md:col-span-2">
       <div
         class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4"

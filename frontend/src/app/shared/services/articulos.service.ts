@@ -12,8 +12,6 @@ import { MainStore } from '../stores/main.store';
 export class ArticulosService {
   private httpClient = inject(HttpClient);
 
-  private mainStore = inject(MainStore);
-
   public async postArticulo(datos: ArticuloPost): Promise<Articulo> {
     return await firstValueFrom(
       this.httpClient.post<Articulo>(environment.apiUrl + '/articulos', datos)
