@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { FotoComponent } from '../../../../shared/components/foto/foto.component';
 import { DocumentoValidatorDirective } from '../../../../shared/validators/documento-validator.directive';
 import { EmailFormatDirective } from '../../../../shared/validators/email-validator.directive';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -43,6 +44,7 @@ import { EmailFormatDirective } from '../../../../shared/validators/email-valida
     FotoComponent,
     DocumentoValidatorDirective,
     EmailFormatDirective,
+    JsonPipe
   ],
 })
 export class UsuariosFormComponent {

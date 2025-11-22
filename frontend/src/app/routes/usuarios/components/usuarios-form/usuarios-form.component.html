@@ -155,8 +155,16 @@
       </ion-input>
     </div>
 
-    @if (passwordsDontCheck()) {
-    <p class="text-sm text-red-500 mt-2">Las contraseñas no coinciden</p>
+    @if (passwordsDontCheck() || documentoCtrl.errors) {
+    <p class="text-sm text-red-500 mt-2">
+      @if(documentoCtrl.errors && user().nro_documento) {
+      {{
+        documentoCtrl.errors['notNumeric']
+          ? 'El documento no puede contener letras o simbolos'
+          : 'Ese numero de documento no es valido'
+      }}
+      } @else if (passwordsDontCheck()) {Las contraseñas no coinciden}
+    </p>
     } } @if (isAdmin() && !isLoggedUser()) {
     <div class="md:col-span-2">
       <div
