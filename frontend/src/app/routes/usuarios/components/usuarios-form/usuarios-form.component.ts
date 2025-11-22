@@ -44,7 +44,6 @@ import { JsonPipe } from '@angular/common';
     FotoComponent,
     DocumentoValidatorDirective,
     EmailFormatDirective,
-    JsonPipe
   ],
 })
 export class UsuariosFormComponent {
