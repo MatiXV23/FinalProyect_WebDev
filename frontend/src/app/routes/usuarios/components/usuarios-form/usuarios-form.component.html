@@ -71,9 +71,11 @@
         [(ngModel)]="user().nro_documento"
         name="nro_documento"
         fill="outline"
-        type="number"
+        type="text"
         placeholder="12345678"
         required
+        appDocumentoValidator
+        #documentoCtrl="ngModel"
       >
       </ion-input>
     </div>
