@@ -6,7 +6,7 @@ import { isAdminGuard } from './core/guards/is-admin-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: ArticuloListarPage, title: 'Home' },
+  { path: 'home', component: ArticuloListarPage, title: 'CNP Market' },
 
   {
     path: 'usuarios',
@@ -15,7 +15,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuarios/usuarios.page')).UsuariosPage,
-        title: 'Usuarios',
+        title: 'CNP Market | Usuarios',
         canActivate: [isLoggedGuard, isAdminGuard],
       },
       {
@@ -23,14 +23,14 @@ export const routes: Routes = [
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
             .UsuarioDetallePage,
-        title: 'Editar usuarios',
+        title: 'CNP Market | Usuarios',
       },
       {
         path: ':id_usuario/edit',
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page'))
             .UsuariosEditPage,
-        title: 'Editar usuarios',
+        title: 'CNP Market | Editar usuarios',
         canActivate: [isLoggedGuard, isAdminGuard],
       },
 
@@ -42,7 +42,7 @@ export const routes: Routes = [
               './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
             )
           ).ArticulosUsuarioListarPage,
-        title: 'Usuario lista articulos publicados',
+        title: 'CNP Market | Publicaciones',
       },
     ],
   },
@@ -56,14 +56,14 @@ export const routes: Routes = [
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuario-detalle/usuario-detalle.page'))
             .UsuarioDetallePage,
-        title: 'Editar cuenta',
+        title: 'CNP Market | Mi Cuenta',
       },
       {
         path: 'edit',
         loadComponent: async () =>
           (await import('./routes/usuarios/pages/usuarios-edit/usuarios-edit.page'))
             .UsuariosEditPage,
-        title: 'Editar cuenta',
+        title: 'CNP Market | Editar Cuenta',
       },
 
       {
@@ -78,7 +78,7 @@ export const routes: Routes = [
                   './routes/articulos/pages/compras-usuario-listar/compras-usuario-listar.page'
                 )
               ).ComprasUsuarioListarPage,
-            title: 'Listar compras usuario',
+            title: 'CNP Market | Mis Compras',
           },
         ],
       },
@@ -95,7 +95,7 @@ export const routes: Routes = [
                   './routes/articulos/pages/ventas-usuario-listar/ventas-usuario-listar.page'
                 )
               ).VentasUsuarioListarPage,
-            title: 'Listar ventas usuario',
+            title: 'CNP Market | Mis Ventas',
           },
         ],
       },
@@ -108,7 +108,7 @@ export const routes: Routes = [
       (await import('./routes/usuarios/pages/usuarios-login/usuarios-login.page'))
         .UsuariosLoginPage,
     canActivate: [isNotLoggedGuard],
-    title: 'Logear usuario',
+    title: 'CNP Market | Log In',
   },
 
   {
@@ -117,7 +117,7 @@ export const routes: Routes = [
       (await import('./routes/usuarios/pages/usuarios-register/usuarios-register.page'))
         .UsuariosRegisterPage,
     canActivate: [isNotLoggedGuard],
-    title: 'Regsitrar usuario',
+    title: 'CNP Market | Regsitrarse',
   },
 
   {
@@ -127,14 +127,14 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: async () => (await import('./routes/carrito/carrito.page')).CarritoPage,
-        title: 'Ver Carrito',
+        title: 'CNP Market | Mi Carrito',
       },
       {
         path: 'comprar',
         loadComponent: async () =>
           (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
             .ArticuloComprarPage,
-        title: 'Compar Carrito entero',
+        title: 'CNP Market | Pago',
       },
     ],
   },
@@ -150,14 +150,14 @@ export const routes: Routes = [
         path: '',
         loadComponent: async () =>
           (await import('./routes/chats/pages/no-chat/no-chat.page')).NoChatPage,
-        title: 'Chat con :id_chat',
+        title: 'CNP Market | Chats',
       },
       {
         path: ':id_chat',
         loadComponent: async () =>
           (await import('./routes/chats/pages/mensajes-detalle/mensajes-detalle.page'))
             .MensajesDetallePage,
-        title: 'Chat con :id_chat',
+        title: 'CNP Market | Chats',
       },
     ],
   },
@@ -171,7 +171,7 @@ export const routes: Routes = [
         loadComponent: async () =>
           (await import('./routes/articulos/pages/articulo-crear/articulo-crear.page'))
             .ArticuloCrearPage,
-        title: 'Crear Articulo',
+        title: 'CNP Market | Crear Articulo',
       },
       {
         path: 'usuario',
@@ -182,7 +182,7 @@ export const routes: Routes = [
               './routes/articulos/pages/articulos-usuario-listar/articulos-usuario-listar.page'
             )
           ).ArticulosUsuarioListarPage,
-        title: 'Listar articulos del usuario',
+        title: 'CNP Market | Publicaciones',
       },
 
       {
@@ -193,7 +193,7 @@ export const routes: Routes = [
             loadComponent: async () =>
               (await import('./routes/articulos/pages/articulo-detalle/articulo-detalle.page'))
                 .ArticuloDetallePage,
-            title: 'Detallar Articulo',
+            title: 'CNP Market | Articulo',
           },
           {
             path: 'comprar',
@@ -201,7 +201,7 @@ export const routes: Routes = [
             loadComponent: async () =>
               (await import('./routes/articulos/pages/articulo-comprar/articulo-comprar.page'))
                 .ArticuloComprarPage,
-            title: 'Comprar Articulo',
+            title: 'CNP Market | Pago',
           },
           // ##TODO: Crear Guard, isAdminOrOwner, para entrar y crear un boton que verifique lo mismo en el template de articulo
           {
@@ -213,7 +213,7 @@ export const routes: Routes = [
                   './routes/articulos/pages/articulos-usuario-editar/articulos-usuario-editar.page'
                 )
               ).ArticulosUsuarioEditarPage,
-            title: 'Usuario edita articulos publicados',
+            title: 'CNP Market | Edita articulos',
           },
         ],
       },
@@ -223,6 +223,6 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () => import('./routes/not-found/not-found.page').then((m) => m.NotFoundPage),
-    title: 'No encontrado',
+    title: 'CNP Market | No encontrado',
   },
 ];
