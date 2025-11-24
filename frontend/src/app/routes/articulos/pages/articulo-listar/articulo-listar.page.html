@@ -1,9 +1,9 @@
-<main class="m-3 lg:m-6 xl:m-10 h-full">
-  <form class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+<main class="m-3 mb-0! lg:m-6 xl:m-8">
+  <form class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 h-full">
     <div class="flex justify-between xl:justify-start">
       @if (this.departamentos.hasValue()) {
       <ion-select
-        (ngModelChange)="this.articulos.reload()"
+        (ngModelChange)="this.recargarArticulos()"
         [(ngModel)]="this.params['id_departamento']"
         name="id_departamento"
         label="Departamento"
@@ -18,7 +18,7 @@
       </ion-select>
       } @if (this.categorias.hasValue()) {
       <ion-select
-        (ngModelChange)="this.articulos.reload()"
+        (ngModelChange)="this.recargarArticulos()"
         [(ngModel)]="this.params['id_categoria']"
         name="id_categoria"
         label="Categorias"
@@ -35,19 +35,25 @@
       </ion-select>
       }
     </div>
-    <ion-searchbar
-      color="light"
-      name="searchbar"
-      animated="true"
-      placeholder="Buscar"
-      [(ngModel)]="params['nombre']"
-      (ngModelChange)="this.articulos.reload()"
-    ></ion-searchbar>
+    <div class="flex items-center justify-between col-span-2">
+      <ion-searchbar
+        color="light"
+        name="searchbar"
+        animated="true"
+        placeholder="Buscar"
+        [(ngModel)]="params['nombre']"
+        (ngModelChange)="this.recargarArticulos()"
+      ></ion-searchbar>
+
+      <ion-button (click)="resetFilters()">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+      </ion-button>
+    </div>
   </form>
 
+  @if (articulos.hasValue()) { @let arts = this.paginatedArticulos();
   <div class="grid max-w-full mt-10 gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    @if (articulos.hasValue()) { @let arts = this.articulos.value(); @if (arts.length !== 0) { @for
-    (articulo of arts; track $index) {
+    @for (articulo of arts; track $index) {
     <a [routerLink]="['/articulos', articulo.id_articulo]">
       <div
         class="relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group cursor-pointer h-80"
@@ -60,7 +66,7 @@
         />
         }@else {
         <div
-          class="w-full h-full bg-linear-to-br from-blue-400 to-indigo-500 rounded-lg flex items-center justify-center"
+          class="w-full h-full bg-linear-to-br from-pink-400 to-purple-500 rounded-lg flex items-center justify-center"
         >
           <ion-icon name="shirt" class="text-white text-5xl"></ion-icon>
         </div>
@@ -105,46 +111,34 @@
       </div>
     </a>
 
-    } } @else {
-    <div class="col-span-full flex items-center justify-center py-20">
-      <div class="text-center max-w-md">
-        <div
-          class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-        >
-          <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
-        </div>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-          No se encontraron artículos
-        </h2>
-        <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
-          Intenta ajustar los filtros o buscar con otros términos
-        </p>
-        <ion-button (click)="resetFilters()">
-          <ion-icon slot="start" name="refresh"></ion-icon>
-          Limpiar filtros
-        </ion-button>
-      </div>
-    </div>
-    } } @else {
-    <div class="col-span-full flex items-center justify-center py-20">
-      <div class="text-center max-w-md">
-        <div
-          class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"
-        >
-          <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
-        </div>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-          No se encontraron artículos
-        </h2>
-        <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
-          Intenta ajustar los filtros o buscar con otros términos
-        </p>
-        <ion-button (click)="resetFilters()">
-          <ion-icon slot="start" name="refresh"></ion-icon>
-          Limpiar filtros
-        </ion-button>
-      </div>
-    </div>
     }
   </div>
+  @if (articulos.hasValue()) {
+  <app-grid-nav
+    [resource]="articulos"
+    [(paginaActual)]="paginaActual"
+    [cantPorPagina]="articulosPorPagina"
+    (resourceValues)="setpaginatedArticulos($event)"
+  ></app-grid-nav>
+  } } @else {
+  <div class="col-span-full flex items-center justify-center py-20">
+    <div class="text-center max-w-md">
+      <div
+        class="bg-gray-100 dark:bg-gray-800 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center"
+      >
+        <ion-icon name="search-outline" class="text-gray-400 text-5xl"></ion-icon>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+        No se encontraron artículos
+      </h2>
+      <p class="text-base text-gray-600 dark:text-gray-400 mb-6">
+        Intenta ajustar los filtros o buscar con otros términos
+      </p>
+      <ion-button (click)="resetFilters()">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        Limpiar filtros
+      </ion-button>
+    </div>
+  </div>
+  }
 </main>

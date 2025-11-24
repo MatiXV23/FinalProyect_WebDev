@@ -1,0 +1,47 @@
+@if (totalPages() > 1) {
+<div class="col-span-full flex justify-center mt-8 mb-8">
+  <nav class="flex items-center gap-2">
+    <button
+      (click)="changePage(paginaActual() - 1)"
+      [disabled]="paginaActual() === 1"
+      class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+    >
+      <ion-icon name="chevron-back" class="text-xl"></ion-icon>
+    </button>
+
+    <button
+      (click)="changePage(1)"
+      [class]="
+        1 === paginaActual()
+          ? 'bg-blue-600 text-white shadow-md'
+          : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+      "
+      class="w-10 h-10 rounded-lg flex items-center justify-center font-medium transition-all"
+    >
+      {{ 1 }}
+    </button>
+    @if (totalPages() > 1) { @if (paginaActual() > 2) { ... } @if (paginaActual() > 1) {
+    <button
+      class="w-10 h-10 rounded-lg bg-blue-600 text-white shadow-md flex items-center justify-center font-medium transition-all"
+    >
+      {{ paginaActual() }}
+    </button>
+    } @if (paginaActual() < totalPages() - 1) { ... } @if (paginaActual() < totalPages()) {
+    <button
+      (click)="changePage(totalPages())"
+      class="w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 shadow-md flex items-center justify-center font-medium transition-all"
+    >
+      {{ totalPages() }}
+    </button>
+    } }
+
+    <button
+      (click)="changePage(paginaActual() + 1)"
+      [disabled]="paginaActual() === totalPages()"
+      class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+    >
+      <ion-icon name="chevron-forward" class="text-xl"></ion-icon>
+    </button>
+  </nav>
+</div>
+}

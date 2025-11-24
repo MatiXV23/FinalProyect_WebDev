@@ -96,7 +96,7 @@ export class UsuariosService {
 
   public async getVentasByUserId(idUser: number) {
     return await firstValueFrom(
-      this.httpClient.get<{ compra: any; articulo: any }[]>(
+      this.httpClient.get<Compras[]>(
         `${environment.apiUrl}/usuarios/${idUser}/ventas`
       )
     );
