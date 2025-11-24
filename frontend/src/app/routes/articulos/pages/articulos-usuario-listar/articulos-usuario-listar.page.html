@@ -9,7 +9,7 @@
     </span>
   </div>
 
-  @for (articulo of articulos.value(); track articulo.id_articulo) {
+  @for (articulo of paginatedArticulos(); track articulo.id_articulo) {
   <div
     class="bg-white dark:bg-gray-800 rounded-xl mb-2 shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700"
   >
@@ -35,7 +35,9 @@
       <div class="flex items-center w-full justify-end mt-3 flex-col sm:flex-row">
         <div class="flex-1 flex flex-col justify-between">
           <div>
-            <h3 class="text-lg font-bold text-center sm:text-start text-gray-900 dark:text-white mb-1">
+            <h3
+              class="text-lg font-bold text-center sm:text-start text-gray-900 dark:text-white mb-1"
+            >
               {{ articulo.nombre }}
             </h3>
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -50,7 +52,9 @@
           </div>
         </div>
 
-        <div class="flex self-end items-center gap-3 w-full sm:w-fit justify-between sm:justify-start">
+        <div
+          class="flex self-end items-center gap-3 w-full sm:w-fit justify-between sm:justify-start"
+        >
           <ion-button fill="clear" [routerLink]="['/articulos', articulo.id_articulo, 'editar']">
             <ion-icon slot="icon-only" name="pencil"></ion-icon>
           </ion-button>
@@ -72,10 +76,17 @@
       No hay artículos registrados
     </h3>
     <p class="text-gray-600 dark:text-gray-400 mb-6">Comienza agregando tu primer artículo</p>
-    <ion-button routerLink="/articulos/nuevo">
+    <ion-button routerLink="/articulos/crear">
       <ion-icon slot="start" name="add-circle"></ion-icon>
       Agregar artículo
     </ion-button>
   </div>
+  } @if (articulos.hasValue()) {
+  <app-grid-nav
+    [resource]="articulos"
+    [(paginaActual)]="paginaActual"
+    [cantPorPagina]="articulosPorPagina"
+    (resourceValues)="setpaginatedArticulos($event)"
+  ></app-grid-nav>
   }
 </div>

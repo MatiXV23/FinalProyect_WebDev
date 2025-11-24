@@ -5,7 +5,7 @@
     </div>
     <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Mis Ventas</h2>
     <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold ml-auto">
-      {{ ventas() ? ventas().length : 0 }} ventas
+      {{ ventasTotales.value()?.length || 0 }} ventas
     </span>
   </div>
 
@@ -73,5 +73,12 @@
       Publicar un articulo
     </ion-button>
   </div>
+  } @if (ventasTotales.value()) {
+  <app-grid-nav
+    [resource]="ventasTotales"
+    [(paginaActual)]="paginaActual"
+    [cantPorPagina]="ventasPorPagina"
+    (resourceValues)="setpaginatedVentas($event)"
+  ></app-grid-nav>
   }
 </div>

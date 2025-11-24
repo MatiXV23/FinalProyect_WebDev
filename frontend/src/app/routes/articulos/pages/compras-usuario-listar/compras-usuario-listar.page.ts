@@ -1,11 +1,7 @@
 import { Component, effect, inject, resource, signal } from '@angular/core';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { MainStore } from '../../../../shared/stores/main.store';
-import {
-  IonButton,
-  IonIcon,
-  IonModal,
-} from '@ionic/angular/standalone';
+import { IonButton, IonIcon, IonModal } from '@ionic/angular/standalone';
 import { ComprasService } from '../../../../shared/services/compras.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { Router, RouterLink } from '@angular/router';
@@ -13,10 +9,11 @@ import { Articulo } from '../../../../shared/types/articulos';
 import { Compras } from '../../../../shared/types/compras';
 import { FormsModule } from '@angular/forms';
 import { NotificationService } from '../../../../core/services/notification.service';
+import { GridNavComponent } from '../../../../shared/components/grid-nav/grid-nav.component';
 
 @Component({
   selector: 'app-compras-usuario-listar',
-  imports: [IonButton, IonIcon, IonModal, FormsModule, RouterLink],
+  imports: [IonButton, IonIcon, IonModal, FormsModule, RouterLink, GridNavComponent],
   templateUrl: './compras-usuario-listar.page.html',
   styleUrl: './compras-usuario-listar.page.css',
 })
@@ -36,8 +33,16 @@ export class ComprasUsuarioListarPage {
     loader: () => this.comprasService.getComprasByUserId(Number(this.mainStore.user()?.id_usuario)),
   });
 
+  comprasPorPagina = 6;
+  paginaActual = signal(1);
+  paginatedCompras = signal<Compras[]>([]);
+
+  setpaginatedCompras(paginatedCompras: Compras[]) {
+    this.paginatedCompras.set(paginatedCompras);
+  }
+
   private cargarArticulosComprados = effect(async () => {
-    const compras = this.articulosComprados.value();
+    const compras = this.paginatedCompras();
     if (!compras) return;
 
     if (compras.length === 0) {
