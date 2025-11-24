@@ -94,4 +94,8 @@ export class ArticuloDetallePage {
     });
   }
 
+  isUserLogged(id_vendedor: number) {
+    return this.user()?.id_usuario === id_vendedor;
+  }
+
 }
