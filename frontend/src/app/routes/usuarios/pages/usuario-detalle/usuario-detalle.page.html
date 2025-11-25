@@ -111,6 +111,12 @@
             <p class="text-lg font-medium text-gray-900 dark:text-white">
               {{ user.nombres }} {{ user.apellidos }}
             </p>
+            <p
+              (click)="handleChatBtn($event, user.id_usuario)"
+              class="text-sm text-purple-600 dark:text-purple-400 hover:underline mt-1 inline-block cursor-pointer"
+            >
+              Enviar Mensaje →
+            </p>
           </div>
         </div>
 
