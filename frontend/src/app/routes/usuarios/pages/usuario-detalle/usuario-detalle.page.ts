@@ -21,6 +21,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DepartamentosService } from '../../../../shared/services/departamentos.service';
 import { ArticulosService } from '../../../../shared/services/articulos.service';
 import { RatingStarComponent } from '../../../../shared/components/rating-star/rating-star.component';
+import { ChatsService } from '../../../../shared/services/chats.service';
 
 @Component({
   selector: 'app-usuario-detalle',
@@ -31,9 +32,12 @@ import { RatingStarComponent } from '../../../../shared/components/rating-star/r
 export class UsuarioDetallePage {
   private mainStore = inject(MainStore);
   private usuariosService = inject(UsuariosService);
+  private chatsService = inject(ChatsService);
   private depService = inject(DepartamentosService);
   private route = inject(ActivatedRoute);
   private articuloService = inject(ArticulosService);
+  private router = inject(Router);
+
 
   private params = toSignal(this.route.paramMap);
   id_usuario = computed(() => this.params()?.get('id_usuario') ?? null);
@@ -89,5 +93,24 @@ export class UsuarioDetallePage {
   });
   async getArticuloName(id_articulo: number): Promise<string> {
     return (await this.articuloService.getArticuloId(String(id_articulo))).nombre;
+  }
+
+  async handleChatBtn(event: any, id_vendedor: number) {
+    const chatId = await this.getChatId(id_vendedor);
+
+    if (!chatId) return; //TODO: ver que hacer en estos casos en los que el usuario duenio pulsa el btn
+
+    this.router.navigate(['/chats', chatId]);
+  }
+
+  async getChatId(id_vendedor: number) {
+    const user = this.mainStore.user();
+    if (!user) this.router.navigate(['/login']);
+
+    if (user?.id_usuario === id_vendedor) return;
+
+    const chatId = await this.chatsService.getChatId(user!.id_usuario, id_vendedor);
+
+    return chatId;
   }
 }
