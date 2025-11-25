@@ -67,8 +67,9 @@
           </label>
           <ion-input
             [(ngModel)]="this.tarjeta"
-            type="number"
-            maxlength="16"
+            type="text"
+            inputmode="numeric"
+            [maxlength]="16"
             fill="outline"
             placeholder="1111 2222 3333 4444"
           >

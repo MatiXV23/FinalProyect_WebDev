@@ -45,8 +45,12 @@ export class GridNavComponent {
     return Math.ceil(arts.length / this.cantPorPagina());
   });
 
+  scroller = effect(() => {
+    this.paginaActual();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   changePage(page: number) {
     this.paginaActual.set(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
