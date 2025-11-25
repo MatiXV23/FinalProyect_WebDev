@@ -20,10 +20,13 @@ export const articuloModel = Type.Object(
 
 export type Articulo = Static<typeof articuloModel>;
 
-export const articuloQueryModel = Type.Optional(Type.Object({
-  id_categoria: Type.Optional(Type.Integer()),
-  id_departamento: Type.Optional(Type.Integer()),
-  id_vendedor: Type.Optional(Type.Integer()),
-}))
+export const articuloQueryModel = Type.Optional(
+  Type.Object({
+    nombre: Type.Optional(Type.String({ maxLength: 28 })),
+    id_categoria: Type.Optional(Type.Integer()),
+    id_departamento: Type.Optional(Type.Integer()),
+    id_vendedor: Type.Optional(Type.Integer()),
+  })
+);
 
 export type ArticuloQuery = Static<typeof articuloQueryModel>;

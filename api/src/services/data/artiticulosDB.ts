@@ -35,12 +35,13 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
   }
 
   async findAll(query: ArticuloQuery): Promise<Articulo[]> {
-    const { id_categoria, id_departamento, id_vendedor } = query;
+    const { nombre, id_categoria, id_departamento, id_vendedor } = query;
     let baseWhereCond = `LEFT JOIN compras c ON a.id_articulo = c.id_articulo `;
     let whereCondition = "";
     let vars: any[] = [];
 
-    if (id_categoria || id_departamento || id_vendedor) {
+    console.log({ nombre });
+    if (id_categoria || id_departamento || id_vendedor || nombre) {
       let cont = 1;
       if (id_departamento) {
         whereCondition = /*sql*/ `
@@ -64,6 +65,13 @@ export class ArticulosDB extends BasePgRepository<Articulo> {
           : `WHERE a.id_vendedor = $${cont} `;
         cont++;
         vars.push(id_vendedor);
+      }
+      if (nombre) {
+        whereCondition += whereCondition
+          ? `AND LOWER(a.nombre) LIKE LOWER('%' || $${cont} || '%')`
+          : `WHERE LOWER(a.nombre) LIKE LOWER('%' || $${cont} || '%')`;
+        cont++;
+        vars.push(nombre);
       }
     }
 
