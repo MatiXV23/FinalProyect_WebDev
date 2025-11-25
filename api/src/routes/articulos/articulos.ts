@@ -24,6 +24,7 @@ const articuloRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
+      console.log({ params: req.query });
       if (req.query) return await fastify.ArticulosDB.findAll(req.query);
       return await fastify.ArticulosDB.getAll();
     }
