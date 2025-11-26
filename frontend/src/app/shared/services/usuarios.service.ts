@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Usuario, UsuarioConPwd, UsuarioSinId } from '../types/usuario';
 import { firstValueFrom } from 'rxjs';
@@ -24,8 +24,19 @@ export class UsuariosService {
       this.httpClient.post<Usuario>(environment.apiUrl + '/usuarios', datos)
     );
   }
-  public async getUsuarios() {
-    return await firstValueFrom(this.httpClient.get<Usuario[]>(environment.apiUrl + '/usuarios'));
+  public async getUsuarios(queryParams?: { email?: string; nro_documento?: string }) {
+    let params = new HttpParams();
+    if (queryParams) {
+      Object.entries(queryParams).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          params = params.append(key, String(value));
+        }
+      });
+    }
+
+    return await firstValueFrom(
+      this.httpClient.get<Usuario[]>(environment.apiUrl + '/usuarios', { params })
+    );
   }
 
   public async eliminarUsuario(id: number) {
@@ -96,9 +107,7 @@ export class UsuariosService {
 
   public async getVentasByUserId(idUser: number) {
     return await firstValueFrom(
-      this.httpClient.get<Compras[]>(
-        `${environment.apiUrl}/usuarios/${idUser}/ventas`
-      )
+      this.httpClient.get<Compras[]>(`${environment.apiUrl}/usuarios/${idUser}/ventas`)
     );
   }
 }
