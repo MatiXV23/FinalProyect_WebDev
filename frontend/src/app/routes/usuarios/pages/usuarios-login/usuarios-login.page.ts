@@ -13,13 +13,7 @@ import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-usuarios-login',
-  imports: [
-    IonInput,
-    IonInputPasswordToggle,
-    IonRouterLinkWithHref,
-    RouterLink,
-    FormsModule,
-  ],
+  imports: [IonInput, IonInputPasswordToggle, IonRouterLinkWithHref, RouterLink, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './usuarios-login.page.html',
   styleUrl: './usuarios-login.page.css',
@@ -34,8 +28,6 @@ export class UsuariosLoginPage {
   });
 
   async handleSessionInit(event: any) {
-    console.log('credenciales: ', this.credenciales());
-
     try {
       await this.authService.logIn(this.credenciales());
       this.router.navigate(['/home']);
@@ -44,7 +36,7 @@ export class UsuariosLoginPage {
     }
   }
 
-  async extraConnection(connector_name: 'Facebook' | 'Google'){
-    throw new Error(`Funcionalidad para iniciar sesion via ${connector_name} no implementada aun`)
+  async extraConnection(connector_name: 'Facebook' | 'Google') {
+    throw new Error(`Funcionalidad para iniciar sesion via ${connector_name} no implementada aun`);
   }
 }

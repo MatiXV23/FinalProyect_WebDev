@@ -28,12 +28,10 @@ export class GridNavComponent {
 
   emitter = effect(() => {
     this.resourceValues.emit(this.iterableDivPaginas());
-    console.log(this.iterableDivPaginas());
   });
 
   iterableDivPaginas = computed(() => {
     const res = this.resource().value();
-    console.log({ res });
     if (!res) return [];
     const start = (this.paginaActual() - 1) * this.cantPorPagina();
     return res.slice(start, start + this.cantPorPagina());

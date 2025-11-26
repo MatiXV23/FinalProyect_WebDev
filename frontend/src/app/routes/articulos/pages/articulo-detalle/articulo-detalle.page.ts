@@ -48,7 +48,7 @@ export class ArticuloDetallePage {
   disabled = computed(() => this.articulo.value()?.id_vendedor === this.user()?.id_usuario);
   inCarrito = computed(() =>
     Boolean(
-      this.mainStore.user()!.articulos_carrito.find((a) => a === this.articulo.value()!.id_articulo)
+      this.mainStore.user()?.articulos_carrito.find((a) => a === this.articulo.value()!.id_articulo)
     )
   );
 
@@ -80,22 +80,23 @@ export class ArticuloDetallePage {
   }
 
   async agregarAlCarrito(id_articulo: number) {
-    let articulos_carrito = this.mainStore.user()!.articulos_carrito;
+    const user = this.mainStore.user();
+    if (!user) return;
+    let articulos_carrito = user.articulos_carrito;
 
     if (articulos_carrito.find((a) => a === id_articulo)) return;
 
     articulos_carrito.push(id_articulo);
-    await this.usuariosService.updateCarrito(this.mainStore.user()!.id_usuario, articulos_carrito);
+    await this.usuariosService.updateCarrito(user.id_usuario, articulos_carrito);
   }
 
   navComprar() {
-    this.router.navigate(['articulos', this.id_articulo(), 'comprar'], { 
-      queryParams: { ids_articulos: [this.id_articulo()] } 
+    this.router.navigate(['articulos', this.id_articulo(), 'comprar'], {
+      queryParams: { ids_articulos: [this.id_articulo()] },
     });
   }
 
   isUserLogged(id_vendedor: number) {
     return this.user()?.id_usuario === id_vendedor;
   }
-
 }
