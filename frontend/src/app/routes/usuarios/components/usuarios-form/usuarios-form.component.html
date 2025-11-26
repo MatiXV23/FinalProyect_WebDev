@@ -61,6 +61,7 @@
         placeholder="correo@ejemplo.com"
         required
         emailFormat
+        [user]="user()"
         #emailCtrl="ngModel"
       >
       </ion-input>
@@ -80,6 +81,7 @@
         required
         appDocumentoValidator
         #documentoCtrl="ngModel"
+        [user]="user()"
         [maxlength]="8"
       >
       </ion-input>

@@ -1,4 +1,4 @@
-import { Directive, inject } from '@angular/core';
+import { Directive, inject, input } from '@angular/core';
 import { NG_ASYNC_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UsuariosService } from '../services/usuarios.service';
 import { MainStore } from '../stores/main.store';
@@ -18,7 +18,7 @@ export class DocumentoValidatorDirective implements Validator {
   private mainStore = inject(MainStore);
   private userService = inject(UsuariosService);
 
-  user = this.mainStore.user;
+  user = input(this.mainStore.user());
 
   async validate(control: AbstractControl): Promise<ValidationErrors | null> {
     const value = control.value;

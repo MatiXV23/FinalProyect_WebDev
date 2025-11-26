@@ -1,5 +1,10 @@
-import { Directive, forwardRef, inject } from '@angular/core';
-import { AbstractControl, NG_ASYNC_VALIDATORS, ValidationErrors, AsyncValidator } from '@angular/forms';
+import { Directive, forwardRef, inject, input } from '@angular/core';
+import {
+  AbstractControl,
+  NG_ASYNC_VALIDATORS,
+  ValidationErrors,
+  AsyncValidator,
+} from '@angular/forms';
 import { UsuariosService } from '../services/usuarios.service';
 import { MainStore } from '../stores/main.store';
 
@@ -14,13 +19,14 @@ import { MainStore } from '../stores/main.store';
     },
   ],
 })
+
 export class EmailFormatDirective implements AsyncValidator {
   private mainStore = inject(MainStore);
   private userService = inject(UsuariosService);
 
   private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  user = this.mainStore.user;
+  user = input(this.mainStore.user());
 
   async validate(control: AbstractControl): Promise<ValidationErrors | null> {
     const value = (control.value ?? '').toString().trim();
@@ -34,7 +40,6 @@ export class EmailFormatDirective implements AsyncValidator {
 
     if (!this.user() || users[0].id_usuario !== this.user()?.id_usuario) return { inUse: true };
 
-    
     return null;
   }
 }
