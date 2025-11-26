@@ -65,7 +65,7 @@ export class UsuariosEditPage {
       if (foto) await this.usuariosService.updateUserFoto(id_usuario, foto);
       await this.usuariosService.updateUsuario(data);
 
-      this.notificationService.showSuccess('Usuario editado correctamente', 1000);
+      this.notificationService.showSuccess('Usuario guardado correctamente', 1000);
       this.router.navigate(['/cuenta']);
     } catch (e) {
       throw new Error('Ocurrio un error al editar el usuario');

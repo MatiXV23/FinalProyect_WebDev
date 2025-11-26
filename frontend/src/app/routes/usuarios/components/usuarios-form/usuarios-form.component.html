@@ -80,6 +80,7 @@
         required
         appDocumentoValidator
         #documentoCtrl="ngModel"
+        [maxlength]="8"
       >
       </ion-input>
     </div>
@@ -158,17 +159,21 @@
       </ion-input>
     </div>
 
-    } @if (passwordsDontCheck() || documentoCtrl.errors) {
-    <p class="text-sm text-red-500 mt-2">
-      @if(documentoCtrl.errors && user().nro_documento) {
-      {{
-        documentoCtrl.errors['notNumeric']
-          ? 'El documento no puede contener letras o simbolos'
-          : 'Ese numero de documento no es valido'
-      }}
-      } @else if (passwordsDontCheck()) {Las contraseñas no coinciden}
+    }
+    <p class="text-sm text-red-500 h-3">
+      @if (passwordsDontCheck() || !miForm.valid) {
+      <span class="mt-2">
+        @if (passwordsDontCheck()) {Las contraseñas no coinciden} @else if(documentoCtrl.errors &&
+        user().nro_documento) { @if(documentoCtrl.errors['notNumeric']) { El documento no puede
+        contener letras o simbolos } @else if (documentoCtrl.errors['inUse']) { El documento ya esta
+        registrado en otra cuenta } @else {Ese numero de documento no es valido} } @else if
+        (emailCtrl.errors && user().email) { @if(emailCtrl.errors['emailFormat']) { El email no
+        tiene el formato correcto } @else if (emailCtrl.errors['inUse']) { El email ya esta
+        registrado en otra cuenta } @else {Ese email no es valido} }
+      </span>
+      }
     </p>
-    } @if (isAdmin() && !isLoggedUser()) {
+    @if (isAdmin() && !isLoggedUser()) {
     <div class="md:col-span-2">
       <div
         class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4"
@@ -200,18 +205,19 @@
       type="submit"
       expand="block"
       size="large"
-      [disabled]="miForm.invalid || passwordsDontCheck()"
-      [color]="miForm.invalid || passwordsDontCheck() ? 'medium' : 'primary'"
+      [disabled]="!miForm.valid || passwordsDontCheck()"
+      [color]="!miForm.valid || passwordsDontCheck() ? 'medium' : 'primary'"
       class="font-bold"
     >
       <ion-icon slot="start" name="checkmark-circle"></ion-icon>
       {{ buttonMSG() }}
     </ion-button>
 
-    @if (miForm.invalid) {
-    <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">
-      Por favor completa todos los campos requeridos
+    <p
+      class="text-sm text-gray-500 dark:text-gray-400 flex items-baseline text-center justify-center h-3"
+    >
+      @if (!miForm.valid) {<span class="mt-3">Por favor completa todos los campos requeridos</span>
+      }
     </p>
-    }
   </div>
 </form>
