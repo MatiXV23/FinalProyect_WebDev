@@ -1,17 +1,20 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
 
   private ws?: WebSocket;
 
   shouldMsgReload = signal(false);
   shouldCarritoReload = signal(false);
+  shouldReloadVentas = signal(false);
 
   connected = signal(false);
 
@@ -36,6 +39,13 @@ export class WebsocketService {
             await this.authService.getUser();
             this.shouldCarritoReload.set(true);
             break;
+          case 'venta_realizada':
+            this.shouldReloadVentas.set(true);
+            this.notificationService.showSuccess(
+              'Has vendido un articulo, puedes verlo en la seccion "Mis Ventas"',
+              1000
+            );
+            break;
         }
       }
     };
@@ -54,5 +64,9 @@ export class WebsocketService {
       this.ws?.close(1000, 'Cliente cerró la conexión');
       this.connected.set(false);
     }
+  }
+
+  resetVentasReload() {
+    this.shouldReloadVentas.set(false);
   }
 }

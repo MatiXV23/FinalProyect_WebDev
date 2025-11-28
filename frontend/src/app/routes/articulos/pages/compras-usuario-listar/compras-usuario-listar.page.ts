@@ -39,9 +39,10 @@ export class ComprasUsuarioListarPage {
 
   setpaginatedCompras(paginatedCompras: Compras[]) {
     this.paginatedCompras.set(paginatedCompras);
+    this.cargarArticulosComprados();
   }
 
-  private cargarArticulosComprados = effect(async () => {
+  private async cargarArticulosComprados() {
     const compras = this.paginatedCompras();
     if (!compras) return;
 
@@ -56,7 +57,7 @@ export class ComprasUsuarioListarPage {
 
     const mixArtComp = compras.map((compra, index) => ({ compra, articulo: articulos[index] }));
     this.listadoArticulos.set(mixArtComp);
-  });
+  }
 
   handleVendedor(id: number) {
     this.router.navigate([`usuarios/${id}`]);

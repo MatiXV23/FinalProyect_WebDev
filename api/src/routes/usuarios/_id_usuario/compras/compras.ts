@@ -58,7 +58,6 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       preHandler: async (req, rep) => {
         const { id_articulo } = req.body;
         const articulo = await fastify.ArticulosDB.getById(id_articulo);
-        console.log("llego1");
         if (articulo.id_vendedor === req.params.id_usuario)
           throw new PC_NoAuthorized(
             "No puedes comprar un articulo que tu publicaste"
@@ -66,10 +65,17 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       },
     },
     async (req, rep) => {
-      console.log("llego");
+      const { id_articulo } = req.body;
       await fastify.ComprasDB.create({
         id_comprador: req.params.id_usuario,
-        id_articulo: req.body.id_articulo,
+        id_articulo: id_articulo,
+      });
+
+      const articulo = await fastify.ArticulosDB.getById(id_articulo);
+
+      fastify.notifyClient(articulo.id_vendedor, {
+        type: "venta_realizada",
+        id_articulo: id_articulo,
       });
       rep.code(204).send();
     }

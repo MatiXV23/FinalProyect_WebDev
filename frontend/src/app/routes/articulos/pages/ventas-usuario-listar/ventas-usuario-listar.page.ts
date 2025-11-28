@@ -9,6 +9,7 @@ import { Articulo } from '../../../../shared/types/articulos';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { IonIcon, IonButton } from '@ionic/angular/standalone';
 import { GridNavComponent } from '../../../../shared/components/grid-nav/grid-nav.component';
+import { WebsocketService } from '../../../../shared/services/websocket.service';
 
 @Component({
   selector: 'app-ventas-usuario-listar',
@@ -17,6 +18,7 @@ import { GridNavComponent } from '../../../../shared/components/grid-nav/grid-na
   imports: [IonIcon, IonButton, RouterLink, GridNavComponent],
 })
 export class VentasUsuarioListarPage {
+  private wsService = inject(WebsocketService);
   private router = inject(Router);
   private mainStore = inject(MainStore);
   private usuariosService = inject(UsuariosService);
@@ -28,15 +30,23 @@ export class VentasUsuarioListarPage {
     loader: () => this.usuariosService.getVentasByUserId(this.mainStore.user()!.id_usuario),
   });
 
+  private reloadVentasTotales = effect(() => {
+    if (this.wsService.shouldReloadVentas()) {
+      this.ventasTotales.reload();
+      this.wsService.resetVentasReload();
+    }
+  });
+
   ventasPorPagina = 6;
   paginaActual = signal(1);
   paginatedVentas = signal<Compras[]>([]);
 
   setpaginatedVentas(paginatedVentas: Compras[]) {
     this.paginatedVentas.set(paginatedVentas);
+    this.cargarVentas();
   }
 
-  private cargarVentas = effect(async () => {
+  private async cargarVentas() {
     const ventas = this.paginatedVentas();
     if (!ventas) return;
 
@@ -51,7 +61,7 @@ export class VentasUsuarioListarPage {
 
     const mixArtComp = ventas.map((compra, index) => ({ compra, articulo: articulos[index] }));
     this.ventas.set(mixArtComp);
-  });
+  }
 
   handleComprador(idComprador: number) {
     this.router.navigate([`/usuarios/${idComprador}`]);
