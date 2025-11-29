@@ -78,7 +78,6 @@
         fill="outline"
         type="text"
         placeholder="12345678"
-        required
         appDocumentoValidator
         #documentoCtrl="ngModel"
         [user]="user()"
@@ -98,7 +97,6 @@
         fill="outline"
         type="text"
         placeholder="Calle, número, barrio"
-        required
         [maxlength]="50"
       >
       </ion-input>
@@ -167,11 +165,11 @@
       <span class="mt-2">
         @if (passwordsDontCheck()) {Las contraseñas no coinciden} @else if(documentoCtrl.errors &&
         user().nro_documento) { @if(documentoCtrl.errors['notNumeric']) { El documento no puede
-        contener letras o simbolos } @else if (documentoCtrl.errors['inUse']) { El documento ya esta
-        registrado en otra cuenta } @else {Ese numero de documento no es valido} } @else if
+        contener letras o simbolos } @else if (documentoCtrl.errors['inUse']) { Ese documento de
+        identidad ya está registrado } @else {Ese numero de documento no es valido} } @else if
         (emailCtrl.errors && user().email) { @if(emailCtrl.errors['emailFormat']) { El email no
-        tiene el formato correcto } @else if (emailCtrl.errors['inUse']) { El email ya esta
-        registrado en otra cuenta } @else {Ese email no es valido} }
+        tiene el formato correcto } @else if (emailCtrl.errors['inUse']) { Ese email ya está
+        registrado } @else {Ese email no es valido} }
       </span>
       }
     </p>

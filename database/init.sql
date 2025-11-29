@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombres VARCHAR(50) NOT NULL,
     apellidos VARCHAR(50) NOT NULL,
     id_departamento INTEGER NOT NULL REFERENCES departamentos(id_departamento) ON DELETE CASCADE,
-    direccion VARCHAR(50) NOT NULL,
+    direccion VARCHAR(50),
     foto_url VARCHAR(520),
-    nro_documento CHAR(8) UNIQUE NOT NULL CHECK (nro_documento ~ '^[0-9]{8}$')
+    nro_documento CHAR(8) 
 );
 
 -- Tabla con solo el hash

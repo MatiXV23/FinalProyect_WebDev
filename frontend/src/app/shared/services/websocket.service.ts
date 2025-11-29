@@ -12,6 +12,7 @@ export class WebsocketService {
 
   shouldMsgReload = signal(false);
   shouldCarritoReload = signal(false);
+  shouldVentasReload = signal(false);
 
   connected = signal(false);
 
@@ -35,6 +36,9 @@ export class WebsocketService {
           case 'carrito_editado':
             await this.authService.getUser();
             this.shouldCarritoReload.set(true);
+            break;
+          case 'CompraRealizada':
+            this.shouldVentasReload.set(true);
             break;
         }
       }

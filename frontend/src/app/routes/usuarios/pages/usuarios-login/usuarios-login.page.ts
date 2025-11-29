@@ -1,25 +1,43 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, inject, signal } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  HostListener,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {
   IonCard,
   IonInputPasswordToggle,
   IonCardSubtitle,
   IonRouterLinkWithHref,
+  IonSelect,
 } from '@ionic/angular/standalone';
 import { IonInput } from '@ionic/angular/standalone';
 import { Credenciales } from '../../../../shared/types/credenciales';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../../shared/services/auth.service';
+import { single } from 'rxjs';
+import { UsuariosService } from '../../../../shared/services/usuarios.service';
 
 @Component({
   selector: 'app-usuarios-login',
-  imports: [IonInput, IonInputPasswordToggle, IonRouterLinkWithHref, RouterLink, FormsModule],
+  imports: [
+    IonInput,
+    IonInputPasswordToggle,
+    IonRouterLinkWithHref,
+    RouterLink,
+    FormsModule,
+    IonSelect,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './usuarios-login.page.html',
   styleUrl: './usuarios-login.page.css',
 })
 export class UsuariosLoginPage {
   private authService = inject(AuthService);
+  private userservice = inject(UsuariosService);
   private router = inject(Router);
 
   credenciales = signal<Credenciales>({

@@ -138,18 +138,19 @@ export class UsuariosDB extends BasePgRepository<Usuario> {
       ]);
       return res.rows[0];
     } catch (err: any) {
-      if (err.code !== "23505") throw new PC_InternalServerError();
+      throw err;
+      // if (err.code !== "23505") throw new e;
 
-      switch (err.constraint) {
-        case "usuarios_nro_documento_key":
-          throw new PC_BadRequest("Ese numero de documento ya esta en uso");
+      // switch (err.constraint) {
+      //   case "usuarios_nro_documento_key":
+      //     throw new PC_BadRequest("Ese numero de documento ya esta en uso");
 
-        case "usuarios_email_key":
-          throw new PC_BadRequest("Ese email ya esta en uso");
+      //   case "usuarios_email_key":
+      //     throw new PC_BadRequest("Ese email ya esta en uso");
 
-        default:
-          throw new PC_BadRequest("Alguna key esta duplicada");
-      }
+      //   default:
+      //     throw new PC_BadRequest("Alguna key esta duplicada");
+      // }
     }
   }
 

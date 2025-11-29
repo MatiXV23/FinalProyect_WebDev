@@ -1,22 +1,19 @@
-<main class="min-h-screen flex justify-center items-center p-6 ">
+<main class="min-h-screen flex justify-center items-center p-6">
   <div class="w-full max-w-md">
-    
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-xl">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-xl"
+      >
         <ion-icon name="log-in" class="text-white text-3xl"></ion-icon>
       </div>
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-        ¡Bienvenido de nuevo!
-      </h1>
-      <p class="text-gray-600 dark:text-gray-400">
-        Ingresa tus credenciales para continuar
-      </p>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">¡Bienvenido de nuevo!</h1>
+      <p class="text-gray-600 dark:text-gray-400">Ingresa tus credenciales para continuar</p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-
+    <div
+      class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700"
+    >
       <form #loginForm="ngForm" (ngSubmit)="handleSessionInit($event)" class="p-8">
-        
         <div class="form-field mb-6">
           <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
             <ion-icon name="mail" class="align-middle mr-1"></ion-icon>
@@ -29,7 +26,8 @@
             type="email"
             placeholder="correo@ejemplo.com"
             class="custom-input"
-            required>
+            required
+          >
             <ion-icon slot="start" name="mail-outline" class="text-gray-400"></ion-icon>
           </ion-input>
         </div>
@@ -46,54 +44,36 @@
             type="password"
             placeholder="Tu contraseña"
             class="custom-input"
-            required>
+            required
+          >
             <ion-icon slot="start" name="lock-closed-outline" class="text-gray-400"></ion-icon>
             <ion-input-password-toggle slot="end"></ion-input-password-toggle>
           </ion-input>
         </div>
 
-        <ion-button 
-          type="submit" 
+        <ion-button
+          type="submit"
           expand="block"
           size="large"
           class="font-bold mb-4"
-          [disabled]="loginForm.invalid">
+          [disabled]="loginForm.invalid"
+        >
           <ion-icon slot="start" name="log-in"></ion-icon>
           Iniciar Sesión
         </ion-button>
-
-        <div class="relative my-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-4 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-              O inicia sesion con
-            </span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <button type="button" (click)="extraConnection('Google')" class="flex items-center justify-center gap-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-            <ion-icon name="logo-google" class="text-xl px-4 py-3 text-red-500"></ion-icon>
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Google</span>
-          </button>
-          <button type="button" (click)="extraConnection('Facebook')" class="flex items-center justify-center gap-2  bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-            <ion-icon name="logo-facebook" class="text-xl px-4 py-3 text-blue-600"></ion-icon>
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Facebook</span>
-          </button>
-        </div>
       </form>
 
       <div class="px-8 pb-8 pt-4 border-t border-gray-200 dark:border-gray-700 text-center">
         <p class="text-gray-600 dark:text-gray-400">
           ¿No tienes cuenta?
-          <a routerLink="/registro" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors cursor-pointer ml-1">
+          <a
+            routerLink="/registro"
+            class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors cursor-pointer ml-1"
+          >
             ¡Regístrate aquí!
           </a>
         </p>
       </div>
     </div>
-
   </div>
 </main>

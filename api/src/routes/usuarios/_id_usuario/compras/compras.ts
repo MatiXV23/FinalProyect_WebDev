@@ -34,6 +34,7 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       preHandler: [fastify.isAdminOrOwner],
     },
     async (req, rep) => {
+      fastify.notifyClient(req.params.id_usuario, { type: "CompraRealizada" });
       return await fastify.ComprasDB.getByIdUser(req.params.id_usuario);
     }
   );
@@ -58,6 +59,10 @@ const comprasUserRoutes: FastifyPluginAsyncTypebox = async (fastify) => {
       preHandler: async (req, rep) => {
         const { id_articulo } = req.body;
         const articulo = await fastify.ArticulosDB.getById(id_articulo);
+        fastify.notifyClient(req.params.id_usuario, {
+          type: "CompraRealizada",
+        });
+        console.log("NOTIFY");
         console.log("llego1");
         if (articulo.id_vendedor === req.params.id_usuario)
           throw new PC_NoAuthorized(
